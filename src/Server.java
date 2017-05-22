@@ -36,11 +36,22 @@ public class Server extends Thread {
         }
     }
 
-    public static void toByte(byte[] msg, String message) {
+    public static void toByte(String input, byte[] output) {
             int i = 0;
-        for (char m : message.toCharArray()) {
-            msg[i] = (byte) m;
+        for (char m : input.toCharArray()) {
+            output[i] = (byte) m;
             i++;
         }
+    }
+
+    public static String toString(byte[] input) {
+            StringBuilder sb = new StringBuilder();
+        for (byte b : input) {
+            if (b != 0) {
+                sb.append((char) b);
+            }
+        }
+        String output = new String(sb);
+        return output;
     }
 }

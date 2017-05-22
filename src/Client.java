@@ -37,10 +37,9 @@ public class Client extends Thread {
     private void initConnection() {
         try {
             this.mSocket.receive(packet);
-            this.socket = new Socket(packet.getAddress(), ClientConnector.SERVER_PORT);
-            System.out.println("Connection has been established.");
-            String str = new String(packetData);
+            String str = Server.toString(packetData);
             if (str.equals(Server.SERVER_STRING)) {
+                this.socket = new Socket(packet.getAddress(), ClientConnector.SERVER_PORT);
                 System.out.println("Connection has been established.");
             }
         } catch (IOException exc) {

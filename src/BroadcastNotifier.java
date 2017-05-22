@@ -26,7 +26,7 @@ public class BroadcastNotifier extends Thread {
             group = InetAddress.getByName("230.0.0.1");
             socket = new DatagramSocket(SERVER_PORT);
             msg = new byte[message.length()];
-            Server.toByte(this.msg, message);
+            Server.toByte(message, this.msg);
             packet = new DatagramPacket(msg, msg.length, group, CLIENT_PORT);
         } catch (IOException exc) {
             exc.printStackTrace();
