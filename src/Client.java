@@ -3,11 +3,12 @@ import java.net.*;
 
 public class Client extends Thread {
         private final String NICKNAME;
-        private MulticastSocket mSocket = null;
-        private Socket socket = null;
-        private InetAddress group = null;
+        private MulticastSocket mSocket = null; // Socket to find server;
+        private Socket socket = null;   // Socket to establish connection with server;
+        private InetAddress group = null;   // Multicast group to reach server's packet with IP;
         private DatagramPacket packet = null;
-        private byte[] packetData;
+        private byte[] packetData = null;
+
 
     public Client(String nickName) {
         super("SLClient");
@@ -16,38 +17,43 @@ public class Client extends Thread {
             mSocket = new MulticastSocket(BroadcastNotifier.CLIENT_PORT);
             group = InetAddress.getByName("230.0.0.1");
             mSocket.joinGroup(group);
-            packetData = new byte[256];
+            packetData = new byte[8];
             packet = new DatagramPacket(packetData, packetData.length);
         } catch (IOException exc) {
             exc.printStackTrace();
         }
-
         start();
     }
 
     @Override
     public void run() {
-        try {
-                this.mSocket.receive(packet);
-                String serverString = new String(packetData, 0, packetData.length);
-                this.socket = new Socket(packet.getAddress(), ClientConnector.SERVER_PORT);
-                System.out.println("Connections has been established.");
-                System.out.println("Inet adress of the server is: " + socket.getInetAddress());
-                System.out.println("Port is: " + socket.getPort());
-        } catch (IOException exc) {
-            exc.printStackTrace();
-        }
+        initConnection();
     }
 
     public static void main(String[] args) {
         new Client("Vasya");
     }
 
-    @Override
-    public void finalize() {
+    private void initConnection() {
         try {
-            this.mSocket.close();
-            this.socket.close();
+            this.mSocket.receive(packet);
+            this.socket = new Socket(packet.getAddress(), ClientConnector.SERVER_PORT);
+            System.out.println("Connection has been established.");
+            String str = new String(packetData);
+            if (str.equals(Server.SERVER_STRING)) {
+                System.out.println("Connection has been established.");
+            }
+        } catch (IOException exc) {
+            exc.printStackTrace();
+        } finally {
+            close();
+        }
+    }
+
+    private void close() {
+        try {
+            if (mSocket != null) this.mSocket.close();
+            if (socket != null) this.socket.close();
         } catch (IOException exc) {
             exc.printStackTrace();
         }

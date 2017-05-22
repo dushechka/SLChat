@@ -1,3 +1,7 @@
+import com.sun.org.apache.bcel.internal.classfile.ConstantUtf8;
+import com.sun.xml.internal.stream.writers.UTF8OutputStreamWriter;
+import sun.text.normalizer.UnicodeSet;
+
 import java.io.IOException;
 import java.net.*;
 
@@ -19,9 +23,10 @@ public class BroadcastNotifier extends Thread {
         super("BroadcastNotifier");
         IS_RUNNING = true;
         try {
-            this.msg = message.getBytes();
             group = InetAddress.getByName("230.0.0.1");
             socket = new DatagramSocket(SERVER_PORT);
+            msg = new byte[message.length()];
+            Server.toByte(this.msg, message);
             packet = new DatagramPacket(msg, msg.length, group, CLIENT_PORT);
         } catch (IOException exc) {
             exc.printStackTrace();
@@ -42,6 +47,8 @@ public class BroadcastNotifier extends Thread {
             }
         } catch (IOException exc) {
             exc.printStackTrace();
+        } finally {
+            close();
         }
     }
 
@@ -49,8 +56,7 @@ public class BroadcastNotifier extends Thread {
         IS_RUNNING = false;
     }
 
-        @Override
-    protected void finalize() {
+    private void close() {
         socket.close();
     }
 }
