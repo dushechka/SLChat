@@ -1,3 +1,5 @@
+package server;
+
 public class Server extends Thread {
         private BroadcastNotifier broadcastNotifier = null;
         private ClientConnector clientConnector = null;

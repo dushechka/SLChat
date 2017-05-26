@@ -1,3 +1,6 @@
+package client;
+
+import server.*;
 import java.io.*;
 import java.net.*;
 
