@@ -3,41 +3,39 @@ package server;
 public class Server extends Thread {
         private BroadcastNotifier broadcastNotifier = null;
         private ClientConnector clientConnector = null;
+        // An identifying string, which is being sending to clients;
         public final static String SERVER_STRING = "SLChat";
-        private volatile String CURRENT_ROOM_NAME;
+        private String serverName = null;
         private final String PASSWORD;
 
-    public Server(String roomName, String password) {
+    public Server(String serverName, String password) {
         super("SLServer");
+        this.serverName = serverName;
         this.PASSWORD = password;
-        CURRENT_ROOM_NAME = roomName;
         start();
     }
 
     @Override
     public void run() {
-            BroadcastNotifier bn = null;
         broadcastNotifier = new BroadcastNotifier(SERVER_STRING);
-        clientConnector = new ClientConnector(CURRENT_ROOM_NAME, PASSWORD);
+        clientConnector = new ClientConnector();
         System.out.println("The server has been started. Waiting for connection...");
         close();
     }
 
-    public static void main(String[] args) {
-        new Server("Sick Fucks", "12345");
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
     }
 
-    private void close() {
-//        broadcastNotifier.die();
-//        clientConnector.die();
-        try {
-            broadcastNotifier.join();
-            clientConnector.join();
-        } catch (InterruptedException exc) {
-            exc.printStackTrace();
-        }
+    public String getServerName() {
+        return serverName;
     }
 
+    public String getPASSWORD() {
+        return PASSWORD;
+    }
+
+    // Convert String to an array of bytes;
     public static void toByte(String input, byte[] output) {
             int i = 0;
         for (char m : input.toCharArray()) {
@@ -46,6 +44,7 @@ public class Server extends Thread {
         }
     }
 
+    // Convert an array of bytes to String;
     public static String toString(byte[] input) {
             StringBuilder sb = new StringBuilder();
         for (byte b : input) {
@@ -56,4 +55,21 @@ public class Server extends Thread {
         String output = new String(sb);
         return output;
     }
+
+    private void close() {
+//        broadcastNotifier.die();
+//        clientConnector.die();
+        try {
+            broadcastNotifier.join();
+            clientConnector.join();
+        } catch (InterruptedException exc) {
+            System.out.println("An error occured while join threads.");
+            exc.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        new Server("SRV","TalkDirtyToMe");
+    }
+
 }

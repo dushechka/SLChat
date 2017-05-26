@@ -8,20 +8,20 @@ import java.io.*;
  * and pass them to ClientHandler;
  */
 public class ClientConnector extends Thread {
+        // A server port for establishing final connection with client;
         public final static int SERVER_PORT = 4488;
+        // Tracking server state value. Shuts this tread when set to false;
         private boolean IS_RUNNING;
+        // A server socket for establishing final connection with client;
         private ServerSocket server = null;
-        private final String ROOM_NAME;
-        private final String PASSWORD;
 
-    public ClientConnector(String roomName, String password) {
+    public ClientConnector() {
         super("ClientConnector");
         IS_RUNNING = true;
-        this.ROOM_NAME = roomName;
-        this.PASSWORD = password;
         try {
             server = new ServerSocket(SERVER_PORT);
         } catch (IOException exc) {
+            System.out.println("Exception thrown, while instating ServerSocket;");
             exc.printStackTrace();
         }
         start();
@@ -32,8 +32,10 @@ public class ClientConnector extends Thread {
         try {
             while (IS_RUNNING) {
                 Socket clientSocket = server.accept();
+                new ClientHandler(clientSocket);
             }
         } catch (IOException exc) {
+            System.out.println("Exception thrown, while connecting client to ServerSocket;");
             exc.printStackTrace();
         } finally {
             close();
