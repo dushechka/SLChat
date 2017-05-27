@@ -1,9 +1,5 @@
 package server;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-
-import static server.ServerConstants.SERVER_FINAL_PORT;
 import static server.ServerConstants.SERVER_STRING;
 
 
@@ -49,10 +45,10 @@ public class Server extends Thread {
 
     private void close() {
         try {
-            clientConnector.die();
-            clientConnector.join();
             broadcastNotifier.die();
             broadcastNotifier.join();
+            clientConnector.die();
+            clientConnector.join();
 //  TODO: |Identify whether server shuts only incoming|
 //  TODO: |connections, or established connections to?|
         } catch (InterruptedException exc) {

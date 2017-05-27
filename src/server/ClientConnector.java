@@ -22,6 +22,7 @@ class ClientConnector extends Thread {
         clients = new ListOfClients();
         try {
             serverSocket = new ServerSocket(SERVER_FINAL_PORT);
+
         } catch (IOException exc) {
             exc.printStackTrace();
         }
@@ -33,10 +34,6 @@ class ClientConnector extends Thread {
             Socket clientSocket = null;
         try {
             while (IS_RUNNING) {
-                if (!IS_RUNNING) {
-                    System.out.println("Breaking CC.");
-                    break;
-                }
                 clientSocket = serverSocket.accept();
                 clients.addClient(new ClientHandler(clientSocket, clients));
                 sleep(1000);
@@ -51,7 +48,20 @@ class ClientConnector extends Thread {
     }
 
     protected void die() {
+            Socket socket = null;
         IS_RUNNING = false;
+        try {
+            // This is need to get out from serverSocket.accept() cycle in run() method;
+            socket = new Socket("localhost", SERVER_FINAL_PORT);
+        } catch (IOException exc) {
+            exc.printStackTrace();
+        } finally {
+            try {
+                if ((socket != null) && (!socket.isClosed())) {
+                    socket.close();
+                }
+            } catch (IOException e) {}
+        }
     }
 
     private void close(){

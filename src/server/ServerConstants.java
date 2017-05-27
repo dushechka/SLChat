@@ -1,7 +1,5 @@
 package server;
 
-import java.net.InetAddress;
-
 /**
  * Contains program final fields
  * and methods;

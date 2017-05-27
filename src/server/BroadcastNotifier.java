@@ -58,7 +58,9 @@ class BroadcastNotifier extends Thread {
     }
 
     private void close() {
-        socket.close();
+        if ((socket != null) && (!socket.isClosed())) {
+            socket.close();
+        }
         System.out.println("BroadcastNotifier stopped.");
     }
 }
