@@ -10,7 +10,7 @@ import java.util.Vector;
  */
 class ListOfClients {
     // List of connected clients;
-        private Vector<ClientHandler> clients;
+        private Vector<ClientHandler> clients = null;
 
     ListOfClients() {
         clients = new Vector<>(8,8);

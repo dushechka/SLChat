@@ -13,25 +13,19 @@ public class Server extends Thread {
     // An identifying string, which is being sending to clients;
         private String serverName = null;
         private final String PASSWORD;
-        private ServerSocket serverSocket = null;
 
 
     public Server(String serverName, String password) {
         super("SLServer");
         this.serverName = serverName;
         this.PASSWORD = password;
-        try {
-            serverSocket = new ServerSocket(SERVER_FINAL_PORT);
-        } catch (IOException exc) {
-            exc.printStackTrace();
-        }
         start();
     }
 
     @Override
     public void run() {
         broadcastNotifier = new BroadcastNotifier(SERVER_STRING);
-        clientConnector = new ClientConnector(serverSocket);
+        clientConnector = new ClientConnector();
         System.out.println("The server has been started. Waiting for connection...");
         try {
             sleep(10000);
@@ -54,16 +48,15 @@ public class Server extends Thread {
     }
 
     private void close() {
-        broadcastNotifier.die();
-        clientConnector.die();
         try {
-            broadcastNotifier.join();
+            clientConnector.die();
             clientConnector.join();
-            serverSocket.close();
+            broadcastNotifier.die();
+            broadcastNotifier.join();
+//  TODO: |Identify whether server shuts only incoming|
+//  TODO: |connections, or established connections to?|
         } catch (InterruptedException exc) {
             exc.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

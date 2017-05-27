@@ -1,7 +1,8 @@
 package server;
 
+import java.io.IOException;
 import java.net.*;
-import java.io.*;
+
 import static server.ServerConstants.SERVER_FINAL_PORT;
 
 /**
@@ -14,40 +15,52 @@ class ClientConnector extends Thread {
         // A server socket for establishing final connection with client;
         private ServerSocket serverSocket = null;
         private ListOfClients clients;
-        private ConnectionAcceptor connectionAcceptor = null;
 
-    ClientConnector(ServerSocket serverSocket) {
+    ClientConnector() {
         super("ClientConnector");
         IS_RUNNING = true;
         clients = new ListOfClients();
-        this.serverSocket = serverSocket;
+        try {
+            serverSocket = new ServerSocket(SERVER_FINAL_PORT);
+        } catch (IOException exc) {
+            exc.printStackTrace();
+        }
         start();
     }
 
     @Override
     public void run() {
-        connectionAcceptor = new ConnectionAcceptor(serverSocket, clients);
+            Socket clientSocket = null;
         try {
             while (IS_RUNNING) {
-                    sleep(100);
+                if (!IS_RUNNING) {
+                    System.out.println("Breaking CC.");
+                    break;
+                }
+                clientSocket = serverSocket.accept();
+                clients.addClient(new ClientHandler(clientSocket, clients));
+                sleep(1000);
             }
         } catch (InterruptedException exc) {
+            exc.printStackTrace();
+        } catch (IOException exc) {
             exc.printStackTrace();
         } finally {
             close();
         }
     }
 
-
     protected void die() {
         IS_RUNNING = false;
     }
 
     private void close(){
-//  TODO: |Identify whether server shuts only incoming|
-//  TODO: |connections, or established connections to?|
-            connectionAcceptor.interrupt();
+        try {
             clients.killTheClients();
             System.out.println("ClientConnector stopped.");
+            serverSocket.close();
+        } catch (IOException exc) {
+            exc.printStackTrace();
+        }
     }
 }

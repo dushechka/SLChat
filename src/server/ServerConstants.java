@@ -1,5 +1,7 @@
 package server;
 
+import java.net.InetAddress;
+
 /**
  * Contains program final fields
  * and methods;
@@ -9,6 +11,8 @@ public class ServerConstants {
                 public final static String SERVER_STRING = "SLChat";
         // This port is used for client to connect to server;
                 public final static int SERVER_FINAL_PORT = 4488;
+        // Broadcast group address;
+                public final static String GROUP_ADDRESS = "230.0.0.1";
         // These ports are used to client and server to find each other;
                 public final static int SERVER_PORT = 4444;
                 public final static int CLIENT_PORT = 4445;

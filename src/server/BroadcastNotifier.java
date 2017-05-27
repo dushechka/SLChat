@@ -22,7 +22,7 @@ class BroadcastNotifier extends Thread {
         super("BroadcastNotifier");
         IS_RUNNING = true;
         try {
-            group = InetAddress.getByName("230.0.0.1");
+            group = InetAddress.getByName(GROUP_ADDRESS);
             socket = new DatagramSocket(SERVER_PORT);
             msg = new byte[message.length()];
             stringToByte(message, this.msg);

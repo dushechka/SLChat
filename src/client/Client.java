@@ -19,7 +19,7 @@ public class Client extends Thread {
         this.NICKNAME = nickName;
         try {
             mSocket = new MulticastSocket(CLIENT_PORT);
-            group = InetAddress.getByName("230.0.0.1");
+            group = InetAddress.getByName(GROUP_ADDRESS);
             mSocket.joinGroup(group);
             packetData = new byte[8];
             packet = new DatagramPacket(packetData, packetData.length);
