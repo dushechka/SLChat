@@ -1,8 +1,9 @@
 package client;
 
-import server.*;
 import java.io.*;
 import java.net.*;
+
+import static server.ServerConstants.*;
 
 public class Client extends Thread {
         private final String NICKNAME;
@@ -17,7 +18,7 @@ public class Client extends Thread {
         super("SLClient");
         this.NICKNAME = nickName;
         try {
-            mSocket = new MulticastSocket(BroadcastNotifier.CLIENT_PORT);
+            mSocket = new MulticastSocket(CLIENT_PORT);
             group = InetAddress.getByName("230.0.0.1");
             mSocket.joinGroup(group);
             packetData = new byte[8];
@@ -40,9 +41,9 @@ public class Client extends Thread {
     private void initConnection() {
         try {
             this.mSocket.receive(packet);
-            String str = Server.toString(packetData);
-            if (str.equals(Server.SERVER_STRING)) {
-                this.socket = new Socket(packet.getAddress(), ClientConnector.SERVER_PORT);
+            String str = byteToString(packetData);
+            if (str.equals(SERVER_STRING)) {
+                this.socket = new Socket(packet.getAddress(), SERVER_FINAL_PORT);
                 System.out.println("Connection has been established.");
             }
         } catch (IOException exc) {

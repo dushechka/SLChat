@@ -2,24 +2,23 @@ package server;
 
 import java.net.*;
 import java.io.*;
+import static server.ServerConstants.SERVER_FINAL_PORT;
 
 /**
  * Listens for incoming client connections
  * and pass them to ClientHandler;
  */
-public class ClientConnector extends Thread {
-        // A server port for establishing final connection with client;
-        public final static int SERVER_PORT = 4488;
+class ClientConnector extends Thread {
         // Tracking server state value. Shuts this tread when set to false;
         private boolean IS_RUNNING;
         // A server socket for establishing final connection with client;
         private ServerSocket server = null;
 
-    public ClientConnector() {
+    ClientConnector() {
         super("ClientConnector");
         IS_RUNNING = true;
         try {
-            server = new ServerSocket(SERVER_PORT);
+            server = new ServerSocket(SERVER_FINAL_PORT);
         } catch (IOException exc) {
             System.out.println("Exception thrown, while instating ServerSocket;");
             exc.printStackTrace();

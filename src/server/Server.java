@@ -1,10 +1,11 @@
 package server;
 
+import static server.ServerConstants.SERVER_STRING;
+
 public class Server extends Thread {
         private BroadcastNotifier broadcastNotifier = null;
         private ClientConnector clientConnector = null;
         // An identifying string, which is being sending to clients;
-        public final static String SERVER_STRING = "SLChat";
         private String serverName = null;
         private final String PASSWORD;
 
@@ -33,27 +34,6 @@ public class Server extends Thread {
 
     public String getPASSWORD() {
         return PASSWORD;
-    }
-
-    // Convert String to an array of bytes;
-    public static void toByte(String input, byte[] output) {
-            int i = 0;
-        for (char m : input.toCharArray()) {
-            output[i] = (byte) m;
-            i++;
-        }
-    }
-
-    // Convert an array of bytes to String;
-    public static String toString(byte[] input) {
-            StringBuilder sb = new StringBuilder();
-        for (byte b : input) {
-            if (b != 0) {
-                sb.append((char) b);
-            }
-        }
-        String output = new String(sb);
-        return output;
     }
 
     private void close() {
