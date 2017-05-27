@@ -40,6 +40,7 @@ public class Client extends Thread {
 
     private void initConnection() {
         try {
+            System.out.println("Waiting for server to connect...");
             this.mSocket.receive(packet);
             String str = byteToString(packetData);
             if (str.equals(SERVER_STRING)) {
@@ -55,8 +56,12 @@ public class Client extends Thread {
 
     private void close() {
         try {
-            if (mSocket != null) this.mSocket.close();
-            if (socket != null) this.socket.close();
+            if ((mSocket != null) && (!mSocket.isClosed())) {
+                this.mSocket.close();
+            }
+            if ((socket != null) && (!socket.isClosed())) {
+                this.socket.close();
+            }
         } catch (IOException exc) {
             exc.printStackTrace();
         }

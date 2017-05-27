@@ -12,29 +12,26 @@ class ClientConnector extends Thread {
         // Tracking server state value. Shuts this tread when set to false;
         private boolean IS_RUNNING;
         // A server socket for establishing final connection with client;
-        private ServerSocket server = null;
+        private ServerSocket serverSocket = null;
+        private ListOfClients clients;
+        private ConnectionAcceptor connectionAcceptor = null;
 
-    ClientConnector() {
+    ClientConnector(ServerSocket serverSocket) {
         super("ClientConnector");
         IS_RUNNING = true;
-        try {
-            server = new ServerSocket(SERVER_FINAL_PORT);
-        } catch (IOException exc) {
-            System.out.println("Exception thrown, while instating ServerSocket;");
-            exc.printStackTrace();
-        }
+        clients = new ListOfClients();
+        this.serverSocket = serverSocket;
         start();
     }
 
     @Override
     public void run() {
+        connectionAcceptor = new ConnectionAcceptor(serverSocket, clients);
         try {
             while (IS_RUNNING) {
-                Socket clientSocket = server.accept();
-                new ClientHandler(clientSocket);
+                    sleep(100);
             }
-        } catch (IOException exc) {
-            System.out.println("Exception thrown, while connecting client to ServerSocket;");
+        } catch (InterruptedException exc) {
             exc.printStackTrace();
         } finally {
             close();
@@ -47,10 +44,10 @@ class ClientConnector extends Thread {
     }
 
     private void close(){
-        try {
-            server.close();
-        } catch (IOException exc) {
-            exc.printStackTrace();
-        }
+//  TODO: |Identify whether server shuts only incoming|
+//  TODO: |connections, or established connections to?|
+            connectionAcceptor.interrupt();
+            clients.killTheClients();
+            System.out.println("ClientConnector stopped.");
     }
 }

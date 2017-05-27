@@ -59,5 +59,6 @@ class BroadcastNotifier extends Thread {
 
     private void close() {
         socket.close();
+        System.out.println("BroadcastNotifier stopped.");
     }
 }

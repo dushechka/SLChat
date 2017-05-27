@@ -5,12 +5,15 @@ package server;
  * and methods;
  */
 public class ServerConstants {
-        public final static String SERVER_STRING = "SLChat";
-        public final static int SERVER_FINAL_PORT = 4488;
-        public final static long FIVE_SECONDS = 5000;
+        // String, that server is broadcasting to clients for server identification;
+                public final static String SERVER_STRING = "SLChat";
+        // This port is used for client to connect to server;
+                public final static int SERVER_FINAL_PORT = 4488;
         // These ports are used to client and server to find each other;
-        public final static int CLIENT_PORT = 4445;
-        public final static int SERVER_PORT = 4444;
+                public final static int SERVER_PORT = 4444;
+                public final static int CLIENT_PORT = 4445;
+        // Plain five seconds;
+                public final static long FIVE_SECONDS = 5000;
 
 
         // Convert String to an array of bytes;
@@ -22,7 +25,7 @@ public class ServerConstants {
                 }
         }
 
-        // Convert an array of bytes to String;
+        // Convert an array of bytes to a String;
         public static String byteToString(byte[] input) {
                 StringBuilder sb = new StringBuilder();
                 for (byte b : input) {
