@@ -1,8 +1,7 @@
-package server;
+package server.model;
 
 /**
- * Contains program final fields
- * and methods;
+ * Contains program final fields and methods;
  */
 public class ServerConstants {
         // String, that server is broadcasting to clients for server identification;

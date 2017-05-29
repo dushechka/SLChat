@@ -1,9 +1,9 @@
-package client;
+package client.model;
 
 import java.io.*;
 import java.net.*;
 
-import static server.ServerConstants.*;
+import static server.model.ServerConstants.*;
 
 public class Client extends Thread {
         private final String NICKNAME;

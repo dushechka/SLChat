@@ -1,8 +1,7 @@
-package server;
+package server.model;
 
 import java.io.IOException;
 import java.net.*;
-import static server.ServerConstants.*;
 
 /**
  * Sends broadcast messages to clients
@@ -22,11 +21,11 @@ class BroadcastNotifier extends Thread {
         super("BroadcastNotifier");
         IS_RUNNING = true;
         try {
-            group = InetAddress.getByName(GROUP_ADDRESS);
-            socket = new DatagramSocket(SERVER_PORT);
+            group = InetAddress.getByName(ServerConstants.GROUP_ADDRESS);
+            socket = new DatagramSocket(ServerConstants.SERVER_PORT);
             msg = new byte[message.length()];
-            stringToByte(message, this.msg);
-            packet = new DatagramPacket(msg, msg.length, group, CLIENT_PORT);
+            ServerConstants.stringToByte(message, this.msg);
+            packet = new DatagramPacket(msg, msg.length, group, ServerConstants.CLIENT_PORT);
         } catch (IOException exc) {
             System.out.println("An IOException thrown in BroadcastNotifier constructor;");
             exc.printStackTrace();
@@ -41,7 +40,7 @@ class BroadcastNotifier extends Thread {
                 // Sending broadcast bait packet;
                 socket.send(packet);
                 try {
-                    sleep((long) Math.random() * FIVE_SECONDS);
+                    sleep((long) Math.random() * ServerConstants.FIVE_SECONDS);
                 } catch (InterruptedException exc) {
                     exc.printStackTrace();
                 }

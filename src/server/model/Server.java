@@ -1,6 +1,4 @@
-package server;
-
-import static server.ServerConstants.SERVER_STRING;
+package server.model;
 
 
 public class Server extends Thread {
@@ -20,7 +18,7 @@ public class Server extends Thread {
 
     @Override
     public void run() {
-        broadcastNotifier = new BroadcastNotifier(SERVER_STRING);
+        broadcastNotifier = new BroadcastNotifier(ServerConstants.SERVER_STRING);
         clientConnector = new ClientConnector();
         System.out.println("The server has been started. Waiting for connection...");
         try {

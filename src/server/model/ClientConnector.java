@@ -1,9 +1,7 @@
-package server;
+package server.model;
 
 import java.io.IOException;
 import java.net.*;
-
-import static server.ServerConstants.SERVER_FINAL_PORT;
 
 /**
  * Listens for incoming client connections
@@ -21,7 +19,7 @@ class ClientConnector extends Thread {
         IS_RUNNING = true;
         clients = new ListOfClients();
         try {
-            serverSocket = new ServerSocket(SERVER_FINAL_PORT);
+            serverSocket = new ServerSocket(ServerConstants.SERVER_FINAL_PORT);
 
         } catch (IOException exc) {
             exc.printStackTrace();
@@ -52,7 +50,7 @@ class ClientConnector extends Thread {
         IS_RUNNING = false;
         try {
             // This is need to get out from serverSocket.accept() cycle in run() method;
-            socket = new Socket("localhost", SERVER_FINAL_PORT);
+            socket = new Socket("localhost", ServerConstants.SERVER_FINAL_PORT);
         } catch (IOException exc) {
             exc.printStackTrace();
         } finally {
