@@ -2,11 +2,11 @@ package server.model;
 
 
 public class Server extends Thread {
-        private BroadcastNotifier broadcastNotifier = null;
-        private ClientConnector clientConnector = null;
+    private BroadcastNotifier broadcastNotifier = null;
+    private ClientConnector clientConnector = null;
     // An identifying string, which is being sending to clients;
-        private String serverName = null;
-        private final String PASSWORD;
+    private String serverName = null;
+    private final String PASSWORD;
 
 
     public Server(String serverName, String password) {
@@ -53,9 +53,4 @@ public class Server extends Thread {
             exc.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        new Server("SRV","TalkDirtyToMe");
-    }
-
 }

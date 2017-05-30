@@ -1,4 +1,4 @@
-package client.view.start;
+package server.view.create;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,20 +6,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class StartView extends Application {
+public class CreateView extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Create.fxml"));
 
-        Scene scene = new Scene(root,280,280);
+        Scene scene = new Scene(root, 300, 275);
 
         stage.setTitle("SLChat");
         stage.setScene(scene);
         stage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+//    public static void main(String[] args) {
+//        launch(args);
+//    }
 }

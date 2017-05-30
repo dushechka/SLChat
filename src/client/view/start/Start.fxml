@@ -1,37 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
- * Copyright (c) 2011, 2014 Oracle and/or its affiliates.
- * All rights reserved. Use is subject to license terms.
- *
- * This file is available and licensed under the following license:
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *  - Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *  - Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the distribution.
- *  - Neither the name of Oracle Corporation nor the names of its
- *    contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
-
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -44,32 +12,32 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane alignment="center" hgap="10" prefHeight="245.0" prefWidth="262.0" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-    <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
+<GridPane alignment="center" hgap="10" prefHeight="280.0" prefWidth="280.0" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.start.StartController">
+    <padding><Insets bottom="10.0" left="38.0" right="25.0" top="25.0" /></padding>
 
-    <Text id="welcome-text" fill="#446b27" nodeOrientation="LEFT_TO_RIGHT" text="Welcome to SLChat!" textAlignment="RIGHT" wrappingWidth="172.3359375" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+    <Text id="welcome-text" fill="#446b27" nodeOrientation="LEFT_TO_RIGHT" text="Welcome to SLChat!" textAlignment="RIGHT" wrappingWidth="172.3359375" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1">
       <font>
          <Font name="System Italic" size="15.0" />
       </font></Text>
 
-    <Text id="welcome-text" fill="#9c5d5d" text="You can:" wrappingWidth="169.3359375" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+    <Text id="welcome-text" fill="#9c5d5d" text="You can:" wrappingWidth="169.3359375" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3">
       <font>
          <Font size="14.0" />
       </font></Text>
 
-    <VBox alignment="CENTER_RIGHT" prefHeight="95.0" prefWidth="188.0" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="3">
-        <Button prefHeight="25.0" prefWidth="172.0" text="Search for opened room" textAlignment="CENTER" textFill="#0d184a">
+    <VBox alignment="CENTER_RIGHT" prefHeight="95.0" prefWidth="188.0" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="4">
+        <Button prefHeight="25.0" prefWidth="172.0" text="Search for opened room &gt;&gt;" textAlignment="CENTER" textFill="#0d184a">
          <font>
             <Font name="System Italic" size="12.0" />
          </font></Button>
-        <TextField alignment="CENTER" promptText="Enter room name or IP" />
-        <Button prefHeight="25.0" prefWidth="172.0" text="Start your own room" textAlignment="CENTER" textFill="#0d184a">
+        <TextField alignment="CENTER" promptText="Enter room's PC name or IP" />
+        <Button fx:id="startServer" onAction="#handleStartButtonAction" prefHeight="25.0" prefWidth="172.0" text="Open your own room &gt;&gt;" textAlignment="CENTER" textFill="#0d184a">
          <font>
             <Font name="System Italic" size="12.0" />
          </font></Button>
     </VBox>
 
-    <Text fx:id="actiontarget" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+    <Text fx:id="actionTarget" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
 
     <stylesheets>
         <URL value="@Start.css" />
@@ -84,7 +52,7 @@
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
-      <RowConstraints />
+      <RowConstraints minHeight="30.0" />
       <RowConstraints />
    </rowConstraints>
    <effect>

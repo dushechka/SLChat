@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.SepiaTone?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.view.create.CreateController">
+    <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
+
+    <Text id="welcome-text" fill="#446b27" text="Enter your login and password:" wrappingWidth="211.8388671875" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+      <font>
+         <Font name="System Italic" size="14.0" />
+      </font></Text>
+
+    <Label text="Login:" textFill="#9c5d5d" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+
+    <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+    <Label text="Password:" textFill="#9d5e5e" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+
+    <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+    <HBox alignment="BOTTOM_RIGHT" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
+        <Button fx:id="openButton" onAction="#handleOpenButtonAction" text="Open room &gt;&gt;" textFill="#0d184a">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font></Button>
+    </HBox>
+
+    <Text fx:id="actionTarget" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <effect>
+      <SepiaTone level="0.13" />
+   </effect>
+</GridPane>
