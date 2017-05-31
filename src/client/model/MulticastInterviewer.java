@@ -10,13 +10,14 @@ import static server.model.ServerConstants.*;
  * find server's IP address;
  */
 public class MulticastInterviewer extends Thread {
+    // Determines whether this thread is alive;
+    private boolean IS_RUNNING;
     // A group for sending broadcast packet;
     private InetAddress group = null;
     private DatagramSocket datagramSocket = null;
     private DatagramPacket datagramPacket = null;
     // Broadcast message to identify client;
     private byte[] msg = null;
-    private boolean IS_RUNNING;
 
     MulticastInterviewer() {
         super("MulticastInterviewer");
@@ -47,8 +48,9 @@ public class MulticastInterviewer extends Thread {
     private void distribute() {
         try {
             while(IS_RUNNING) {
-                // Sending broadcast bait packet;
+                // Sending broadcast packet;
                 datagramSocket.send(datagramPacket);
+                System.out.println("Multicast packet sent.");
                     sleep((long) Math.random() * FIVE_SECONDS);
                 }
         } catch (IOException | InterruptedException e) {
@@ -65,6 +67,7 @@ public class MulticastInterviewer extends Thread {
         IS_RUNNING = false;
     }
 
+    // Releasing occupied resources;
     private void close() {
         if ((datagramSocket != null) && (!datagramSocket.isClosed())) {
             datagramSocket.close();
