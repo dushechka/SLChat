@@ -23,10 +23,10 @@ public class MulticastInterviewer extends Thread {
         super("MulticastInterviewer");
         try {
             group = InetAddress.getByName(GROUP_ADDRESS);
-            datagramSocket = new DatagramSocket(CLIENT_PORT);
+            datagramSocket = new DatagramSocket(CLIENT_MULTICAST_PORT);
             msg = new byte[SERVER_STRING.length()];
             stringToByte(SERVER_STRING, msg);
-            datagramPacket = new DatagramPacket(msg, msg.length, group, SERVER_PORT);
+            datagramPacket = new DatagramPacket(msg, msg.length, group, SERVER_MULTI_PORT);
         } catch (UnknownHostException e) {
             System.out.println("Exception thrown while trying to achieve multicast group.");
             System.out.println("Thread " + getName());
@@ -50,7 +50,6 @@ public class MulticastInterviewer extends Thread {
             while(IS_RUNNING) {
                 // Sending broadcast packet;
                 datagramSocket.send(datagramPacket);
-                System.out.println("Multicast packet sent.");
                     sleep((long) Math.random() * FIVE_SECONDS);
                 }
         } catch (IOException | InterruptedException e) {

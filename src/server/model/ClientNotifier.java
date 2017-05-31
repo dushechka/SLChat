@@ -12,7 +12,7 @@ import java.net.*;
 public class ClientNotifier extends Thread {
         // Determines whether this thread is alive;
         private boolean IS_RUNNING;
-        // Socket which recieves clients multicast packet;
+        // Socket which, recieves clients multicast packet;
         private MulticastSocket mSocket = null;
         // Multicast group in which client sends packets;
         private InetAddress group = null;
@@ -22,7 +22,7 @@ public class ClientNotifier extends Thread {
     ClientNotifier() {
         super("ClientNotifier");
         try {
-            mSocket = new MulticastSocket(SERVER_PORT);
+            mSocket = new MulticastSocket(SERVER_MULTI_PORT);
             group = InetAddress.getByName(GROUP_ADDRESS);
             mSocket.joinGroup(group);
             packetData = new byte[8];
@@ -38,9 +38,23 @@ public class ClientNotifier extends Thread {
         IS_RUNNING = true;
         System.out.println("ClientNotifier started.");
         try {
-            mSocket.receive(packet);
-            System.out.println("Client's multicast packet recieved.");
-        } catch (IOException e) {
+            while(IS_RUNNING) {
+                mSocket.receive(packet);
+                // Recieving multicast packet from clients;
+                if (byteToString(packetData).equals(SERVER_STRING)) {
+                    System.out.println("Multicast packet recieved from client.");
+                    System.out.println("Clients address: " + packet.getAddress());
+                    packet = new DatagramPacket(packetData, packetData.length, packet.getAddress(), CLIENT_PORT);
+                    mSocket.send(packet);
+                    System.out.println("Back datagram packet sent to client;");
+                } else {
+                    System.out.println("Unknown packet intercepted.");
+                    System.out.println("Sender's address: " + packet.getAddress());
+                    System.out.println("Packet data: " + byteToString(packetData));
+                }
+                sleep(1000);
+            }
+        } catch (IOException | InterruptedException e) {
             System.out.println("Exception thrown in run() method.");
             System.out.println("Thread " + getName());
             e.printStackTrace();

@@ -11,8 +11,10 @@ public class ServerConstants {
         // Broadcast group address;
                 public final static String GROUP_ADDRESS = "230.0.0.1";
         // These ports are used to client and server to find each other;
-                public final static int SERVER_PORT = 4444;
-                public final static int CLIENT_PORT = 4445;
+                public final static int SERVER_MULTI_PORT = 4444;
+                public final static int CLIENT_MULTICAST_PORT = 4445;
+                public final static int SERVER_PORT = 4446;
+                public final static int CLIENT_PORT = 4447;
         // Plain five seconds;
                 public final static long FIVE_SECONDS = 5000;
 
