@@ -66,6 +66,17 @@ public class ClientNotifier extends Thread {
     // Killing this thread;
     void die() {
         IS_RUNNING = false;
+        // Sending dummy packet to overcome while cycle in method run();
+        System.out.println("Stopping ClientNotifier;");
+        try ( DatagramSocket dummySocket = new DatagramSocket(4455); ) {
+            DatagramPacket dummyPacket = new DatagramPacket(packetData, packetData.length,
+                                    InetAddress.getByName("localhost"), SERVER_MULTI_PORT);
+            dummySocket.send(dummyPacket);
+        } catch (IOException exc) {
+            System.out.println("Exception thrown while trying to release kill the thread.");
+            System.out.println("Thread " + getName());
+            exc.printStackTrace();
+        }
     }
 
     private void close() {

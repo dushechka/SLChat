@@ -13,10 +13,12 @@ public class Client {
     // Multicast packets sender;
         MulticastInterviewer mi = null;
     // This socket used to get a datagram packet
-    // packet from server, which contains it's IP;
+    // from server, which contains it's IP;
         private DatagramSocket dSocket = null;
         private DatagramPacket packet = null;
         private byte[] packetData = null;
+    // Socket to establish connection with server;
+        Socket socket = null;
 
     Client () {
         establishConnection();
@@ -33,6 +35,8 @@ public class Client {
             System.out.println("Server's back packet recieved.");
             System.out.println("Server's address: " + packet.getAddress());
             mi.die();
+            socket = new Socket(packet.getAddress(), SERVER_FINAL_PORT);
+            System.out.println("Connection established.");
         } catch (IOException ie) {
             System.out.println("Exception thrown while client tried to establish connection with server;");
             ie.printStackTrace();
@@ -44,7 +48,14 @@ public class Client {
     private void close() {
         try {
             mi.join();
-        } catch (InterruptedException e) {
+            if ((dSocket != null) && (!dSocket.isClosed())) {
+                dSocket.close();
+            }
+            if ((socket != null) && (!socket.isClosed())) {
+                socket.close();
+            }
+            System.out.println("Client stoped.");
+        } catch (IOException | InterruptedException e) {
             System.out.println("Exception thrown while client tied to release resources.");
             e.printStackTrace();
         }
