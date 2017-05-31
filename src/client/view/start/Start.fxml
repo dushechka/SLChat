@@ -26,12 +26,12 @@
       </font></Text>
 
     <VBox alignment="CENTER_RIGHT" prefHeight="95.0" prefWidth="188.0" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="4">
-        <Button prefHeight="25.0" prefWidth="172.0" text="Search for opened room &gt;&gt;" textAlignment="CENTER" textFill="#0d184a">
+        <Button prefHeight="25.0" prefWidth="172.0" text="Search for opened room" textAlignment="CENTER" textFill="#0d184a">
          <font>
             <Font name="System Italic" size="12.0" />
          </font></Button>
         <TextField alignment="CENTER" promptText="Enter room's PC name or IP" />
-        <Button fx:id="startServer" onAction="#handleStartButtonAction" prefHeight="25.0" prefWidth="172.0" text="Open your own room &gt;&gt;" textAlignment="CENTER" textFill="#0d184a">
+        <Button fx:id="startServer" onAction="#handleStartButtonAction" prefHeight="25.0" prefWidth="172.0" text="Open your own room" textAlignment="CENTER" textFill="#0d184a">
          <font>
             <Font name="System Italic" size="12.0" />
          </font></Button>
