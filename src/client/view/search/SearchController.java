@@ -1,24 +1,23 @@
-package server.view.create;
+package client.view.search;
+
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class CreateController {
-    @FXML private Button openButton;
-    @FXML private Button backButton;
-
-    @FXML
-    protected void handleOpenButtonAction(ActionEvent event) {
-//        new Server("SRV","TalkDirtyToMe");
-    }
+/**
+ * Search server menu controller;
+ */
+public class SearchController {
+        @FXML private Button getBackButton;
+        @FXML private Button connectButton;
 
     // Switching to main menu;
     @FXML
@@ -27,10 +26,10 @@ public class CreateController {
         try {
             root = FXMLLoader.load(getClass().getResource("/client/view/start/Start.fxml"));
         } catch (IOException exc) {
-            System.out.println("Exception thrown while switching to main window from create.");
+            System.out.println("Exception thrown while switching to main window from search.");
             exc.printStackTrace();
         }
-        Stage stage = (Stage) backButton.getScene().getWindow();
+        Stage stage = (Stage) getBackButton.getScene().getWindow();
         stage.setScene(new Scene(root));
     }
 }

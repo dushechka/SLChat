@@ -24,11 +24,11 @@
          <Font name="System Italic" size="14.0" />
       </font></Text>
 
-    <Label text="Login:" textFill="#9c5d5d" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="60.0" text="Login:" textFill="#9c5d5d" GridPane.columnIndex="0" GridPane.rowIndex="2" />
 
     <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-    <Label text="Password:" textFill="#9d5e5e" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="60.0" text="Password:" textFill="#9d5e5e" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 
     <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
 

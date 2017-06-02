@@ -7,32 +7,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import client.view.search.*;
 
+import java.io.IOException;
+
 /**
- * Main menu implementation;
+ * Main menu view;
  */
-public class Start extends Application {
-        @FXML private Button startServer;
-        @FXML private Button searchRoom;
-
-    @FXML
-    protected void handleStartButtonAction(ActionEvent event) {
-        System.out.println("Start button pressed.");
-    }
-
-    @FXML
-    protected void handleSearchButtonAction(ActionEvent event) {
-        Thread searchMenu = new Thread(new Search());
-        searchMenu.start();
-    }
+public class StartView extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
-
-        Scene scene = new Scene(root,280,280);
+        Scene scene = new Scene(root);
 
         stage.setTitle("SLChat");
         stage.setScene(scene);
