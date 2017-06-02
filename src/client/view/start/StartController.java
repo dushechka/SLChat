@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,15 +24,20 @@ public class StartController {
     @FXML
     protected void handleStartButtonAction(ActionEvent event) {
             Parent root = new GridPane();
-            Stage stage;
+            Stage stage = new Stage();
         try {
             root = FXMLLoader.load(getClass().getResource("/server/view/create/Create.fxml"));
         } catch (IOException exc) {
             System.out.println("Exception thrown while switching main window to create window.");
             exc.printStackTrace();
         }
-        stage = (Stage) startButton.getScene().getWindow();
         stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        // Setting this stage to be the new stage owner;
+        stage.initOwner((Stage) startButton.getScene().getWindow());
+        // Make this stage frozen, while new stage is open;
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.show();
     }
 
     //Swithing to search server window;

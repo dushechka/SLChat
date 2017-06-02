@@ -25,6 +25,7 @@ public class StartView extends Application {
 
         stage.setTitle("SLChat");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
