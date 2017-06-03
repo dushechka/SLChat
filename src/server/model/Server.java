@@ -5,18 +5,20 @@ import static java.lang.Thread.*;
 /**
  * Chat's server class;
  */
-public class Server {
+public class Server extends Thread {
         ClientNotifier clientNotifier = null;
         ClientConnector clientConnector = null;
+        private final String roomName;
+        private final String password;
 
-    Server() {
+    public Server(String roomName, String password) {
+        super("SLServer");
+        this.roomName = roomName;
+        this.password = password;
+    }
+
+    public void run() {
         startListening();
-        try {
-            sleep(10000);
-        } catch (InterruptedException ie) {
-            ie.printStackTrace();
-        }
-        close();
     }
 
     // Starts threads, which listens and handles clients connections;
@@ -27,7 +29,7 @@ public class Server {
         clientConnector.start();
     }
 
-    private void close() {
+    public void close() {
         try {
             clientNotifier.die();
             clientConnector.die();
@@ -37,9 +39,5 @@ public class Server {
             System.out.println("Exception thrown while server was closing secondary threads.");
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        new Server();
     }
 }

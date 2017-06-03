@@ -37,6 +37,7 @@ public class StartController {
         stage.initOwner((Stage) startButton.getScene().getWindow());
         // Make this stage frozen, while new stage is open;
         stage.initModality(Modality.WINDOW_MODAL);
+        stage.setTitle("SLChat");
         stage.show();
     }
 
@@ -52,6 +53,7 @@ public class StartController {
             exc.printStackTrace();
         }
         stage = (Stage) searchButton.getScene().getWindow();
+        stage.setTitle("SLChat");
         stage.setScene(new Scene(pane));
     }
 }

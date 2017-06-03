@@ -22,11 +22,11 @@
 
     <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="65.0" text="Room:" textFill="#9c5d5d" GridPane.columnIndex="0" GridPane.rowIndex="2" />
 
-    <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <TextField fx:id="roomName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
     <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="65.0" text="Password:" textFill="#9d5e5e" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 
-    <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <TextField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
     <HBox alignment="BOTTOM_RIGHT" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
         <Button fx:id="openButton" onAction="#handleOpenButtonAction" text="Open room &gt;&gt;" textFill="#0d184a">

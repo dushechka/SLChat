@@ -30,6 +30,7 @@ public class SearchController {
             exc.printStackTrace();
         }
         Stage stage = (Stage) getBackButton.getScene().getWindow();
+        stage.setTitle("SLChat");
         stage.setScene(new Scene(root));
     }
 }
