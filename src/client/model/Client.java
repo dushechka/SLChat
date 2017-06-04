@@ -1,67 +1,60 @@
 package client.model;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.InetAddress;
+import java.net.Socket;
 
-import static java.lang.Thread.*;
-import static server.model.ServerConstants.*;
+import static server.model.ServerConstants.SERVER_FINAL_PORT;
 
 /**
- * Chat's client handling class;
+ * Chat's client backend;
  */
-public class Client {
-    // Multicast packets sender;
-        MulticastInterviewer mi = null;
-    // This socket used to get a datagram packet
-    // from server, which contains it's IP;
-        private DatagramSocket dSocket = null;
-        private DatagramPacket packet = null;
-        private byte[] packetData = null;
+public class Client extends Thread{
     // Socket to establish connection with server;
-        Socket socket = null;
+        private final InetAddress serverAddress;
+    // Determines whether this thread is alive;
+        private boolean IS_RUNNING;
 
-    Client () {
-        establishConnection();
+    public Client(InetAddress serverAddress) {
+        IS_RUNNING = false;
+        this.serverAddress = serverAddress;
     }
 
-    private void establishConnection() {
-        try {
-            mi = new MulticastInterviewer();
-            mi.start();
-            dSocket = new DatagramSocket(CLIENT_PORT);
-            packetData = new byte[8];
-            packet = new DatagramPacket(packetData, packetData.length);
-            dSocket.receive(packet);
-            System.out.println("Server's back packet recieved.");
-            System.out.println("Server's address: " + packet.getAddress());
-            mi.die();
-            socket = new Socket(packet.getAddress(), SERVER_FINAL_PORT);
+    public void run() {
+        IS_RUNNING = true;
+        try (Socket socket = new Socket(serverAddress, SERVER_FINAL_PORT);) {
             System.out.println("Connection established.");
-        } catch (IOException ie) {
-            System.out.println("Exception thrown while client tried to establish connection with server;");
-            ie.printStackTrace();
+            while(IS_RUNNING) {
+            try {
+                sleep(1000);
+                System.out.println("Client is working.");
+            } catch (InterruptedException exc) {
+                exc.printStackTrace();
+            }
+        }
+        } catch (IOException exc) {
+            System.out.println("Exception thrown, while trying to connect to server.");
+            System.out.println("Thread: " + getName());
+            System.out.println("Client couldn't establish connection with server.");
+            exc.printStackTrace();
         } finally {
-            close();
+            System.out.println("Client stopped.");
         }
     }
 
+    public void die() {
+        IS_RUNNING = false;
+        close();
+    }
     private void close() {
-        try {
-            mi.join();
-            if ((dSocket != null) && (!dSocket.isClosed())) {
-                dSocket.close();
-            }
-            if ((socket != null) && (!socket.isClosed())) {
-                socket.close();
-            }
-            System.out.println("Client stoped.");
-        } catch (IOException | InterruptedException e) {
-            System.out.println("Exception thrown while client tied to release resources.");
-            e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) {
-        new Client();
+//        try {
+//            if ((socket != null) && (!socket.isClosed())) {
+//                socket.close();
+//            }
+//    } catch (IOException e) {
+//            System.out.println("Exception thrown while client tied to release resources.");
+//            e.printStackTrace();
+//        }
+        System.out.println("Closing client;");
     }
 }

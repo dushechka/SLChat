@@ -1,12 +1,13 @@
 package client.view.start;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ import java.io.IOException;
 public class StartController {
         @FXML private Button startButton;
         @FXML private Button searchButton;
+        @FXML private TextField enterName;
 
     // Switching to start server window;
     @FXML
@@ -55,5 +57,22 @@ public class StartController {
         stage = (Stage) searchButton.getScene().getWindow();
         stage.setTitle("SLChat");
         stage.setScene(new Scene(pane));
+    }
+
+    @FXML
+    protected void handleEnterNameFieldAction(ActionEvent event) {
+        String name = enterName.getText();
+        enterName.setText("");
+        // Making an alert, that indicates what's going on;
+        if (name.equals("")) {
+            Alert nameAlert = new Alert(Alert.AlertType.INFORMATION);
+            nameAlert.setTitle("Wrong!");
+            nameAlert.setHeaderText(null);
+            nameAlert.setContentText("You must enter something!");
+            nameAlert.showAndWait();
+        } else
+        {
+
+        }
     }
 }

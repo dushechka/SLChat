@@ -9,7 +9,7 @@ import static server.model.ServerConstants.*;
  * Sends Multicast packets in order to
  * find server's IP address;
  */
-public class MulticastInterviewer extends Thread {
+public class Seeker extends Thread {
     // Determines whether this thread is alive;
     private boolean IS_RUNNING;
     // A group for sending broadcast packet;
@@ -19,8 +19,8 @@ public class MulticastInterviewer extends Thread {
     // Broadcast message to identify client;
     private byte[] msg = null;
 
-    MulticastInterviewer() {
-        super("MulticastInterviewer");
+    Seeker() {
+        super("Seeker");
         try {
             group = InetAddress.getByName(GROUP_ADDRESS);
             datagramSocket = new DatagramSocket(CLIENT_MULTICAST_PORT);
@@ -40,7 +40,7 @@ public class MulticastInterviewer extends Thread {
 
     public void run() {
         IS_RUNNING = true;
-        System.out.println("MulticastInterviewer started.");
+        System.out.println("Seeker started.");
         distribute();
     }
 
@@ -71,6 +71,6 @@ public class MulticastInterviewer extends Thread {
         if ((datagramSocket != null) && (!datagramSocket.isClosed())) {
             datagramSocket.close();
         }
-        System.out.println("MulticastInterviewer stoped.");
+        System.out.println("Seeker stoped.");
     }
 }

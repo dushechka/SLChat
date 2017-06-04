@@ -1,5 +1,6 @@
 package server.view.create;
 
+import client.model.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,10 +11,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.SLChat;
 import server.model.Server;
 import static main.SLChat.*;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class CreateController {
     @FXML private Button openButton;
@@ -31,6 +33,7 @@ public class CreateController {
             server.start();
             SLServer = server;
             IS_SERVER_RUNNING = true;
+
             // Opening client GUI;
             Parent root = new GridPane();
             try {
@@ -44,6 +47,17 @@ public class CreateController {
             // Closing secondary window;
             Stage stage = (Stage) openButton.getScene().getWindow();
             stage.close();
+
+            // Starting client;
+            try {
+                SLClient = new Client(InetAddress.getByName("localhost"));
+                IS_CLIENT_RUNNING = true;
+                SLClient.start();
+            } catch (UnknownHostException exc) {
+                System.out.println("Exception thrown, while CreateController attempted to start client.");
+                IS_CLIENT_RUNNING = false;
+                exc.printStackTrace();
+            }
         }
     }
 }
