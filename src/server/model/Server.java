@@ -1,6 +1,6 @@
 package server.model;
 
-import static java.lang.Thread.*;
+import static main.SLChat.*;
 
 /**
  * Chat's server class;
@@ -19,6 +19,7 @@ public class Server extends Thread {
 
     public void run() {
         startListening();
+        IS_SERVER_RUNNING = true;
     }
 
     // Starts threads, which listens and handles clients connections;
@@ -39,5 +40,9 @@ public class Server extends Thread {
             System.out.println("Exception thrown while server was closing secondary threads.");
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        new Server("SRV", "TalkDirtyToMe!");
     }
 }

@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+import static main.SLChat.*;
 import java.io.IOException;
 
 /**
@@ -61,18 +61,23 @@ public class StartController {
 
     @FXML
     protected void handleEnterNameFieldAction(ActionEvent event) {
-        String name = enterName.getText();
+        String serverName = enterName.getText();
         enterName.setText("");
         // Making an alert, that indicates what's going on;
-        if (name.equals("")) {
+        startClient(serverName);
+        // Client might not already started;
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException ie) {}
+        if (!IS_CLIENT_RUNNING) {
             Alert nameAlert = new Alert(Alert.AlertType.INFORMATION);
-            nameAlert.setTitle("Wrong!");
+            nameAlert.setTitle("Wrong.");
             nameAlert.setHeaderText(null);
-            nameAlert.setContentText("You must enter something!");
+            nameAlert.setContentText("Server not found!");
             nameAlert.showAndWait();
-        } else
-        {
-
+        } else {
+            // Opening client GUI;
+            mainView.openChatWindow(clientGUIPath);
         }
     }
 }

@@ -32,7 +32,7 @@ public class IPGetter {
             System.out.println("Server's address: " + packet.getAddress());
             seeker.die();
             // Create new client;
-            client = new Client(packet.getAddress());
+            client = new Client(packet.getAddress().toString());
             System.out.println("Client started.");
         } catch (IOException ie) {
             System.out.println("Exception thrown while client tried to establish connection with server;");

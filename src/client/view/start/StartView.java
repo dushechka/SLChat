@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import static main.SLChat.*;
 
@@ -20,6 +21,7 @@ public class StartView extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        mainView = this;
         primaryStage = stage;
         Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
         Scene scene = new Scene(root);
@@ -69,5 +71,17 @@ public class StartView extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    // Opens client window;
+    public void openChatWindow(String fxmlPath) {
+            Parent root = new GridPane();
+        try {
+            root = FXMLLoader.load(getClass().getResource(fxmlPath));
+        } catch (IOException exc) {
+            System.out.println("Exception thrown while switching to chat window.");
+            exc.printStackTrace();
+        }
+        primaryStage.setScene(new Scene(root));
     }
 }
