@@ -6,6 +6,8 @@ package server.model;
 public class ServerConstants {
         // String, that server is broadcasting to clients for server identification;
                 public final static String SERVER_STRING = "SLChat";
+        // Searching for server in da LAN time has expired message;
+                public final static String TIME_HAS_EXPIRED = "TimeHasExpired";
         // This port is used for client to connect to server;
                 public final static int SERVER_FINAL_PORT = 4488;
         // Broadcast group address;

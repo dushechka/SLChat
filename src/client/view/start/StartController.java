@@ -5,15 +5,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import static main.SLChat.*;
 import java.io.IOException;
-
+import static main.SLChat.*;
 /**
  * Controller that handles main window actions;
  */
@@ -21,6 +20,7 @@ public class StartController {
         @FXML private Button startButton;
         @FXML private Button searchButton;
         @FXML private TextField enterName;
+        @FXML private Text enterSomething;
 
     // Switching to start server window;
     @FXML
@@ -46,38 +46,32 @@ public class StartController {
     //Swithing to search server window;
     @FXML
     protected void handleSearchButtonAction(ActionEvent event) {
-            Parent pane = new GridPane();
-            Stage stage;
-        try {
-            pane = FXMLLoader.load(getClass().getResource("/client/view/search/Search.fxml"));
-        } catch (IOException exc) {
-            System.out.println("Exception thrown while switching from main window to search window.");
-            exc.printStackTrace();
-        }
-        stage = (Stage) searchButton.getScene().getWindow();
-        stage.setTitle("SLChat");
-        stage.setScene(new Scene(pane));
+        mainView.changeWindow("/client/view/search/Search.fxml");
+        System.out.println(getIP());
     }
 
     @FXML
     protected void handleEnterNameFieldAction(ActionEvent event) {
-        String serverName = enterName.getText();
-        enterName.setText("");
-        // Making an alert, that indicates what's going on;
-        startClient(serverName);
-        // Client might not already started;
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException ie) {}
-        if (!IS_CLIENT_RUNNING) {
-            Alert nameAlert = new Alert(Alert.AlertType.INFORMATION);
-            nameAlert.setTitle("Wrong.");
-            nameAlert.setHeaderText(null);
-            nameAlert.setContentText("Server not found!");
-            nameAlert.showAndWait();
+        if (enterName.getText().length() > 32) {
+            mainView.alertWindow("Server name is too long", "Please enter a smaller name.");
+        } else if (enterName.getText().isEmpty()) {
+            enterSomething.setText("Please enter something!");
         } else {
-            // Opening client GUI;
-            mainView.openChatWindow(clientGUIPath);
+            String serverName = enterName.getText();
+            enterName.setText("");
+            // Making an alert, that indicates what's going on;
+            startClient(serverName);
+            // Client might not already started;
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ie) {
+            }
+            if (!IS_CLIENT_RUNNING) {
+                mainView.alertWindow("Wrong", "Server not found!");
+            } else {
+                // Opening client GUI;
+                mainView.changeWindow(clientGUIPath);
+            }
         }
     }
 }

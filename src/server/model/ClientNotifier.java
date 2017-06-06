@@ -18,14 +18,16 @@ public class ClientNotifier extends Thread {
         private InetAddress group = null;
         private DatagramPacket packet = null;
         private byte[] packetData = null;
+        private final String roomName;
 
-    ClientNotifier() {
+    ClientNotifier(String roomName) {
         super("ClientNotifier");
+        this.roomName = roomName;
         try {
             mSocket = new MulticastSocket(SERVER_MULTI_PORT);
             group = InetAddress.getByName(GROUP_ADDRESS);
             mSocket.joinGroup(group);
-            packetData = new byte[8];
+            packetData = new byte[32];
             packet = new DatagramPacket(packetData, packetData.length);
         } catch (IOException exc) {
             System.out.println("Exception thrown while initializing resources in constructor.");
@@ -44,6 +46,7 @@ public class ClientNotifier extends Thread {
                 if (byteToString(packetData).equals(SERVER_STRING)) {
                     System.out.println("Multicast packet recieved from client.");
                     System.out.println("Clients address: " + packet.getAddress());
+                    stringToByte((SERVER_STRING + roomName), packetData);
                     packet = new DatagramPacket(packetData, packetData.length, packet.getAddress(), CLIENT_PORT);
                     mSocket.send(packet);
                     System.out.println("Back datagram packet sent to client;");

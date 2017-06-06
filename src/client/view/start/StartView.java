@@ -74,7 +74,7 @@ public class StartView extends Application {
     }
 
     // Opens client window;
-    public void openChatWindow(String fxmlPath) {
+    public void changeWindow(String fxmlPath) {
             Parent root = new GridPane();
         try {
             root = FXMLLoader.load(getClass().getResource(fxmlPath));
@@ -83,5 +83,13 @@ public class StartView extends Application {
             exc.printStackTrace();
         }
         primaryStage.setScene(new Scene(root));
+    }
+
+    public void alertWindow(String title, String content) {
+        Alert nameAlert = new Alert(Alert.AlertType.INFORMATION);
+        nameAlert.setTitle(title);
+        nameAlert.setHeaderText(null);
+        nameAlert.setContentText(content);
+        nameAlert.showAndWait();
     }
 }

@@ -24,7 +24,7 @@ public class Server extends Thread {
 
     // Starts threads, which listens and handles clients connections;
     private void startListening() {
-        clientNotifier = new ClientNotifier();
+        clientNotifier = new ClientNotifier(roomName);
         clientConnector = new ClientConnector();
         clientNotifier.start();
         clientConnector.start();

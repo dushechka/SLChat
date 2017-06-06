@@ -17,16 +17,18 @@ public class CreateController {
 
     @FXML
     protected void handleOpenButtonAction(ActionEvent event) {
-        if (roomName.getText() == null || roomName.getText().isEmpty()) {
+        if (roomName.getText().isEmpty()) {
             errorLine.setText("Please enter your room name!");
+        } else if (roomName.getText().length() > 26) {
+            errorLine.setText("Room name is too long!");
         } else {
             // Starting server;
-            Server server = new Server(roomName.getText(), password.getText());
+            Server server = new Server(roomName.getText().trim(), password.getText().trim());
             server.start();
             SLServer = server;
 
             // Opening client GUI;
-            mainView.openChatWindow(clientGUIPath);
+            mainView.changeWindow(clientGUIPath);
             // Closing secondary window;
             Stage stage = (Stage) openButton.getScene().getWindow();
             stage.close();
