@@ -5,11 +5,12 @@ import client.model.Seeker;
 import client.view.start.StartView;
 import javafx.stage.Stage;
 import server.model.Server;
-import static server.model.ServerConstants.*;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import client.view.search.SearchController;
+
+import static server.model.ServerConstants.*;
 
 /**
  * Main entrance to the whole programm;

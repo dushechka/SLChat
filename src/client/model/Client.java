@@ -3,10 +3,8 @@ package client.model;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
-import static main.SLChat.*;
-
+import static main.SLChat.IS_CLIENT_RUNNING;
 import static server.model.ServerConstants.SERVER_FINAL_PORT;
 
 /**
