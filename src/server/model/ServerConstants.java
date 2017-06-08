@@ -1,5 +1,10 @@
 package server.model;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+
 /**
  * Contains program final fields and methods;
  */
@@ -41,4 +46,33 @@ public class ServerConstants {
                 String output = new String(sb);
                 return output;
         }
+
+
+    private static void print (String str, boolean isSub) {
+        if (isSub) System.out.print("\t");
+        System.out.println(str);
+    }
+
+    private static void getNicInfo(NetworkInterface nic, boolean isSub) {
+        if (isSub) System.out.print("\t");
+        print(nic.getName(), isSub);
+        Enumeration<InetAddress> nicAddresses = nic.getInetAddresses();
+        while (nicAddresses.hasMoreElements()) {
+            print(("\t" + nicAddresses.nextElement()), isSub);
+        }
+    }
+
+    private static void getNicInfo(Enumeration<NetworkInterface> nics, boolean isSub) throws SocketException {
+        while (nics.hasMoreElements()) {
+            NetworkInterface nic = nics.nextElement();
+            if (nic.isUp()) {
+                // If nic is subinterface (virtual), then print tab;
+                getNicInfo(nic, isSub);
+                Enumeration<NetworkInterface> subNics = nic.getSubInterfaces();
+                if (subNics.hasMoreElements()) {
+                    getNicInfo(subNics, true);
+                }
+            }
+        }
+    }
 }

@@ -15,6 +15,8 @@ public class Seeker extends Thread {
     // A group for sending broadcast packet;
     private InetAddress group = null;
     private DatagramPacket datagramPacket = null;
+    // Interface's address, from which send packets;
+    private InetAddress socketAddress = null;
     // Broadcast message to identify client;
     private byte[] msg = null;
 
@@ -25,8 +27,9 @@ public class Seeker extends Thread {
             msg = new byte[SERVER_STRING.length()];
             stringToByte(SERVER_STRING, msg);
             datagramPacket = new DatagramPacket(msg, msg.length, group, SERVER_MULTI_PORT);
-        } catch (UnknownHostException e) {
-            System.out.println("Exception thrown while trying to achieve multicast group.");
+            socketAddress = getInterface();
+        } catch (UnknownHostException | SocketException e) {
+            System.out.println("Exception thrown while trying to achieve multicast group and IF address.");
             System.out.println("Thread " + getName());
             e.printStackTrace();
         }
@@ -37,17 +40,18 @@ public class Seeker extends Thread {
         IS_RUNNING = true;
         System.out.println("Seeker started.");
         // Sends multicast packet's on LAN;
-        try (DatagramSocket datagramSocket = new DatagramSocket(CLIENT_MULTICAST_PORT);){
+        try (DatagramSocket datagramSocket = new DatagramSocket(CLIENT_MULTICAST_PORT, socketAddress);){
             while(IS_RUNNING) {
                 i++;
                 // Sending broadcast packet;
                 datagramSocket.send(datagramPacket);
+                System.out.println("Packet send from: " + socketAddress);
                 sleep(1000);
                 // Stop if server's not responding;
                 if (i == 5) {
                     msg = new byte[TIME_HAS_EXPIRED.length()];
                     stringToByte(TIME_HAS_EXPIRED, msg);
-                    datagramPacket = new DatagramPacket(msg, msg.length, InetAddress.getByName("localhost"), CLIENT_PORT);
+                    datagramPacket = new DatagramPacket(msg, msg.length, socketAddress, CLIENT_PORT);
                     datagramSocket.send(datagramPacket);
                     break;
                 }
@@ -64,5 +68,12 @@ public class Seeker extends Thread {
     // Killing this thread;
     public void die() {
         IS_RUNNING = false;
+    }
+
+    // Get interface address, from which send packets;
+    public static InetAddress getInterface() throws SocketException {
+        NetworkInterface nif = NetworkInterface.getByName("eth3");
+        InetAddress socketAddress = nif.getInetAddresses().nextElement();
+        return socketAddress;
     }
 }

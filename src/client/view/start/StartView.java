@@ -73,7 +73,7 @@ public class StartView extends Application {
         stage.show();
     }
 
-    // Opens client window;
+    // Change scene;
     public void changeWindow(String fxmlPath) {
             Parent root = new GridPane();
         try {

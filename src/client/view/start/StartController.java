@@ -47,7 +47,7 @@ public class StartController {
     @FXML
     protected void handleSearchButtonAction(ActionEvent event) {
         mainView.changeWindow("/client/view/search/Search.fxml");
-        System.out.println(getIP());
+        startClient(getIP());
     }
 
     @FXML

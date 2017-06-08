@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SLChat:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SLChat_jar</output-path>
+    <root id="archive" name="SLChat.jar">
+      <element id="module-output" name="SLChat" />
+    </root>
+  </artifact>
+</component>
