@@ -19,24 +19,40 @@ import java.util.Optional;
  */
 public class StartView extends Application {
 
+    /**
+     * Creates main window and saves itself
+     * in static {@link main.SLChat#mainView} field.
+     * Also creates and saves primary stage for
+     * whole program in {@link main.SLChat#primaryStage}.
+     * Further, loads main window content and sets
+     * onClose operation for main window to close
+     * client and determine with users respond, whether
+     * it should stop server on exit.
+     *
+     * @param stage  main javafx stage instance
+     * @throws IOException  when FXMLLoader can't find
+     *                      .fxml file with root <b>Pane</b>
+     */
     @Override
     public void start(Stage stage) throws IOException {
+        /* Setting static field that all classes can invoke it. */
         mainView = this;
+        /* Setting this field too. */
         primaryStage = stage;
         Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
         Scene scene = new Scene(root);
 
-        // What to do, when closing program?
+        /* What to do, when closing program? */
         stage.setOnCloseRequest(e -> {
             if (!IS_SERVER_RUNNING) {
                 primaryStage.hide();
             }
             try {
-                // Killing client on exit;
+                /* Killing client on exit. */
                 if (IS_CLIENT_RUNNING) {
                     SLClient.die();
                 }
-                // Killing server on exit?;
+                /* Killing server on exit? */
                 if (IS_SERVER_RUNNING) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     ObservableList<ButtonType> buttonTypes = alert.getButtonTypes();
@@ -46,16 +62,11 @@ public class StartView extends Application {
                     alert.setContentText("Do you want to close it?");
                     Optional<ButtonType> result = alert.showAndWait();
                     primaryStage.hide();
-                    // If choosed to stop server;
+                    /* If choosed to stop server */
                     if (result.get() == ButtonType.YES) {
                         SLServer.close();
                         SLServer.join();
                         System.out.println("SLServer stopped.");
-//                        Alert serverClosed = new Alert(Alert.AlertType.INFORMATION);
-//                        serverClosed.setTitle("Exiting");
-//                        serverClosed.setHeaderText(null);
-//                        serverClosed.setContentText("Your SLChat room has been closed.");
-//                        serverClosed.showAndWait();
                     }
                 }
                 if (SLClient != null && SLClient.isAlive()) {
@@ -66,14 +77,23 @@ public class StartView extends Application {
                 ie.printStackTrace();
             }
         });
-
+        /* Creating and showing main menu window. */
         stage.setTitle("SLChat");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
     }
 
-    // Change scene;
+    /**
+     * Changes scene on window.
+     * <p>
+     *     Invoked from other view classes,
+     *     which needs to change scene at
+     *     {@link main.SLChat#mainView}.
+     *
+     * @param fxmlPath  a path to .fxml file,
+     *                  containing root <b>Pane</b>
+     */
     public void changeWindow(String fxmlPath) {
             Parent root = new GridPane();
         try {
@@ -85,6 +105,12 @@ public class StartView extends Application {
         primaryStage.setScene(new Scene(root));
     }
 
+    /**
+     * Displays alert window.
+     *
+     * @param title    title of an alert window
+     * @param content  a window to be displayed
+     */
     public void alertWindow(String title, String content) {
         Alert nameAlert = new Alert(Alert.AlertType.INFORMATION);
         nameAlert.setTitle(title);

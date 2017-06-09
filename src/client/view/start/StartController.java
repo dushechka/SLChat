@@ -15,14 +15,23 @@ import java.io.IOException;
 import static main.SLChat.*;
 /**
  * Controller that handles main window actions;
+ *
+ * @since 0.3
  */
 public class StartController {
         @FXML private Button startButton;
         @FXML private Button searchButton;
         @FXML private TextField enterName;
+        /* Text, intended to warn user, if he/she entered wrong values. */
         @FXML private Text enterSomething;
 
-    // Switching to start server window;
+    /**
+     * Opens new window for
+     * server creation, handled by
+     * {@link server.view.create.CreateController}.
+     *
+     * @param event  User pressed this button.
+     */
     @FXML
     protected void handleStartButtonAction(ActionEvent event) {
             Parent root = new GridPane();
@@ -35,21 +44,36 @@ public class StartController {
         }
         stage.setScene(new Scene(root));
         stage.setResizable(false);
-        // Setting this stage to be the new stage owner;
+        /** Setting this stage to be the new stage owner */
         stage.initOwner((Stage) startButton.getScene().getWindow());
-        // Make this stage frozen, while new stage is open;
+        /** Make this stage frozen, while new stage is open */
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setTitle("SLChat");
         stage.show();
     }
 
-    //Swithing to search server window;
+    /**
+     * Swithes to search server window, handled by
+     * {@link client.view.search.SearchController}.
+     */
     @FXML
     protected void handleSearchButtonAction(ActionEvent event) {
         mainView.changeWindow("/client/view/search/Search.fxml");
         startClient(getIP());
     }
 
+    /**
+     * Searches for server on address,
+     * gained from users input.
+     * <p>
+     * If found one, runs client backend
+     * ({@link client.model.Client})
+     * and switches window to chat
+     * window, contained in
+     * {@link main.SLChat#clientGUIPath}.
+     *
+     * @param event  User pressed enter in this window.
+     */
     @FXML
     protected void handleEnterNameFieldAction(ActionEvent event) {
         if (enterName.getText().length() > 32) {
@@ -59,17 +83,24 @@ public class StartController {
         } else {
             String serverName = enterName.getText();
             enterName.setText("");
-            // Making an alert, that indicates what's going on;
+
+            /*
+             * Attampting to start client with
+             * gained server address. If failed
+             * to start, {@link client.model.Client}
+             * will throw and handle an exception.
+             */
             startClient(serverName);
-            // Client might not already started;
+            /* Client might not already started. */
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ie) {
             }
+            /* If client could not start, assume that address is wrong. */
             if (!IS_CLIENT_RUNNING) {
                 mainView.alertWindow("Wrong", "Server not found!");
             } else {
-                // Opening client GUI;
+                /* Switchin to client GUI. */
                 mainView.changeWindow(clientGUIPath);
             }
         }
