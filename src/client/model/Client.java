@@ -8,12 +8,12 @@ import static main.SLChat.IS_CLIENT_RUNNING;
 import static server.model.ServerConstants.SERVER_FINAL_PORT;
 
 /**
- * Chat's client backend;
+ * Chat's client backend.
  */
 public class Client extends Thread {
-    // Socket to establish connection with server;
+    /* Server's address to establish connection with. */
     private final String serverAddress;
-    // Determines whether this thread is alive;
+    // Determines when to stop this thread. */
     private boolean IS_RUNNING;
 
     public Client(String serverAddress) {
@@ -23,7 +23,14 @@ public class Client extends Thread {
         this.serverAddress = serverAddress;
     }
 
+    /**
+     * Establishes connection with
+     * server, until signal to stop
+     * is received from outside by
+     * invoking {@link #die()}.
+     */
     public void run() {
+        /* Establishing connection with server */
         try (Socket socket = new Socket(InetAddress.getByName(serverAddress), SERVER_FINAL_PORT);) {
             IS_RUNNING = true;
             IS_CLIENT_RUNNING = true;
@@ -49,14 +56,6 @@ public class Client extends Thread {
     }
 
     private void close() {
-//        try {
-//            if ((socket != null) && (!socket.isClosed())) {
-//                socket.close();
-//            }
-//    } catch (IOException e) {
-//            System.out.println("Exception thrown while client tied to release resources.");
-//            e.printStackTrace();
-//        }
         System.out.println("Closing client;");
     }
 }

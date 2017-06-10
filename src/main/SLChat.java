@@ -80,6 +80,12 @@ public class SLChat {
     /**
      * Searches for server's IP on LAN.
      * <p>
+     * Starts {@link client.model.Seeker}
+     * and then waits for response from
+     * server with datagram, from which
+     * it retrieves server's address and
+     * room name ({@link server.model.Server#roomName})
+     * field.
      *
      * @return  A String, which contains
      *          concatenated server's message and IP

@@ -6,20 +6,30 @@ import java.io.IOException;
 import java.net.*;
 
 /**
- * Recieves multicast packets from client and then sends
- * datagram packet back in order for client to know server's address;
+ * Notifies client about server's
+ * presence on LAN.
+ * <p>
+ * Receives multicast packets
+ * from client and then sends
+ * datagram packet back in order
+ * for client to know server's address;
  */
 public class ClientNotifier extends Thread {
-        // Determines whether this thread is alive;
+        /* Determines when to stop this thread. */
         private boolean IS_RUNNING;
-        // Socket which, recieves clients multicast packet;
+        /* Socket which, recieves clients multicast packet. */
         private MulticastSocket mSocket = null;
-        // Multicast group in which client sends packets;
+        /* Multicast group in which client sends packets. */
         private InetAddress group = null;
         private DatagramPacket packet = null;
         private byte[] packetData = null;
         private final String roomName;
 
+    /**
+     *
+     * @param roomName  The name of server's room, which
+     *                  is represented to client.
+     */
     ClientNotifier(String roomName) {
         super("ClientNotifier");
         this.roomName = roomName;
@@ -41,13 +51,15 @@ public class ClientNotifier extends Thread {
         System.out.println("ClientNotifier started.");
         try {
             while(IS_RUNNING) {
+                /* Receiving multicast packets from clients. */
                 mSocket.receive(packet);
-                // Recieving multicast packet from clients;
                 if (byteToString(packetData).equals(SERVER_STRING)) {
                     System.out.println("Multicast packet recieved from client.");
                     System.out.println("Clients address: " + packet.getAddress());
+                    /* Making a packet, containing room name and server address info */
                     stringToByte((SERVER_STRING + roomName), packetData);
                     packet = new DatagramPacket(packetData, packetData.length, packet.getAddress(), CLIENT_PORT);
+                    /* Sending packet to corresponding client's method (main.SLChat#getIP()). */
                     mSocket.send(packet);
                     System.out.println("Back datagram packet sent to client;");
                 } else {
@@ -66,10 +78,10 @@ public class ClientNotifier extends Thread {
         }
     }
 
-    // Killing this thread;
+    /* Killing this thread */
     void die() {
         IS_RUNNING = false;
-        // Sending dummy packet to overcome while cycle in method run();
+        /* Sending dummy packet to overcome "while" cycle in method run() */
         System.out.println("Stopping ClientNotifier;");
         try ( DatagramSocket dummySocket = new DatagramSocket(4455); ) {
             DatagramPacket dummyPacket = new DatagramPacket(packetData, packetData.length,
@@ -82,6 +94,7 @@ public class ClientNotifier extends Thread {
         }
     }
 
+    /* Releasing used resources */
     private void close() {
         if ((mSocket != null) && (!mSocket.isClosed())) {
             this.mSocket.close();

@@ -14,7 +14,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Search server menu controller;
+ * Controller, responsible for
+ * users searching for server
+ * operations.
+ * <p>
+ *
+ *
  */
 public class SearchController {
         @FXML private Button getBackButton;

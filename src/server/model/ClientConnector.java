@@ -5,13 +5,15 @@ import java.net.*;
 import static server.model.ServerConstants.*;
 
 /**
- * Listens for incoming client connections
- * and pass them to ClientHandler;
+ * Listens for incoming client
+ * connections and pass them to
+ * ClientHandler if connection
+ * was established.
  */
 public class ClientConnector extends Thread {
-    // Tracking server state value. Shuts this tread when set to false;
+    /* Determines, when to stop this thread */
     private boolean IS_RUNNING;
-    // A server socket for establishing final connection with client;
+    /* A server socket for establishing final connection with client */
     private ServerSocket serverSocket = null;
 
     ClientConnector() {
@@ -30,6 +32,7 @@ public class ClientConnector extends Thread {
         System.out.println("ClientConnector started.");
         try {
             while (IS_RUNNING) {
+                /* Establishing connection with client. */
                 serverSocket.accept();
                 System.out.println("Client connected.");
             }
@@ -40,11 +43,13 @@ public class ClientConnector extends Thread {
         close();
     }
 
-    // Killing this thread;
+    /**
+     * Kills this thread.
+     */
     void die() {
         IS_RUNNING = false;
         try ( Socket dummy = new Socket("localhost", SERVER_FINAL_PORT); ) {
-            // Socket made to overcome while cycle in run() method;
+            /* Socket made to overcome "while" cycle in run() method */
         } catch (IOException e) {
             System.out.println("Exception thrown while trying to kill thread.");
             System.out.println("Thread " + getName());
@@ -52,7 +57,9 @@ public class ClientConnector extends Thread {
         }
     }
 
-    // Release used resources;
+    /**
+     * Releases used resources.
+     */
     private void close() {
         try {
             if ((serverSocket != null) && (!serverSocket.isClosed())) {

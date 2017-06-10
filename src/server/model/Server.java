@@ -3,7 +3,10 @@ package server.model;
 import static main.SLChat.*;
 
 /**
- * Chat's server class;
+ * Chat's server class.
+ * <p>
+ * Handles all server's
+ * backend functional.
  */
 public class Server extends Thread {
         ClientNotifier clientNotifier = null;
@@ -22,7 +25,15 @@ public class Server extends Thread {
         IS_SERVER_RUNNING = true;
     }
 
-    // Starts threads, which listens and handles clients connections;
+    /**
+     * Starts threads, which notify
+     * clients about server's presence,
+     * connect clients and handle those
+     * connections.
+     *
+     * @see {@link server.model.ClientNotifier}
+     * @see {@link server.model.ClientConnector}
+     */
     private void startListening() {
         clientNotifier = new ClientNotifier(roomName);
         clientConnector = new ClientConnector();
@@ -30,6 +41,10 @@ public class Server extends Thread {
         clientConnector.start();
     }
 
+    /**
+     * Closes ancillary threads
+     * and waits, until they close.
+     */
     public void close() {
         try {
             clientNotifier.die();
@@ -40,9 +55,5 @@ public class Server extends Thread {
             System.out.println("Exception thrown while server was closing secondary threads.");
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        new Server("SRV", "TalkDirtyToMe!");
     }
 }

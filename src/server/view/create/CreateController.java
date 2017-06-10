@@ -10,26 +10,53 @@ import server.model.Server;
 import static main.SLChat.*;
 
 public class CreateController {
-    @FXML private Button openButton;
-    @FXML private Text errorLine;
-    @FXML private TextField roomName;
-    @FXML private TextField password;
+    /* Invokes creation process */
+        @FXML private Button openButton;
+    /* Shows up if text fields were not filled properly */
+        @FXML private Text errorLine;
+    /* Field for input a room name of server to be created */
+        @FXML private TextField roomName;
+    /* Field for server's password, which is used to authenticate users */
+        @FXML private TextField password;
 
+    /**
+     * Starts server backend thread
+     * {@link server.model.Server}.
+     * <p>
+     * Takes data, entered by user
+     * in fields {@link #roomName}
+     * and {@link #password}, then
+     * starts server backend thread
+     * {@link server.model.Server}
+     * if entered data is correct.
+     *
+     * @param event  User hits openButton.
+     */
     @FXML
     protected void handleOpenButtonAction(ActionEvent event) {
         if (roomName.getText().isEmpty()) {
             errorLine.setText("Please enter your room name!");
+        /* Server name needs to be not more
+         * than 26 symbols, so it can fit in
+         * server's packet message (array of
+         * byte with length of 32).
+         */
         } else if (roomName.getText().length() > 26) {
             errorLine.setText("Room name is too long!");
         } else {
-            // Starting server;
+            /* starting server */
             Server server = new Server(roomName.getText().trim(), password.getText().trim());
             server.start();
+
+            /* Saving server's thread link
+             * in public static field to
+             * gain access anytime it needs.
+             */
             SLServer = server;
 
-            // Opening client GUI;
+            /* opening client GUI */
             mainView.changeWindow(clientGUIPath);
-            // Closing secondary window;
+            /* closing secondary window */
             Stage stage = (Stage) openButton.getScene().getWindow();
             stage.close();
             startClient("localhost");

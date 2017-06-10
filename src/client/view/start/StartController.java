@@ -16,6 +16,9 @@ import static main.SLChat.*;
 /**
  * Controller that handles main window actions;
  *
+ * Serves for changing frontend windows and
+ * running backend threads when needed.
+ *
  * @since 0.3
  */
 public class StartController {
