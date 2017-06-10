@@ -106,7 +106,7 @@ public class SLChat {
         * server's back packet and extracts server's
         * IP and message from it.
         */
-        try (DatagramSocket dSocket = new DatagramSocket(CLIENT_PORT, Seeker.getInterface());) {
+        try (DatagramSocket dSocket = new DatagramSocket(CLIENT_PORT, getInterface("eth3"));) {
             //Getting server's IP;
             seeker = new Seeker();
             seeker.start();

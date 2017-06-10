@@ -21,6 +21,8 @@ public class ClientNotifier extends Thread {
         private MulticastSocket mSocket = null;
         /* Multicast group in which client sends packets. */
         private InetAddress group = null;
+        /* A system interface, from which to receive and send packets */
+        private NetworkInterface networkInterface = null;
         private DatagramPacket packet = null;
         private byte[] packetData = null;
         private final String roomName;
@@ -34,7 +36,9 @@ public class ClientNotifier extends Thread {
         super("ClientNotifier");
         this.roomName = roomName;
         try {
-            mSocket = new MulticastSocket(SERVER_MULTI_PORT);
+            System.out.println("Starting ClientNotifier");
+            System.out.println("IP address is: " + getInterface("eth3"));
+            mSocket = new MulticastSocket(new InetSocketAddress(getInterface("eth3"), SERVER_MULTI_PORT));
             group = InetAddress.getByName(GROUP_ADDRESS);
             mSocket.joinGroup(group);
             packetData = new byte[32];

@@ -20,6 +20,7 @@ import java.util.Enumeration;
  * @see #GROUP_ADDRESS
  * @see #byteToString(byte[])
  * @see #stringToByte(String, byte[])
+ * @see #getInterface(String)
  */
 public class ServerConstants {
         /* String, that Seeker and ClientNotifier (client's and
@@ -143,5 +144,22 @@ public class ServerConstants {
                 }
             }
         }
+    }
+
+    /**
+     * Gets interface address, from
+     * which to send packets.
+     *
+     * @param iName  The name of interface for
+     *               which to get IP-address.
+     * @return  {@link InetAddress} from
+     *          which to send packets.
+     * @throws SocketException  When cannot get
+     *                          address by name.
+     */
+    public static InetAddress getInterface(String iName) throws SocketException {
+        NetworkInterface nif = NetworkInterface.getByName("eth3");
+        InetAddress socketAddress = nif.getInetAddresses().nextElement();
+        return socketAddress;
     }
 }

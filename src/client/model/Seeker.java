@@ -27,7 +27,7 @@ public class Seeker extends Thread {
             msg = new byte[SERVER_STRING.length()];
             stringToByte(SERVER_STRING, msg);
             datagramPacket = new DatagramPacket(msg, msg.length, group, SERVER_MULTI_PORT);
-            socketAddress = getInterface();
+            socketAddress = getInterface("eth3");
         } catch (UnknownHostException | SocketException e) {
             System.out.println("Exception thrown while trying to achieve multicast group and IF address.");
             System.out.println("Thread " + getName());
@@ -74,21 +74,6 @@ public class Seeker extends Thread {
         } finally {
             System.out.println("Seeker stopped.");
         }
-    }
-
-    /**
-     * Gets interface address, from
-     * which to send packets.
-     *
-     * @return  {@link InetAddress} from
-     *          which to send packets.
-     * @throws SocketException  When cannot get
-     *                          address by name.
-     */
-    public static InetAddress getInterface() throws SocketException {
-        NetworkInterface nif = NetworkInterface.getByName("eth3");
-        InetAddress socketAddress = nif.getInetAddresses().nextElement();
-        return socketAddress;
     }
 
     /**
