@@ -64,7 +64,7 @@ public class CreateController {
             Stage stage = (Stage) openButton.getScene().getWindow();
             stage.close();
             try {
-                startClient(getInterface("eth3").toString(), "");
+                startClient(getInterface("eth3"), "");
             } catch (SocketException se) {
                 se.printStackTrace();
             }

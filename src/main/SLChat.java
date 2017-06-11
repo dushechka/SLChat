@@ -73,7 +73,7 @@ public class SLChat {
      * @param   serverAddress
      *          a string with found server's IPv4 address
      */
-    public static void startClient(String serverAddress, String roomName) {
+    public static void startClient(InetAddress serverAddress, String roomName) {
         SLClient = new Client(serverAddress, roomName);
         SLClient.start();
     }
@@ -119,9 +119,9 @@ public class SLChat {
             msg = byteToString(packetData);
             if (msg.contains(SERVER_STRING)) {
                 System.out.println("Room name is: " + msg.substring(6));
-                startClient(packet.getAddress().toString(), msg.substring(6));
+                startClient(packet.getAddress(), msg.substring(6));
             } else {
-                System.out.println("Server hadn't responsed for given time (5 sec).");
+                System.out.println("Server hadn't responsed for given time (3 sec).");
             }
         } catch (IOException ie) {
             System.out.println("Exception thrown while trying to find server.;");

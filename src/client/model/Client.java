@@ -17,9 +17,9 @@ public class Client extends Thread {
     /* room name */
     private String roomName = null;
     /* server's IP address */
-    private String serverAddress = null;
+    private InetAddress serverAddress = null;
 
-    public Client(String serverAddress, String roomName) {
+    public Client(InetAddress serverAddress, String roomName) {
         super("SLClient");
         IS_RUNNING = false;
         IS_CLIENT_RUNNING = false;
@@ -36,7 +36,7 @@ public class Client extends Thread {
     public void run() {
         /* Establishing connection with server */
         System.out.println("Server address is: " + serverAddress);
-        try (Socket socket = new Socket(InetAddress.getByName(serverAddress), SERVER_FINAL_PORT);) {
+        try (Socket socket = new Socket(serverAddress, SERVER_FINAL_PORT);) {
             IS_RUNNING = true;
             IS_CLIENT_RUNNING = true;
             System.out.println("Connection established.");

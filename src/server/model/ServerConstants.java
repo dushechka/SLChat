@@ -158,7 +158,7 @@ public class ServerConstants {
      *                          address by name.
      */
     public static InetAddress getInterface(String iName) throws SocketException {
-        NetworkInterface nif = NetworkInterface.getByName("eth3");
+        NetworkInterface nif = NetworkInterface.getByName(iName);
         System.out.println("Does interface support multicasting: " + nif.supportsMulticast());
         InetAddress socketAddress = nif.getInetAddresses().nextElement();
         return socketAddress;

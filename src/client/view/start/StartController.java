@@ -87,28 +87,20 @@ public class StartController {
         } else if (enterName.getText().isEmpty()) {
             enterSomething.setText("Please enter something!");
         } else {
-            String serverName = enterName.getText();
-            enterName.setText("");
-
-            /*
-             * Attampting to start client with
-             * gained server address. If failed
-             * to start, {@link client.model.Client}
-             * will throw and handle an exception.
-             */
             try {
-                startClient(serverName, "");
-                /* Client might not already started. */
-                Thread.sleep(1000);
-            } catch (InterruptedException exc) {
-                exc.printStackTrace();
-            }
-            /* If client could not start, assume that address is wrong. */
-            if (!IS_CLIENT_RUNNING) {
-                mainView.alertWindow("Wrong", "Server not found!");
-            } else {
+                enterName.setText("");
+                /*
+                 * Attampting to start client with
+                 * gained server address. If failed
+                 * to start, {@link client.model.Client}
+                 * will throw and handle an exception.
+                 */
+                startClient(InetAddress.getByName(enterName.getText()), "localhost");
                 /* Switchin to client GUI. */
                 mainView.changeWindow(clientGUIPath);
+            } catch (UnknownHostException exc) {
+                exc.printStackTrace();
+                mainView.alertWindow("Wrong", "Server not found!");
             }
         }
     }
