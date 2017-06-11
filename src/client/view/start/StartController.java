@@ -12,6 +12,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import static main.SLChat.*;
 /**
  * Controller that handles main window actions;
@@ -47,7 +50,7 @@ public class StartController {
         }
         stage.setScene(new Scene(root));
         stage.setResizable(false);
-        /** Setting this stage to be the new stage owner */
+        /** Setting new stage to be the stage owner */
         stage.initOwner((Stage) startButton.getScene().getWindow());
         /** Make this stage frozen, while new stage is open */
         stage.initModality(Modality.WINDOW_MODAL);
@@ -62,7 +65,7 @@ public class StartController {
     @FXML
     protected void handleSearchButtonAction(ActionEvent event) {
         mainView.changeWindow("/client/view/search/Search.fxml");
-        startClient(getIP());
+        getIP();
     }
 
     /**
@@ -93,11 +96,12 @@ public class StartController {
              * to start, {@link client.model.Client}
              * will throw and handle an exception.
              */
-            startClient(serverName);
-            /* Client might not already started. */
             try {
-                Thread.sleep(100);
-            } catch (InterruptedException ie) {
+                startClient(serverName, "");
+                /* Client might not already started. */
+                Thread.sleep(1000);
+            } catch (InterruptedException exc) {
+                exc.printStackTrace();
             }
             /* If client could not start, assume that address is wrong. */
             if (!IS_CLIENT_RUNNING) {

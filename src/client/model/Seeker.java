@@ -6,15 +6,19 @@ import java.net.*;
 import static server.model.ServerConstants.*;
 
 /**
- * Sends Multicast packets in order to
- * find server's IP address;
+ * Sends Multicast packets to
+ * specific multicast group
+ * so, the server could recognize,
+ * at which IP the client is located.
+ *
+ * @see server.model.ServerConstants#GROUP_ADDRESS
  */
 public class Seeker extends Thread {
     /* Determines when to stop this thread. */
     private boolean IS_RUNNING;
     private InetAddress group = null;
     private DatagramPacket datagramPacket = null;
-    /* Interface's address, from which to send packets. */
+    /* Interface address, from which to send packets. */
     private InetAddress socketAddress = null;
     /* Broadcast message to identify client. */
     private byte[] msg = null;
@@ -22,21 +26,23 @@ public class Seeker extends Thread {
     public Seeker() {
         super("Seeker");
         try {
-            /* Getting multicast gtoup's IP-address */
+            /* Getting multicast group IP address */
             group = InetAddress.getByName(GROUP_ADDRESS);
             msg = new byte[SERVER_STRING.length()];
             stringToByte(SERVER_STRING, msg);
             datagramPacket = new DatagramPacket(msg, msg.length, group, SERVER_MULTI_PORT);
             socketAddress = getInterface("eth3");
-        } catch (UnknownHostException | SocketException e) {
+        } catch (UnknownHostException e) {
             System.out.println("Exception thrown while trying to achieve multicast group and IF address.");
             System.out.println("Thread " + getName());
             e.printStackTrace();
+        } catch (SocketException exc) {
+            exc.printStackTrace();
         }
     }
 
     /**
-     * Sending multicast packets on LAN
+     * Sends multicast packets on LAN
      * in order to find server.
      * <p>
      * Starts sending multicast packets
@@ -52,13 +58,14 @@ public class Seeker extends Thread {
         System.out.println("Seeker started.");
         /* Sending multicast packet's on LAN */
         try (DatagramSocket datagramSocket = new DatagramSocket(CLIENT_MULTICAST_PORT, socketAddress)){
+//        try (DatagramSocket datagramSocket = new DatagramSocket(CLIENT_MULTICAST_PORT)) {
             while(IS_RUNNING) {
                 i++;
                 /* Sending broadcast packet */
                 datagramSocket.send(datagramPacket);
                 System.out.println("Packet send from: " + socketAddress);
                 sleep(1000);
-                /* Stop if server's not responding */
+                /* stop if server's not responding */
                 if (i == 3) {
                     msg = new byte[TIME_HAS_EXPIRED.length()];
                     stringToByte(TIME_HAS_EXPIRED, msg);

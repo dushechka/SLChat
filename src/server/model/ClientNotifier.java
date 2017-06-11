@@ -21,11 +21,12 @@ public class ClientNotifier extends Thread {
         private MulticastSocket mSocket = null;
         /* Multicast group in which client sends packets. */
         private InetAddress group = null;
-        /* A system interface, from which to receive and send packets */
-        private NetworkInterface networkInterface = null;
         private DatagramPacket packet = null;
         private byte[] packetData = null;
         private final String roomName;
+        /* An interface's IP address, from which
+           to listen and send packets. */
+        private InetAddress inetAddress = null;
 
     /**
      *
@@ -37,12 +38,11 @@ public class ClientNotifier extends Thread {
         this.roomName = roomName;
         try {
             System.out.println("Starting ClientNotifier");
-            System.out.println("IP address is: " + getInterface("eth3"));
-            mSocket = new MulticastSocket(new InetSocketAddress(getInterface("eth3"), SERVER_MULTI_PORT));
+            inetAddress = getInterface("eth3");
+            mSocket = new MulticastSocket(new InetSocketAddress(inetAddress, SERVER_MULTI_PORT));
+//            mSocket = new MulticastSocket(SERVER_MULTI_PORT);
             group = InetAddress.getByName(GROUP_ADDRESS);
             mSocket.joinGroup(group);
-            packetData = new byte[32];
-            packet = new DatagramPacket(packetData, packetData.length);
         } catch (IOException exc) {
             System.out.println("Exception thrown while initializing resources in constructor.");
             System.out.println("Thread " + getName());
@@ -56,7 +56,10 @@ public class ClientNotifier extends Thread {
         try {
             while(IS_RUNNING) {
                 /* Receiving multicast packets from clients. */
+                packetData = new byte[32];
+                packet = new DatagramPacket(packetData, packetData.length);
                 mSocket.receive(packet);
+                packetData = packet.getData();
                 if (byteToString(packetData).equals(SERVER_STRING)) {
                     System.out.println("Multicast packet recieved from client.");
                     System.out.println("Clients address: " + packet.getAddress());
@@ -89,7 +92,7 @@ public class ClientNotifier extends Thread {
         System.out.println("Stopping ClientNotifier;");
         try ( DatagramSocket dummySocket = new DatagramSocket(4455); ) {
             DatagramPacket dummyPacket = new DatagramPacket(packetData, packetData.length,
-                                    InetAddress.getByName("localhost"), SERVER_MULTI_PORT);
+                                                            getInterface("eth3"), SERVER_MULTI_PORT);
             dummySocket.send(dummyPacket);
         } catch (IOException exc) {
             System.out.println("Exception thrown while trying to release kill the thread.");

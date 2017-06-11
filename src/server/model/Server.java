@@ -31,8 +31,8 @@ public class Server extends Thread {
      * connect clients and handle those
      * connections.
      *
-     * @see {@link server.model.ClientNotifier}
-     * @see {@link server.model.ClientConnector}
+     * @see server.model.ClientNotifier
+     * @see server.model.ClientConnector
      */
     private void startListening() {
         clientNotifier = new ClientNotifier(roomName);
@@ -51,6 +51,7 @@ public class Server extends Thread {
             clientConnector.die();
             clientNotifier.join();
             clientConnector.join();
+            IS_SERVER_RUNNING = false;
         } catch (InterruptedException e) {
             System.out.println("Exception thrown while server was closing secondary threads.");
             e.printStackTrace();

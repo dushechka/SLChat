@@ -7,7 +7,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import server.model.Server;
+
+import java.net.SocketException;
+
 import static main.SLChat.*;
+import static server.model.ServerConstants.getInterface;
 
 public class CreateController {
     /* Invokes creation process */
@@ -59,7 +63,11 @@ public class CreateController {
             /* closing secondary window */
             Stage stage = (Stage) openButton.getScene().getWindow();
             stage.close();
-            startClient("localhost");
+            try {
+                startClient(getInterface("eth3").toString(), "");
+            } catch (SocketException se) {
+                se.printStackTrace();
+            }
         }
     }
 }

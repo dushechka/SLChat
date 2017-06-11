@@ -9,6 +9,7 @@ import server.model.Server;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 import static server.model.ServerConstants.*;
 
@@ -72,8 +73,8 @@ public class SLChat {
      * @param   serverAddress
      *          a string with found server's IPv4 address
      */
-    public static void startClient(String serverAddress) {
-        SLClient = new Client(serverAddress);
+    public static void startClient(String serverAddress, String roomName) {
+        SLClient = new Client(serverAddress, roomName);
         SLClient.start();
     }
 
@@ -84,30 +85,26 @@ public class SLChat {
      * and then waits for response from
      * server with datagram, from which
      * it retrieves server's address and
-     * room name ({@link server.model.Server#roomName})
-     * field.
+     * room name.
      *
      * @return  A String, which contains
-     *          concatenated server's message and IP
+     *          concatenated server's message and IP.
      */
-    public static String getIP() {
+    public static void getIP() {
             String msg = null;
-        // Multicast packets sender;
             Seeker seeker= null;
             DatagramPacket packet = null;
             byte[] packetData = null;
 
-        /*
-        * Creates instance of client.model.Seeker
-        * class thread, that sends multicast packets
-        * on LAN, in order, to server catch them and
-        * responce with packet, containing it's IP.
-        * Then, creates DatagramSocket to catch
-        * server's back packet and extracts server's
-        * IP and message from it.
-        */
+        /* Creates instance of client.model.Seeker
+          class thread, that sends multicast packets
+          on LAN, in order, to server catch them and
+          responce with packet, containing it's IP.
+          Then, creates DatagramSocket to catch
+          server's back packet and extracts server's
+          IP and message from it */
         try (DatagramSocket dSocket = new DatagramSocket(CLIENT_PORT, getInterface("eth3"));) {
-            //Getting server's IP;
+//        try (DatagramSocket dSocket = new DatagramSocket(CLIENT_PORT)) {
             seeker = new Seeker();
             seeker.start();
             packetData = new byte[32];
@@ -122,6 +119,7 @@ public class SLChat {
             msg = byteToString(packetData);
             if (msg.contains(SERVER_STRING)) {
                 System.out.println("Room name is: " + msg.substring(6));
+                startClient(packet.getAddress().toString(), msg.substring(6));
             } else {
                 System.out.println("Server hadn't responsed for given time (5 sec).");
             }
@@ -129,6 +127,5 @@ public class SLChat {
             System.out.println("Exception thrown while trying to find server.;");
             ie.printStackTrace();
         }
-        return (msg + packet.getAddress().toString());
     }
 }

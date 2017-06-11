@@ -20,6 +20,7 @@ public class ClientConnector extends Thread {
         super("ClientConnector");
         try {
             serverSocket = new ServerSocket(SERVER_FINAL_PORT);
+//            serverSocket = new ServerSocket(SERVER_FINAL_PORT, 10, getInterface("eth3"));
         } catch (IOException exc) {
             System.out.println("Exception thrown while opening ServerSocket.");
             System.out.println("Thread: " + getName());
