@@ -3,6 +3,8 @@ package server.model;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 
 /**
@@ -20,7 +22,7 @@ import java.util.Enumeration;
  * @see #GROUP_ADDRESS
  * @see #byteToString(byte[])
  * @see #stringToByte(String, byte[])
- * @see #getInterface(String)
+ * @see #getIPAddress(String)
  */
 public class ServerConstants {
         /* String, that Seeker and ClientNotifier (client's and
@@ -157,10 +159,26 @@ public class ServerConstants {
      * @throws SocketException  When cannot get
      *                          address by name.
      */
-    public static InetAddress getInterface(String iName) throws SocketException {
+    public static InetAddress getIPAddress(String iName) throws SocketException {
         NetworkInterface nif = NetworkInterface.getByName(iName);
         System.out.println("Does interface support multicasting: " + nif.supportsMulticast());
         InetAddress socketAddress = nif.getInetAddresses().nextElement();
         return socketAddress;
+    }
+
+    public static void getInterface() throws SocketException {
+        InetAddress inetAddress = null;
+        NetworkInterface iFace = null;
+            /* running interfaces */
+        ArrayList<NetworkInterface> uPnets = new ArrayList<>();
+
+        Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
+
+        for (NetworkInterface netIf : Collections.list(nets)) {
+            if (netIf.isUp()) {
+                uPnets.add(netIf);
+            }
+        }
+        System.out.println(uPnets);
     }
 }

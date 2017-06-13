@@ -11,7 +11,7 @@ import server.model.Server;
 import java.net.SocketException;
 
 import static main.SLChat.*;
-import static server.model.ServerConstants.getInterface;
+import static server.model.ServerConstants.getIPAddress;
 
 public class CreateController {
     /* Invokes creation process */
@@ -64,7 +64,7 @@ public class CreateController {
             Stage stage = (Stage) openButton.getScene().getWindow();
             stage.close();
             try {
-                startClient(getInterface("eth3"), "");
+                startClient(getIPAddress("eth3"), "");
             } catch (SocketException se) {
                 se.printStackTrace();
             }

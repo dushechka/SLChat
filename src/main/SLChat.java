@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
 
 import static server.model.ServerConstants.*;
 
@@ -65,6 +66,11 @@ public class SLChat {
                 javafx.application.Application.launch(StartView.class);
             }
         }.start();
+        try {
+            getInterface();
+        } catch (SocketException exc) {
+            exc.printStackTrace();
+        }
     }
 
     /**
@@ -103,7 +109,7 @@ public class SLChat {
           Then, creates DatagramSocket to catch
           server's back packet and extracts server's
           IP and message from it */
-        try (DatagramSocket dSocket = new DatagramSocket(CLIENT_PORT, getInterface("eth3"));) {
+        try (DatagramSocket dSocket = new DatagramSocket(CLIENT_PORT, getIPAddress("eth3"));) {
 //        try (DatagramSocket dSocket = new DatagramSocket(CLIENT_PORT)) {
             seeker = new Seeker();
             seeker.start();

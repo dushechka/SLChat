@@ -31,7 +31,7 @@ public class Seeker extends Thread {
             msg = new byte[SERVER_STRING.length()];
             stringToByte(SERVER_STRING, msg);
             datagramPacket = new DatagramPacket(msg, msg.length, group, SERVER_MULTI_PORT);
-            socketAddress = getInterface("eth3");
+            socketAddress = getIPAddress("eth3");
         } catch (UnknownHostException e) {
             System.out.println("Exception thrown while trying to achieve multicast group and IF address.");
             System.out.println("Thread " + getName());
