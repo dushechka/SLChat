@@ -88,7 +88,6 @@ public class StartController {
             enterSomething.setText("Please enter something!");
         } else {
             try {
-                enterName.setText("");
                 /*
                  * Attampting to start client with
                  * gained server address. If failed
@@ -96,6 +95,7 @@ public class StartController {
                  * will throw and handle an exception.
                  */
                 startClient(InetAddress.getByName(enterName.getText()), "localhost");
+                enterName.setText("");
                 /* Switchin to client GUI. */
                 mainView.changeWindow(clientGUIPath);
             } catch (UnknownHostException exc) {

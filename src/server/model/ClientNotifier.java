@@ -1,5 +1,6 @@
 package server.model;
 
+import static main.SLChat.localAddress;
 import static server.model.ServerConstants.*;
 
 import java.io.IOException;
@@ -38,9 +39,9 @@ public class ClientNotifier extends Thread {
         this.roomName = roomName;
         try {
             System.out.println("Starting ClientNotifier");
-            inetAddress = getIPAddress("eth3");
-            mSocket = new MulticastSocket(new InetSocketAddress(inetAddress, SERVER_MULTI_PORT));
-//            mSocket = new MulticastSocket(SERVER_MULTI_PORT);
+//            inetAddress = getInterface("eth3");
+//            mSocket = new MulticastSocket(new InetSocketAddress(inetAddress, SERVER_MULTI_PORT));
+            mSocket = new MulticastSocket(SERVER_MULTI_PORT);
             group = InetAddress.getByName(GROUP_ADDRESS);
             mSocket.joinGroup(group);
         } catch (IOException exc) {
@@ -92,7 +93,7 @@ public class ClientNotifier extends Thread {
         System.out.println("Stopping ClientNotifier;");
         try ( DatagramSocket dummySocket = new DatagramSocket(4455); ) {
             DatagramPacket dummyPacket = new DatagramPacket(packetData, packetData.length,
-                                                            getIPAddress("eth3"), SERVER_MULTI_PORT);
+                                                            localAddress, SERVER_MULTI_PORT);
             dummySocket.send(dummyPacket);
         } catch (IOException exc) {
             System.out.println("Exception thrown while trying to release kill the thread.");

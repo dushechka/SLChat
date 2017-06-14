@@ -7,10 +7,7 @@ import javafx.stage.Stage;
 import server.model.Server;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
+import java.net.*;
 
 import static server.model.ServerConstants.*;
 
@@ -42,6 +39,10 @@ public class SLChat {
         public static StartView mainView = null;
     /** Client's GUI fxml file path. */
         public static String clientGUIPath = "/client/view/chat/Chat.fxml";
+    /** Preffered network interface, to run client from */
+        public static NetworkInterface prefferedInterface = null;
+    /** Interface, which is used to make local connections */
+        public static InetAddress localAddress = null;
 
     /**
      * Sole constructor. (Declared explicitly
@@ -60,15 +61,17 @@ public class SLChat {
      * @param args  not useful
      */
     public static void main(String[] args) {
-        new Thread() {
+        try {
+            localAddress = InetAddress.getByName("localhost");
+            new Thread() {
             @Override
             public void run() {
                 javafx.application.Application.launch(StartView.class);
             }
         }.start();
-        try {
-            getInterface();
-        } catch (SocketException exc) {
+            prefferedInterface = chooseInterface();
+            System.out.println("Preffered interface: " + prefferedInterface.getName());
+        } catch (SocketException | UnknownHostException exc) {
             exc.printStackTrace();
         }
     }
@@ -101,6 +104,7 @@ public class SLChat {
             Seeker seeker= null;
             DatagramPacket packet = null;
             byte[] packetData = null;
+            DatagramSocket dSocket = null;
 
         /* Creates instance of client.model.Seeker
           class thread, that sends multicast packets
@@ -109,8 +113,12 @@ public class SLChat {
           Then, creates DatagramSocket to catch
           server's back packet and extracts server's
           IP and message from it */
-        try (DatagramSocket dSocket = new DatagramSocket(CLIENT_PORT, getIPAddress("eth3"));) {
-//        try (DatagramSocket dSocket = new DatagramSocket(CLIENT_PORT)) {
+        try {
+            if (prefferedInterface != null) {
+                dSocket = new DatagramSocket(CLIENT_PORT, getIfaceAddress(prefferedInterface.toString()));
+            } else {
+                dSocket = new DatagramSocket(CLIENT_PORT);
+            }
             seeker = new Seeker();
             seeker.start();
             packetData = new byte[32];
@@ -132,6 +140,10 @@ public class SLChat {
         } catch (IOException ie) {
             System.out.println("Exception thrown while trying to find server.;");
             ie.printStackTrace();
+        } finally {
+            if ((dSocket != null) && (!dSocket.isClosed())) {
+                dSocket.close();
+            }
         }
     }
 }

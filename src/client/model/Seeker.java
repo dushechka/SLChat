@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.*;
 
 import static server.model.ServerConstants.*;
+import static main.SLChat.prefferedInterface;
 
 /**
  * Sends Multicast packets to
@@ -31,7 +32,9 @@ public class Seeker extends Thread {
             msg = new byte[SERVER_STRING.length()];
             stringToByte(SERVER_STRING, msg);
             datagramPacket = new DatagramPacket(msg, msg.length, group, SERVER_MULTI_PORT);
-            socketAddress = getIPAddress("eth3");
+            if (prefferedInterface != null) {
+                socketAddress = getIfaceAddress(prefferedInterface.getName());
+            }
         } catch (UnknownHostException e) {
             System.out.println("Exception thrown while trying to achieve multicast group and IF address.");
             System.out.println("Thread " + getName());
@@ -54,11 +57,18 @@ public class Seeker extends Thread {
      */
     public void run() {
             int i = 0;
+            DatagramSocket datagramSocket = null;
+
         IS_RUNNING = true;
         System.out.println("Seeker started.");
         /* Sending multicast packet's on LAN */
-        try (DatagramSocket datagramSocket = new DatagramSocket(CLIENT_MULTICAST_PORT, socketAddress)){
+        try {
 //        try (DatagramSocket datagramSocket = new DatagramSocket(CLIENT_MULTICAST_PORT)) {
+            if (socketAddress != null) {
+                datagramSocket = new DatagramSocket(CLIENT_MULTICAST_PORT, socketAddress);
+            } else {
+                datagramSocket = new DatagramSocket(CLIENT_MULTICAST_PORT);
+            }
             while(IS_RUNNING) {
                 i++;
                 /* Sending broadcast packet */
@@ -80,6 +90,10 @@ public class Seeker extends Thread {
             e.printStackTrace();
         } finally {
             System.out.println("Seeker stopped.");
+            /* closing a socket, used for connection */
+            if ((datagramSocket != null) && (!datagramSocket.isClosed())) {
+                datagramSocket.close();
+            }
         }
     }
 

@@ -8,10 +8,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import server.model.Server;
 
-import java.net.SocketException;
+import java.io.IOException;
+import java.net.InetAddress;
 
 import static main.SLChat.*;
-import static server.model.ServerConstants.getIPAddress;
 
 public class CreateController {
     /* Invokes creation process */
@@ -64,9 +64,9 @@ public class CreateController {
             Stage stage = (Stage) openButton.getScene().getWindow();
             stage.close();
             try {
-                startClient(getIPAddress("eth3"), "");
-            } catch (SocketException se) {
-                se.printStackTrace();
+                startClient(InetAddress.getByName("localhost"), "");
+            } catch (IOException exc) {
+                exc.printStackTrace();
             }
         }
     }

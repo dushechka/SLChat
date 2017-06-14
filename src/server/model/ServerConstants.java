@@ -22,7 +22,7 @@ import java.util.Enumeration;
  * @see #GROUP_ADDRESS
  * @see #byteToString(byte[])
  * @see #stringToByte(String, byte[])
- * @see #getIPAddress(String)
+ * @see #getInterface(String)
  */
 public class ServerConstants {
         /* String, that Seeker and ClientNotifier (client's and
@@ -159,14 +159,31 @@ public class ServerConstants {
      * @throws SocketException  When cannot get
      *                          address by name.
      */
-    public static InetAddress getIPAddress(String iName) throws SocketException {
+    public static InetAddress getIfaceAddress(String iName) throws SocketException {
         NetworkInterface nif = NetworkInterface.getByName(iName);
         System.out.println("Does interface support multicasting: " + nif.supportsMulticast());
         InetAddress socketAddress = nif.getInetAddresses().nextElement();
         return socketAddress;
     }
 
-    public static void getInterface() throws SocketException {
+    /**
+     * Chooses running network
+     * interface to work with;
+     * <p>
+     * Getting a list of system's
+     * running interfaces and tries
+     * to get a wireless interface
+     * first, then if none, attempts
+     * to get wired interface. If
+     * none of them were found,
+     * returns null;
+     * @return  running network interface
+     *          to work with or null if none
+     * @throws SocketException  when can't get an
+     *                          {@link Enumeration<NetworkInterface>}
+     *                          from system
+     */
+    public static NetworkInterface chooseInterface() throws SocketException {
         InetAddress inetAddress = null;
         NetworkInterface iFace = null;
             /* running interfaces */
@@ -179,6 +196,46 @@ public class ServerConstants {
                 uPnets.add(netIf);
             }
         }
-        System.out.println(uPnets);
+        System.out.println("A list of system's running interfaces:");
+        for (NetworkInterface netIf : uPnets) {
+            System.out.print(netIf.getName() + " ");
+        }
+        System.out.println();
+
+        /* searching for proper interface */
+        iFace = chooseInterface(uPnets, "wlan");
+        if (iFace == null) {
+            iFace = chooseInterface(uPnets, "wan");
+        }
+        if (iFace == null) {
+            iFace = chooseInterface(uPnets, "eth");
+        }
+
+        return iFace;
+    }
+
+    /**
+     * Searches for the interface by
+     * a keyword in it's name.
+     * <p>
+     * Searches in a list of network
+     * interfaces for the first one
+     * with the name, containing the
+     * key.
+     *
+     * @param nics  List of network interfaces
+     * @param key   String key
+     * @return      Found interface and
+     *              <code>null</code> if none
+     */
+    private static NetworkInterface chooseInterface(ArrayList<NetworkInterface> nics, String key) {
+            NetworkInterface nic = null;
+        for (NetworkInterface iFace : nics) {
+            if (iFace.getName().contains(key)) {
+                nic = iFace;
+                break;
+            }
+        }
+        return nic;
     }
 }
