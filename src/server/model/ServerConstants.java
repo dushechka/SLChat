@@ -11,7 +11,6 @@ import java.util.Enumeration;
  * Static class, containing
  * ancillary fields and methods
  * for use by other program classes.
- * <p>
  *
  * @see #SERVER_STRING
  * @see #TIME_HAS_EXPIRED
@@ -22,33 +21,40 @@ import java.util.Enumeration;
  * @see #GROUP_ADDRESS
  * @see #byteToString(byte[])
  * @see #stringToByte(String, byte[])
- * @see #getInterface(String)
  */
 public class ServerConstants {
-        /* String, that Seeker and ClientNotifier (client's and
-         * server's classes respectively) are using to identify,
-         * that datagrams, which they receive belongs to each other.
+        /** String, that {@link client.model.Seeker} and
+         * {@link server.model.ClientNotifier}
+         *  are using to identify, that datagrams,
+         *  which they receive belongs to each other.
          */
         public final static String SERVER_STRING = "SLChat";
-        /* Message, that Seeker sends to itself, to stop
-         * listening for server's answer, if it is not
-         * responding. */
+        /** Message, that {@link client.model.Seeker}
+         * sends to itself, to stop listening for server's
+         * answer, if it is not responding. */
         public final static String TIME_HAS_EXPIRED = "TimeHasExpired";
-        /* This port is used by client and server
+        /** This port is used by client and server
          * to establish connection with each other. */
         public final static int SERVER_FINAL_PORT = 4488;
-        /* Port, on which client sends multicast packets
+        /** Port, on which client sends multicast packets
          * and server listens for them in order, for them
          * to find each other. */
         public final static int SERVER_MULTI_PORT = 4444;
         public final static int CLIENT_MULTICAST_PORT = 4445;
 //                public final static int SERVER_PORT = 4446;
         public final static int CLIENT_PORT = 4447;
-        /* Broadcast group address. */
+        /** Broadcast group address. */
         public final static String GROUP_ADDRESS = "230.0.0.1";
 
 
-        /* Converts String to an array of bytes. */
+    /**
+     * Converts String type to
+     * an array of bytes.
+     *
+     * @param input     some String message;
+     * @param output    given array of bytes
+     *                  to save output;
+     */
         public static void stringToByte(String input, byte[] output) {
                 int i = 0;
                 for (char m : input.toCharArray()) {
@@ -58,7 +64,16 @@ public class ServerConstants {
         }
 
         /* Converts an array of bytes to a String. */
-        public static String byteToString(byte[] input) {
+
+    /**
+     * Converts an array
+     * of bytes to a String.
+     *
+     * @param input An initial array of bytes;
+     * @return      String message, gained in
+     *              process of array conversion;
+     */
+    public static String byteToString(byte[] input) {
                 StringBuilder sb = new StringBuilder();
                 for (byte b : input) {
                         if (b != 0) {
@@ -110,7 +125,10 @@ public class ServerConstants {
     }
 
     /**
-     * Prints all systems running NICs'
+     * Prints all system's running
+     * network interfaces info.
+     * <p>
+     * Prints all system's running NICs'
      * info, such as IP and name
      * to the system standard output, by
      * invoking {@link #getNicInfo(NetworkInterface, boolean)}
@@ -149,26 +167,8 @@ public class ServerConstants {
     }
 
     /**
-     * Gets interface address, from
-     * which to send packets.
-     *
-     * @param iName  The name of interface for
-     *               which to get IP-address.
-     * @return  {@link InetAddress} from
-     *          which to send packets.
-     * @throws SocketException  When cannot get
-     *                          address by name.
-     */
-    public static InetAddress getIfaceAddress(String iName) throws SocketException {
-        NetworkInterface nif = NetworkInterface.getByName(iName);
-        System.out.println("Does interface support multicasting: " + nif.supportsMulticast());
-        InetAddress socketAddress = nif.getInetAddresses().nextElement();
-        return socketAddress;
-    }
-
-    /**
      * Chooses running network
-     * interface to work with;
+     * interface to work with.
      * <p>
      * Getting a list of system's
      * running interfaces and tries
@@ -180,11 +180,10 @@ public class ServerConstants {
      * @return  running network interface
      *          to work with or null if none
      * @throws SocketException  when can't get an
-     *                          {@link Enumeration<NetworkInterface>}
-     *                          from system
+     *                          enumeration of
+     *                          interfaces from system;
      */
     public static NetworkInterface chooseInterface() throws SocketException {
-        InetAddress inetAddress = null;
         NetworkInterface iFace = null;
             /* running interfaces */
         ArrayList<NetworkInterface> uPnets = new ArrayList<>();
@@ -203,12 +202,12 @@ public class ServerConstants {
         System.out.println();
 
         /* searching for proper interface */
-        iFace = chooseInterface(uPnets, "wlan");
+        iFace = chooseInterface(uPnets, "eth");
         if (iFace == null) {
-            iFace = chooseInterface(uPnets, "wan");
+            iFace = chooseInterface(uPnets, "wlan");
         }
         if (iFace == null) {
-            iFace = chooseInterface(uPnets, "eth");
+            iFace = chooseInterface(uPnets, "wan");
         }
 
         return iFace;

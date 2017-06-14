@@ -79,8 +79,8 @@ public class SLChat {
     /**
      * Starts {@link client.model.Client Client} backend class thread.
      *
-     * @param   serverAddress
-     *          a string with found server's IPv4 address
+     * @param   serverAddress   a string with found server's IPv4 address
+     * @param   roomName        a string with received room name;
      */
     public static void startClient(InetAddress serverAddress, String roomName) {
         SLClient = new Client(serverAddress, roomName);
@@ -95,9 +95,6 @@ public class SLChat {
      * server with datagram, from which
      * it retrieves server's address and
      * room name.
-     *
-     * @return  A String, which contains
-     *          concatenated server's message and IP.
      */
     public static void getIP() {
             String msg = null;
@@ -115,7 +112,7 @@ public class SLChat {
           IP and message from it */
         try {
             if (prefferedInterface != null) {
-                dSocket = new DatagramSocket(CLIENT_PORT, getIfaceAddress(prefferedInterface.toString()));
+                dSocket = new DatagramSocket(CLIENT_PORT, getIfaceAddress());
             } else {
                 dSocket = new DatagramSocket(CLIENT_PORT);
             }
@@ -145,5 +142,41 @@ public class SLChat {
                 dSocket.close();
             }
         }
+    }
+
+    /**
+     * Gets interface address, from
+     * which to send packets.
+     *
+     * @param iName  The name of interface for
+     *               which to get IP-address
+     * @return  {@link InetAddress} from
+     *          which to send packets
+     * @throws SocketException  When cannot get
+     *                          address by name
+     */
+    public static InetAddress getIfaceAddress(String iName) throws SocketException {
+        NetworkInterface nif = NetworkInterface.getByName(iName);
+        System.out.println("Does interface support multicasting: " + nif.supportsMulticast());
+        InetAddress socketAddress = nif.getInetAddresses().nextElement();
+        return socketAddress;
+    }
+
+    /**
+     * Gets interface address, from
+     * which to send packets.
+     * <p>
+     * Invokes method of the same name
+     * {@link #getIfaceAddress(String)},
+     * supplying chosen network interface
+     * ({@link #prefferedInterface}) to it.
+     *
+     * @return  {@link InetAddress} from
+     *          which to send packets
+     * @throws SocketException  When cannot get
+     *                          address by name
+     */
+    public static InetAddress getIfaceAddress () throws SocketException {
+        return getIfaceAddress(prefferedInterface.getName().toString());
     }
 }

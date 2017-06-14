@@ -3,6 +3,7 @@ package client.model;
 import java.io.IOException;
 import java.net.*;
 
+import static main.SLChat.getIfaceAddress;
 import static server.model.ServerConstants.*;
 import static main.SLChat.prefferedInterface;
 
@@ -33,7 +34,7 @@ public class Seeker extends Thread {
             stringToByte(SERVER_STRING, msg);
             datagramPacket = new DatagramPacket(msg, msg.length, group, SERVER_MULTI_PORT);
             if (prefferedInterface != null) {
-                socketAddress = getIfaceAddress(prefferedInterface.getName());
+                socketAddress = getIfaceAddress();
             }
         } catch (UnknownHostException e) {
             System.out.println("Exception thrown while trying to achieve multicast group and IF address.");

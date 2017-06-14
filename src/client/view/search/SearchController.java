@@ -17,9 +17,6 @@ import java.io.IOException;
  * Controller, responsible for
  * users searching for server
  * operations.
- * <p>
- *
- *
  */
 public class SearchController {
         @FXML private Button getBackButton;

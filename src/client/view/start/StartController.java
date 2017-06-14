@@ -61,6 +61,8 @@ public class StartController {
     /**
      * Swithes to search server window, handled by
      * {@link client.view.search.SearchController}.
+     *
+     * @param event     User hit the button.
      */
     @FXML
     protected void handleSearchButtonAction(ActionEvent event) {
