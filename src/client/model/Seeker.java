@@ -19,17 +19,13 @@ public class Seeker extends Thread {
     private boolean IS_RUNNING;
     private InetAddress group = null;
     private DatagramPacket datagramPacket = null;
-    /* Broadcast message to identify client. */
-    private byte[] msg = null;
 
     public Seeker() {
         super("Seeker");
         try {
             /* Getting multicast group IP address */
             group = InetAddress.getByName(GROUP_ADDRESS);
-            msg = new byte[SERVER_STRING.length()];
-            stringToByte(SERVER_STRING, msg);
-            datagramPacket = new DatagramPacket(msg, msg.length, group, SERVER_MULTI_PORT);
+            datagramPacket = new DatagramPacket(SERVER_STRING, SERVER_STRING.length, group, SERVER_MULTI_PORT);
         } catch (UnknownHostException e) {
             System.out.println("Exception thrown while trying to achieve multicast group and IF address.");
             System.out.println("Thread " + getName());
@@ -62,9 +58,8 @@ public class Seeker extends Thread {
                 sleep(1000);
                 /* stop if server's not responding */
                 if (i == 3) {
-                    msg = new byte[TIME_HAS_EXPIRED.length()];
-                    stringToByte(TIME_HAS_EXPIRED, msg);
-                    datagramPacket = new DatagramPacket(msg, msg.length, prefferedAddress, CLIENT_PORT);
+                    datagramPacket = new DatagramPacket(TIME_HAS_EXPIRED, TIME_HAS_EXPIRED.length,
+                                                                    prefferedAddress, CLIENT_PORT);
                     datagramSocket.send(datagramPacket);
                     break;
                 }

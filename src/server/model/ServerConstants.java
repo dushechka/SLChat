@@ -3,6 +3,7 @@ package server.model;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -20,7 +21,7 @@ import java.util.Enumeration;
  * @see #CLIENT_PORT
  * @see #GROUP_ADDRESS
  * @see #byteToString(byte[])
- * @see #stringToByte(String, byte[])
+ * @see #stringToByte(String)
  */
 public class ServerConstants {
         /** String, that {@link client.model.Seeker} and
@@ -28,11 +29,11 @@ public class ServerConstants {
          *  are using to identify, that datagrams,
          *  which they receive belongs to each other.
          */
-        public final static String SERVER_STRING = "SLChat";
+        public final static byte[] SERVER_STRING = stringToByte("SLChat");
         /** Message, that {@link client.model.Seeker}
          * sends to itself, to stop listening for server's
          * answer, if it is not responding. */
-        public final static String TIME_HAS_EXPIRED = "TimeHasExpired";
+        public final static byte[] TIME_HAS_EXPIRED = stringToByte("TimeHasExpired");
         /** This port is used by client and server
          * to establish connection with each other. */
         public final static int SERVER_FINAL_PORT = 4488;
@@ -52,15 +53,12 @@ public class ServerConstants {
      * an array of bytes.
      *
      * @param input     some String message;
-     * @param output    given array of bytes
-     *                  to save output;
+     * @return          array of byte, constructed
+     *                  from input string, using
+     *                  UTF-16 charset;
      */
-        public static void stringToByte(String input, byte[] output) {
-                int i = 0;
-                for (char m : input.toCharArray()) {
-                        output[i] = (byte) m;
-                        i++;
-                }
+        public static byte[] stringToByte(String input) {
+            return input.getBytes(Charset.forName("UTF-16"));
         }
 
     /**
@@ -68,17 +66,12 @@ public class ServerConstants {
      * of bytes to a String.
      *
      * @param input An initial array of bytes;
-     * @return      String message, gained in
+     * @return      String message in UTF-16,
+     *              gained in
      *              process of array conversion;
      */
     public static String byteToString(byte[] input) {
-                StringBuilder sb = new StringBuilder();
-        for (byte b : input) {
-            if (b != 0) {
-                sb.append((char) b);
-            }
-        }
-        return (sb.toString());
+        return (new String(input, Charset.forName("UTF-16")));
         }
 
     /**

@@ -118,7 +118,7 @@ public class SLChat {
         try (DatagramSocket dSocket = new DatagramSocket(CLIENT_PORT, prefferedAddress)) {
             seeker = new Seeker();
             seeker.start();
-            packetData = new byte[32];
+            packetData = new byte[64];
             packet = new DatagramPacket(packetData, packetData.length);
             dSocket.receive(packet);
             System.out.println("Server's back packet recieved.");
@@ -128,7 +128,7 @@ public class SLChat {
                 seeker.die();
             }
             msg = byteToString(packetData);
-            if (msg.contains(SERVER_STRING)) {
+            if (msg.contains(byteToString(SERVER_STRING))) {
                 System.out.println("Room name is: " + msg.substring(6));
                 startClient(packet.getAddress(), msg.substring(6));
             } else {
@@ -144,8 +144,10 @@ public class SLChat {
      * Gets interface address, from
      * which to send packets.
      *
-     * @return  {@link InetAddress} from
-     *          which to send packets
+     * @param nif   A network interface, for
+     *              which to get an address;
+     * @return      {@link InetAddress} from
+     *              which to send packets
      * @throws SocketException  When cannot get
      *                          address by name
      */

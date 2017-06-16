@@ -1,11 +1,13 @@
 package server.model;
 
-import static main.SLChat.localAddress;
-import static main.SLChat.prefferedAddress;
-import static server.model.ServerConstants.*;
-
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+
+import static main.SLChat.localAddress;
+import static server.model.ServerConstants.*;
 
 /**
  * Notifies client about server's
@@ -55,15 +57,17 @@ public class ClientNotifier extends Thread {
         try {
             while(IS_RUNNING) {
                 /* Receiving multicast packets from clients. */
-                packetData = new byte[32];
+                packetData = new byte[64];
                 packet = new DatagramPacket(packetData, packetData.length);
                 mSocket.receive(packet);
                 packetData = packet.getData();
-                if (byteToString(packetData).equals(SERVER_STRING)) {
+                System.out.println("Recieved packet: " + byteToString(packetData));
+                if (byteToString(packetData).contains(byteToString(SERVER_STRING))) {
                     System.out.println("Multicast packet recieved from client.");
                     System.out.println("Clients address: " + packet.getAddress());
                     /* Making a packet, containing room name and server address info */
-                    stringToByte((SERVER_STRING + roomName), packetData);
+                    String msg = new String(byteToString(SERVER_STRING) + roomName);
+                    packetData = stringToByte(msg);
                     packet = new DatagramPacket(packetData, packetData.length, packet.getAddress(), CLIENT_PORT);
                     /* Sending packet to corresponding client's method (main.SLChat#getIP()). */
                     mSocket.send(packet);
