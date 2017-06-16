@@ -37,23 +37,20 @@ public class StartView extends Application {
     public void start(Stage stage) throws IOException {
         /* Setting static field that all classes can invoke it. */
         mainView = this;
-        /* Setting this field too. */
+        /* Setting main stage too. */
         primaryStage = stage;
         Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
         Scene scene = new Scene(root);
 
         /* What to do, when closing program? */
         stage.setOnCloseRequest(e -> {
-            if (!IS_SERVER_RUNNING) {
-                primaryStage.hide();
-            }
+            /* stopping client on exit */
+
             try {
-                /* Killing client on exit. */
-                if (IS_CLIENT_RUNNING) {
-                    SLClient.die();
-                }
-                /* Killing server on exit? */
-                if (IS_SERVER_RUNNING) {
+                if (!IS_SERVER_RUNNING) {
+                    primaryStage.hide();
+                } else {
+                    /* Killing server on exit? */
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     ObservableList<ButtonType> buttonTypes = alert.getButtonTypes();
                     buttonTypes.setAll(ButtonType.YES, ButtonType.NO);
@@ -69,7 +66,9 @@ public class StartView extends Application {
                         System.out.println("SLServer stopped.");
                     }
                 }
-                if (SLClient != null && SLClient.isAlive()) {
+                /* KILLING CLIENT THREAD */
+                if (IS_CLIENT_RUNNING) {
+                    SLClient.die();
                     SLClient.join();
                 }
             } catch (InterruptedException ie) {
@@ -77,6 +76,7 @@ public class StartView extends Application {
                 ie.printStackTrace();
             }
         });
+
         /* Creating and showing main menu window. */
         stage.setTitle("SLChat");
         stage.setScene(scene);

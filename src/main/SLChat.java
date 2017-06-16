@@ -3,9 +3,10 @@ package main;
 import client.model.Client;
 import client.model.Seeker;
 import client.view.start.StartView;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import server.model.Server;
-
+import static client.model.Client.connectClient;
 import java.io.IOException;
 import java.net.*;
 import java.util.Collections;
@@ -38,6 +39,8 @@ public class SLChat {
         public static Stage primaryStage;
     /** Main menu window backend instance. */
         public static StartView mainView;
+    /** Maine scene of the {@link #mainView} */
+        public static Scene mainScene;
     /** Client's GUI fxml file path. */
         public static final String CLIENT_GUI_PATH = "/client/view/chat/Chat.fxml";
     /** login GUI fxml file path */
@@ -68,6 +71,7 @@ public class SLChat {
                 }
             }.start();
         } catch (SocketException | UnknownHostException e) {
+            System.out.println("Program broke while starting at SLChat class constructor.");
             e.printStackTrace();
         }
     }
@@ -83,18 +87,6 @@ public class SLChat {
     public static void main(String[] args) {
         new SLChat();
     }
-
-//    /**
-//     * Starts {@link client.model.Client Client} backend class thread.
-//     *
-//     * @param   roomName        a string with received room name;
-//     */
-//    public static void startClient(String roomName) {
-//        SLClient = new Client(roomName);
-//        SLClient.start();
-//        /* Switching to client GUI. */
-//        mainView.changeWindow(CLIENT_GUI_PATH);
-//    }
 
     /**
      * Searches for server's IP on LAN.
@@ -133,7 +125,7 @@ public class SLChat {
             msg = byteToString(packetData);
             if (msg.contains(byteToString(SERVER_STRING))) {
                 System.out.println("Room name is: <" + msg.substring(6).trim() + ">");
-                SLClient.serverAddress = packet.getAddress();
+                Client.serverAddress = packet.getAddress();
                 mainView.changeWindow(LOGIN_GUI_PATH);
             } else {
                 System.out.println("Server hadn't responsed for given time (3 sec).");

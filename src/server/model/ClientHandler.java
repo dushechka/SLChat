@@ -16,7 +16,7 @@ import static server.model.Server.*;
  */
 class ClientHandler extends Thread {
     /** A socket, to which client is connected */
-        private Socket socket;
+        private final Socket socket;
         private final String password;
 
     ClientHandler(Socket socket, String password) {
@@ -26,24 +26,27 @@ class ClientHandler extends Thread {
     }
 
     public void run() {
-        /* string for saving incoming messages */
-            String msg;
         /* Opening input and output streams to exchange messages with client. */
         try (DataInputStream in = new DataInputStream(socket.getInputStream());
              DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
+                    /* string for saving incoming messages */
+                    String msg;
             msg = in.readUTF();
-            if (msg.contains(password)) {
+            if (msg.equals(password)) {
                 out.writeUTF("yes");
                 out.flush();
+                System.out.println("Client connected! Fuck yeah, mutherfucker!!!");
             } else {
                 out.writeUTF("no");
                 out.flush();
+                System.out.println("You can suck my balls. Wrong password!");
             }
             System.out.println("Auth string received: " + msg);
             Thread.sleep(100);
         } catch (IOException exc) {
-            exc.printStackTrace();
+            System.out.println(getName() + ": Unexpected closing I/O data streams.");
         } catch (InterruptedException ie) {
+            System.out.println(getName() + ": Thread was interrupdet, while sleeping.");
             ie.printStackTrace();
         }
     }

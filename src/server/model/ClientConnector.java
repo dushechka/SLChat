@@ -84,6 +84,6 @@ public class ClientConnector extends Thread {
             System.out.println("Exception thrown while trying to release resources.");
             System.out.println("Thread " + getName());
         }
-        System.out.println("ClientConnector sopped.");
+        System.out.println("ClientConnector stopped.");
     }
 }
