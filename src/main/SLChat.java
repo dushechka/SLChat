@@ -129,7 +129,7 @@ public class SLChat {
             }
             msg = byteToString(packetData);
             if (msg.contains(byteToString(SERVER_STRING))) {
-                System.out.println("Room name is: " + msg.substring(6));
+                System.out.println("Room name is: <" + msg.substring(6).trim() + ">");
                 startClient(packet.getAddress(), msg.substring(6));
             } else {
                 System.out.println("Server hadn't responsed for given time (3 sec).");

@@ -45,7 +45,7 @@ public class CreateController {
          * server's packet message (array of
          * byte with length of 32).
          */
-        } else if (roomName.getText().length() > 26) {
+        } else if (roomName.getText().length() > 30) {
             errorLine.setText("Room name is too long!");
         } else {
             /* starting server */

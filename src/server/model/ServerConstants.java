@@ -46,6 +46,12 @@ public class ServerConstants {
         public final static int CLIENT_PORT = 4447;
         /** Broadcast group address. */
         public final static String GROUP_ADDRESS = "230.0.0.1";
+        /** A default inner program charset name for converting
+        *  strings to arrays of byte and backwards by
+        *  {@link #byteToString(byte[])} and
+        *  {@link #stringToByte(String)} methods.
+        */
+        private final static String DEFAULT_CHARSET = "UTF-8";
 
 
     /**
@@ -58,7 +64,7 @@ public class ServerConstants {
      *                  UTF-16 charset;
      */
         public static byte[] stringToByte(String input) {
-            return input.getBytes(Charset.forName("UTF-16"));
+            return input.getBytes(Charset.forName(DEFAULT_CHARSET));
         }
 
     /**
@@ -71,7 +77,7 @@ public class ServerConstants {
      *              process of array conversion;
      */
     public static String byteToString(byte[] input) {
-        return (new String(input, Charset.forName("UTF-16")));
+        return (new String(input, Charset.forName(DEFAULT_CHARSET)));
         }
 
     /**
