@@ -58,13 +58,12 @@ public class CreateController {
              */
             SLServer = server;
 
-            /* opening client GUI */
-            mainView.changeWindow(clientGUIPath);
             /* closing secondary window */
             Stage stage = (Stage) openButton.getScene().getWindow();
             stage.close();
             try {
-                startClient(InetAddress.getByName("localhost"), "");
+                SLClient.serverAddress = (InetAddress.getByName("localhost"));
+                mainView.changeWindow(LOGIN_GUI_PATH);
             } catch (IOException exc) {
                 exc.printStackTrace();
             }

@@ -31,15 +31,17 @@ public class SLChat {
     /** Is used to stop {@link client.model.Client Client} thread. */
         public static boolean IS_CLIENT_RUNNING = false;
     /** Server backend thread. */
-        public static Server SLServer = null;
+        public static Server SLServer;
     /** Client backend thread. */
-        public static Client SLClient = null;
+        public static Client SLClient;
     /** Main GUI window javafx stage. */
-        public static Stage primaryStage = null;
+        public static Stage primaryStage;
     /** Main menu window backend instance. */
-        public static StartView mainView = null;
+        public static StartView mainView;
     /** Client's GUI fxml file path. */
-        public static String clientGUIPath = "/client/view/chat/Chat.fxml";
+        public static final String CLIENT_GUI_PATH = "/client/view/chat/Chat.fxml";
+    /** login GUI fxml file path */
+        public static String LOGIN_GUI_PATH = "/client/view/login/Login.fxml";
     /** Preffered network interface, to run client from. */
         private static NetworkInterface prefferedInterface = null;
     /** {@link #prefferedInterface} address, with wich program will work. */
@@ -82,16 +84,17 @@ public class SLChat {
         new SLChat();
     }
 
-    /**
-     * Starts {@link client.model.Client Client} backend class thread.
-     *
-     * @param   serverAddress   a string with found server's IPv4 address
-     * @param   roomName        a string with received room name;
-     */
-    public static void startClient(InetAddress serverAddress, String roomName) {
-        SLClient = new Client(serverAddress, roomName);
-        SLClient.start();
-    }
+//    /**
+//     * Starts {@link client.model.Client Client} backend class thread.
+//     *
+//     * @param   roomName        a string with received room name;
+//     */
+//    public static void startClient(String roomName) {
+//        SLClient = new Client(roomName);
+//        SLClient.start();
+//        /* Switching to client GUI. */
+//        mainView.changeWindow(CLIENT_GUI_PATH);
+//    }
 
     /**
      * Searches for server's IP on LAN.
@@ -130,7 +133,8 @@ public class SLChat {
             msg = byteToString(packetData);
             if (msg.contains(byteToString(SERVER_STRING))) {
                 System.out.println("Room name is: <" + msg.substring(6).trim() + ">");
-                startClient(packet.getAddress(), msg.substring(6));
+                SLClient.serverAddress = packet.getAddress();
+                mainView.changeWindow(LOGIN_GUI_PATH);
             } else {
                 System.out.println("Server hadn't responsed for given time (3 sec).");
             }

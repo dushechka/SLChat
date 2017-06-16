@@ -19,15 +19,16 @@ import static server.model.ServerConstants.*;
  * for client to know server's address;
  */
 public class ClientNotifier extends Thread {
-        /* Determines when to stop this thread. */
+    /** Determines when to stop this thread. */
         private boolean IS_RUNNING;
-        /* Socket which, recieves clients multicast packet. */
+    /** Socket which, recieves clients multicast packet. */
         private MulticastSocket mSocket = null;
-        /* Multicast group in which client sends packets. */
+    /** Multicast group in which client sends packets. */
         private InetAddress group = null;
         private DatagramPacket packet = null;
         private byte[] packetData = null;
         private final String roomName;
+
 
     /**
      *

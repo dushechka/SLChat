@@ -1,5 +1,7 @@
 package server.model;
 
+import java.util.ArrayList;
+
 import static main.SLChat.*;
 
 /**
@@ -9,15 +11,17 @@ import static main.SLChat.*;
  * backend functional.
  */
 public class Server extends Thread {
-        ClientNotifier clientNotifier = null;
-        ClientConnector clientConnector = null;
+        private ClientNotifier clientNotifier;
+        private ClientConnector clientConnector;
         private final String roomName;
         private final String password;
+        private ArrayList<ClientHandler> clients;
 
     public Server(String roomName, String password) {
         super("SLServer");
         this.roomName = roomName;
         this.password = password;
+        clients = new ArrayList<>();
     }
 
     public void run() {
@@ -38,7 +42,7 @@ public class Server extends Thread {
      */
     private void startListening() {
         clientNotifier = new ClientNotifier(roomName);
-        clientConnector = new ClientConnector();
+        clientConnector = new ClientConnector(clients, password);
         clientNotifier.start();
         clientConnector.start();
     }

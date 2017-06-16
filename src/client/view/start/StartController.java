@@ -78,13 +78,13 @@ public class StartController {
      * ({@link client.model.Client})
      * and switches window to chat
      * window, contained in
-     * {@link main.SLChat#clientGUIPath}.
+     * {@link main.SLChat#CLIENT_GUI_PATH}.
      *
      * @param event  User pressed enter in this window.
      */
     @FXML
     protected void handleEnterNameFieldAction(ActionEvent event) {
-        if (enterName.getText().length() > 32) {
+        if (enterName.getText().length() > 30) {
             mainView.alertWindow("Server name is too long", "Please enter a smaller name.");
         } else if (enterName.getText().isEmpty()) {
             enterSomething.setText("Please enter something!");
@@ -96,10 +96,10 @@ public class StartController {
                  * to start, {@link client.model.Client}
                  * will throw and handle an exception.
                  */
-                startClient(InetAddress.getByName(enterName.getText()), "localhost");
+                SLClient.serverAddress = InetAddress.getByName(enterName.getText());
                 enterName.setText("");
-                /* Switchin to client GUI. */
-                mainView.changeWindow(clientGUIPath);
+                /* Switching to client GUI. */
+                mainView.changeWindow(LOGIN_GUI_PATH);
             } catch (UnknownHostException exc) {
                 exc.printStackTrace();
                 mainView.alertWindow("Wrong", "Server not found!");

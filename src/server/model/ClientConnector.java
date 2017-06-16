@@ -2,6 +2,8 @@ package server.model;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayList;
+
 import static server.model.ServerConstants.*;
 
 /**
@@ -11,13 +13,22 @@ import static server.model.ServerConstants.*;
  * was established.
  */
 public class ClientConnector extends Thread {
-    /* Determines, when to stop this thread */
-    private boolean IS_RUNNING;
-    /* A server socket for establishing final connection with client */
-    private ServerSocket serverSocket = null;
+    /** Determines, when to stop this thread */
+        private boolean IS_RUNNING;
+    /** A server socket for establishing final connection with client */
+        private ServerSocket serverSocket;
+    /** A socket to transmit new client's connections to {@link ClientHandler} */
+        private Socket clientSocket;
+    /** A list of connected clients to work with */
+        private ArrayList<ClientHandler> clients;
+    /** A new connected client to add to {@link #clients} */
+        private ClientHandler clientHandler;
+        private final String password;
 
-    ClientConnector() {
+    ClientConnector(ArrayList<ClientHandler> clients, String password) {
         super("ClientConnector");
+        this.password = password;
+        this.clients = clients;
         try {
             serverSocket = new ServerSocket(SERVER_FINAL_PORT);
 //            serverSocket = new ServerSocket(SERVER_FINAL_PORT, 10, getInterface("eth3"));
@@ -34,7 +45,10 @@ public class ClientConnector extends Thread {
         try {
             while (IS_RUNNING) {
                 /* Establishing connection with client. */
-                serverSocket.accept();
+                clientSocket = serverSocket.accept();
+                clientHandler = new ClientHandler(clientSocket, password);
+                clients.add(clientHandler);
+                clientHandler.start();
                 System.out.println("Client connected.");
             }
         } catch (IOException e) {
