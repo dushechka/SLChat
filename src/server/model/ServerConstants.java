@@ -63,8 +63,6 @@ public class ServerConstants {
                 }
         }
 
-        /* Converts an array of bytes to a String. */
-
     /**
      * Converts an array
      * of bytes to a String.
@@ -75,13 +73,12 @@ public class ServerConstants {
      */
     public static String byteToString(byte[] input) {
                 StringBuilder sb = new StringBuilder();
-                for (byte b : input) {
-                        if (b != 0) {
-                                sb.append((char) b);
-                        }
-                }
-                String output = new String(sb);
-                return output;
+        for (byte b : input) {
+            if (b != 0) {
+                sb.append((char) b);
+            }
+        }
+        return (sb.toString());
         }
 
     /**
@@ -167,6 +164,24 @@ public class ServerConstants {
     }
 
     /**
+     * Gets a list of system's running NICs.
+     *
+     * @return  a list of all system's live network interfaces;
+     * @throws SocketException  when can't retrieve
+     *                          a list of interfaces;
+     */
+    private static ArrayList<NetworkInterface> getLiveNICs() throws SocketException {
+            Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
+            ArrayList<NetworkInterface> uPnets = new ArrayList<>();
+        for (NetworkInterface netIf : Collections.list(nets)) {
+            if (netIf.isUp()) {
+                uPnets.add(netIf);
+            }
+        }
+        return uPnets;
+    }
+
+    /**
      * Chooses running network
      * interface to work with.
      * <p>
@@ -184,17 +199,10 @@ public class ServerConstants {
      *                          interfaces from system;
      */
     public static NetworkInterface chooseInterface() throws SocketException {
-        NetworkInterface iFace = null;
+            NetworkInterface iFace = null;
             /* running interfaces */
-        ArrayList<NetworkInterface> uPnets = new ArrayList<>();
+            ArrayList<NetworkInterface> uPnets = getLiveNICs();
 
-        Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
-
-        for (NetworkInterface netIf : Collections.list(nets)) {
-            if (netIf.isUp()) {
-                uPnets.add(netIf);
-            }
-        }
         System.out.println("A list of system's running interfaces:");
         for (NetworkInterface netIf : uPnets) {
             System.out.print(netIf.getName() + " ");
@@ -209,7 +217,9 @@ public class ServerConstants {
         if (iFace == null) {
             iFace = chooseInterface(uPnets, "wan");
         }
-
+        if (iFace == null) {
+            iFace = uPnets.get(0);
+        }
         return iFace;
     }
 

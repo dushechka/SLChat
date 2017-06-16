@@ -23,6 +23,8 @@ public class Server extends Thread {
     public void run() {
         startListening();
         IS_SERVER_RUNNING = true;
+        System.out.println("Server started.");
+        System.out.println("Room name is: " + roomName);
     }
 
     /**

@@ -8,6 +8,7 @@ import server.model.Server;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.Collections;
 
 import static server.model.ServerConstants.*;
 
@@ -39,18 +40,35 @@ public class SLChat {
         public static StartView mainView = null;
     /** Client's GUI fxml file path. */
         public static String clientGUIPath = "/client/view/chat/Chat.fxml";
-    /** Preffered network interface, to run client from */
-        public static NetworkInterface prefferedInterface = null;
-    /** Interface, which is used to make local connections */
+    /** Preffered network interface, to run client from. */
+        private static NetworkInterface prefferedInterface = null;
+    /** {@link #prefferedInterface} address, with wich program will work. */
+        public static InetAddress prefferedAddress = null;
+    /** Interface, which is used to make local connections. */
         public static InetAddress localAddress = null;
 
     /**
-     * Sole constructor. (Declared explicitly
-     * to deprecate instantiation).
-     *
-     * @deprecated  As this class is not instantiable.
+     * Main program entry.
      */
-    @Deprecated public SLChat() {}
+    public SLChat() {
+        try {
+            localAddress = InetAddress.getByName("localhost");
+            prefferedInterface = chooseInterface();
+            System.out.println("Preffered interface: " + prefferedInterface.getName());
+            System.out.println("Does interface support multicasting: " + prefferedInterface.supportsMulticast());
+            prefferedAddress = getIfaceAddress();
+            System.out.println("Preffered address is: " + prefferedAddress);
+            /* starting program GUI */
+            new Thread() {
+                @Override
+                public void run() {
+                    javafx.application.Application.launch(StartView.class);
+                }
+            }.start();
+        } catch (SocketException | UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Starts main GUI window.
@@ -61,19 +79,7 @@ public class SLChat {
      * @param args  not useful
      */
     public static void main(String[] args) {
-        try {
-            localAddress = InetAddress.getByName("localhost");
-            new Thread() {
-            @Override
-            public void run() {
-                javafx.application.Application.launch(StartView.class);
-            }
-        }.start();
-            prefferedInterface = chooseInterface();
-            System.out.println("Preffered interface: " + prefferedInterface.getName());
-        } catch (SocketException | UnknownHostException exc) {
-            exc.printStackTrace();
-        }
+        new SLChat();
     }
 
     /**
@@ -97,25 +103,19 @@ public class SLChat {
      * room name.
      */
     public static void getIP() {
-            String msg = null;
-            Seeker seeker= null;
-            DatagramPacket packet = null;
-            byte[] packetData = null;
-            DatagramSocket dSocket = null;
+            String msg;
+            Seeker seeker;
+            DatagramPacket packet;
+            byte[] packetData;
 
         /* Creates instance of client.model.Seeker
-          class thread, that sends multicast packets
-          on LAN, in order, to server catch them and
-          responce with packet, containing it's IP.
-          Then, creates DatagramSocket to catch
-          server's back packet and extracts server's
-          IP and message from it */
-        try {
-            if (prefferedInterface != null) {
-                dSocket = new DatagramSocket(CLIENT_PORT, getIfaceAddress());
-            } else {
-                dSocket = new DatagramSocket(CLIENT_PORT);
-            }
+           class thread, that sends multicast packets
+           on LAN, in order, to server catch them and
+           responce with packet, containing it's IP.
+           Then, creates DatagramSocket to catch
+           server's back packet and extracts server's
+           IP and message from it */
+        try (DatagramSocket dSocket = new DatagramSocket(CLIENT_PORT, prefferedAddress)) {
             seeker = new Seeker();
             seeker.start();
             packetData = new byte[32];
@@ -137,10 +137,6 @@ public class SLChat {
         } catch (IOException ie) {
             System.out.println("Exception thrown while trying to find server.;");
             ie.printStackTrace();
-        } finally {
-            if ((dSocket != null) && (!dSocket.isClosed())) {
-                dSocket.close();
-            }
         }
     }
 
@@ -148,18 +144,20 @@ public class SLChat {
      * Gets interface address, from
      * which to send packets.
      *
-     * @param iName  The name of interface for
-     *               which to get IP-address
      * @return  {@link InetAddress} from
      *          which to send packets
      * @throws SocketException  When cannot get
      *                          address by name
      */
-    public static InetAddress getIfaceAddress(String iName) throws SocketException {
-        NetworkInterface nif = NetworkInterface.getByName(iName);
-        System.out.println("Does interface support multicasting: " + nif.supportsMulticast());
-        InetAddress socketAddress = nif.getInetAddresses().nextElement();
-        return socketAddress;
+    private static InetAddress getIfaceAddress(NetworkInterface nif) throws SocketException {
+            InetAddress address = null;
+
+        for (InetAddress addr : Collections.list(nif.getInetAddresses())) {
+            if (addr.toString().length() <= 16) {
+                address = addr;
+            }
+        }
+        return address;
     }
 
     /**
@@ -167,7 +165,7 @@ public class SLChat {
      * which to send packets.
      * <p>
      * Invokes method of the same name
-     * {@link #getIfaceAddress(String)},
+     * {@link #getIfaceAddress(NetworkInterface)},
      * supplying chosen network interface
      * ({@link #prefferedInterface}) to it.
      *
@@ -176,7 +174,7 @@ public class SLChat {
      * @throws SocketException  When cannot get
      *                          address by name
      */
-    public static InetAddress getIfaceAddress () throws SocketException {
-        return getIfaceAddress(prefferedInterface.getName().toString());
+    private static InetAddress getIfaceAddress () throws SocketException {
+        return getIfaceAddress(prefferedInterface);
     }
 }

@@ -1,6 +1,7 @@
 package server.model;
 
 import static main.SLChat.localAddress;
+import static main.SLChat.prefferedAddress;
 import static server.model.ServerConstants.*;
 
 import java.io.IOException;
@@ -25,9 +26,6 @@ public class ClientNotifier extends Thread {
         private DatagramPacket packet = null;
         private byte[] packetData = null;
         private final String roomName;
-        /* An interface's IP address, from which
-           to listen and send packets. */
-        private InetAddress inetAddress = null;
 
     /**
      *
@@ -40,7 +38,7 @@ public class ClientNotifier extends Thread {
         try {
             System.out.println("Starting ClientNotifier");
 //            inetAddress = getInterface("eth3");
-//            mSocket = new MulticastSocket(new InetSocketAddress(inetAddress, SERVER_MULTI_PORT));
+//            mSocket = new MulticastSocket(new InetSocketAddress(prefferedAddress, SERVER_MULTI_PORT));
             mSocket = new MulticastSocket(SERVER_MULTI_PORT);
             group = InetAddress.getByName(GROUP_ADDRESS);
             mSocket.joinGroup(group);

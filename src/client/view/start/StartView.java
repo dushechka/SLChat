@@ -73,7 +73,7 @@ public class StartView extends Application {
                     SLClient.join();
                 }
             } catch (InterruptedException ie) {
-                System.out.println("Oh no! Client seem doesn't whant to stop! :'(");
+                System.out.println("Oh no! Client seems not want to stop! :'(");
                 ie.printStackTrace();
             }
         });
