@@ -62,7 +62,7 @@ public class CreateController {
             /* starting client */
             try {
                 Client.serverAddress = localAddress;
-                if (connectClient("faka", pass)) {
+                if (connectClient("fucker", pass)) {
                     mainView.changeWindow(CLIENT_GUI_PATH);
                 } else {
                     System.out.println("Client could not start!");

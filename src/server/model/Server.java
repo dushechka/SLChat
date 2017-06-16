@@ -15,20 +15,18 @@ public class Server extends Thread {
         private ClientConnector clientConnector;
         private final String roomName;
         private final String password;
-        private ArrayList<ClientHandler> clients;
 
     public Server(String roomName, String password) {
         super("SLServer");
         this.roomName = roomName;
         this.password = password;
-        clients = new ArrayList<>();
     }
 
     public void run() {
         startListening();
         IS_SERVER_RUNNING = true;
-        System.out.println("Server started.");
-        System.out.println("Room name is: " + roomName);
+        printMessage("Started.");
+        printMessage("Room name is <" + roomName + ">");
     }
 
     /**
@@ -42,7 +40,7 @@ public class Server extends Thread {
      */
     private void startListening() {
         clientNotifier = new ClientNotifier(roomName);
-        clientConnector = new ClientConnector(clients, password);
+        clientConnector = new ClientConnector(password);
         clientNotifier.start();
         clientConnector.start();
     }
@@ -59,8 +57,12 @@ public class Server extends Thread {
             clientConnector.join();
             IS_SERVER_RUNNING = false;
         } catch (InterruptedException e) {
-            System.out.println("Exception thrown while server was closing secondary threads.");
+            printMessage("Exception thrown, while closing secondary threads.");
             e.printStackTrace();
         }
+    }
+
+    private void printMessage(String message) {
+        System.out.println(getName() + ": " + message);
     }
 }

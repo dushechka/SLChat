@@ -39,22 +39,21 @@ public class ClientNotifier extends Thread {
         super("ClientNotifier");
         this.roomName = roomName;
         try {
-            System.out.println("Starting ClientNotifier");
+            printMessage("Starting...");
 //            inetAddress = getInterface("eth3");
 //            mSocket = new MulticastSocket(new InetSocketAddress(prefferedAddress, SERVER_MULTI_PORT));
             mSocket = new MulticastSocket(SERVER_MULTI_PORT);
             group = InetAddress.getByName(GROUP_ADDRESS);
             mSocket.joinGroup(group);
         } catch (IOException exc) {
-            System.out.println("Exception thrown while initializing resources in constructor.");
-            System.out.println("Thread " + getName());
+            printMessage("Exception thrown while initializing resources in constructor.");
             exc.printStackTrace();
         }
     }
 
     public void run() {
         IS_RUNNING = true;
-        System.out.println("ClientNotifier started.");
+        printMessage("Started.");
         try {
             while(IS_RUNNING) {
                 /* Receiving multicast packets from clients. */
@@ -62,27 +61,26 @@ public class ClientNotifier extends Thread {
                 packet = new DatagramPacket(packetData, packetData.length);
                 mSocket.receive(packet);
                 packetData = packet.getData();
-                System.out.println("Recieved packet: " + byteToString(packetData));
+                printMessage("Received packet <" + byteToString(packetData) + ">");
                 if (byteToString(packetData).contains(byteToString(SERVER_STRING))) {
-                    System.out.println("Multicast packet recieved from client.");
-                    System.out.println("Clients address: " + packet.getAddress());
+                    printMessage("Multicast packet recieved from client.");
+                    printMessage("Clients address <" + packet.getAddress() + ">");
                     /* Making a packet, containing room name and server address info */
                     String msg = new String(byteToString(SERVER_STRING) + roomName);
                     packetData = stringToByte(msg);
                     packet = new DatagramPacket(packetData, packetData.length, packet.getAddress(), CLIENT_PORT);
                     /* Sending packet to corresponding client's method (main.SLChat#getIP()). */
                     mSocket.send(packet);
-                    System.out.println("Back datagram packet sent to client;");
+                    printMessage("Back datagram packet sent to client.");
                 } else {
-                    System.out.println("Unknown packet intercepted.");
-                    System.out.println("Sender's address: " + packet.getAddress());
-                    System.out.println("Packet data: " + byteToString(packetData));
+                    printMessage("Unknown packet intercepted.");
+                    printMessage("Sender's address <" + packet.getAddress() + ">");
+                    printMessage("Packet data <" + byteToString(packetData) + ">");
                 }
                 sleep(1000);
             }
         } catch (IOException | InterruptedException e) {
-            System.out.println("Exception thrown in run() method.");
-            System.out.println("Thread " + getName());
+            printMessage("Exception thrown in run() method.");
             e.printStackTrace();
         } finally {
             close();
@@ -93,14 +91,13 @@ public class ClientNotifier extends Thread {
     void die() {
         IS_RUNNING = false;
         /* Sending dummy packet to overcome "while" cycle in method run() */
-        System.out.println("Stopping ClientNotifier;");
+        printMessage(": Stopping...");
         try ( DatagramSocket dummySocket = new DatagramSocket(4455); ) {
             DatagramPacket dummyPacket = new DatagramPacket(packetData, packetData.length,
                                                             localAddress, SERVER_MULTI_PORT);
             dummySocket.send(dummyPacket);
         } catch (IOException exc) {
-            System.out.println("Exception thrown while trying to release kill the thread.");
-            System.out.println("Thread " + getName());
+            printMessage(": Exception thrown while trying to release kill the thread.");
             exc.printStackTrace();
         }
     }
@@ -110,6 +107,10 @@ public class ClientNotifier extends Thread {
         if ((mSocket != null) && (!mSocket.isClosed())) {
             this.mSocket.close();
         }
-        System.out.println("ClientNotifier stoped.");
+        printMessage(": Stopped.");
+    }
+
+    private void printMessage(String message) {
+        System.out.println(getName() + ": " + message);
     }
 }

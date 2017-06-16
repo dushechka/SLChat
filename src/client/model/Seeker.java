@@ -27,8 +27,7 @@ public class Seeker extends Thread {
             group = InetAddress.getByName(GROUP_ADDRESS);
             datagramPacket = new DatagramPacket(SERVER_STRING, SERVER_STRING.length, group, SERVER_MULTI_PORT);
         } catch (UnknownHostException e) {
-            System.out.println("Exception thrown while trying to achieve multicast group and IF address.");
-            System.out.println("Thread " + getName());
+            printMessage("Exception thrown while trying to achieve multicast group and IP address.");
             e.printStackTrace();
         }
     }
@@ -47,14 +46,14 @@ public class Seeker extends Thread {
     public void run() {
             int i = 0;
         IS_RUNNING = true;
-        System.out.println("Seeker started.");
+        printMessage("Started.");
         /* Sending multicast packet's on LAN */
         try (DatagramSocket datagramSocket = new DatagramSocket(CLIENT_MULTICAST_PORT, prefferedAddress)) {
             while (IS_RUNNING) {
                 i++;
                 /* Sending broadcast packet */
                 datagramSocket.send(datagramPacket);
-                System.out.println("Packet send from: " + prefferedAddress);
+                printMessage("Packet send from: " + prefferedAddress);
                 sleep(1000);
                 /* stop if server's not responding */
                 if (i == 3) {
@@ -65,8 +64,7 @@ public class Seeker extends Thread {
                 }
             }
         } catch (IOException | InterruptedException e) {
-            System.out.println("Exception thrown while sending packets in run()");
-            System.out.println("Thread " + getName());
+            printMessage("Exception thrown while sending packets in run()");
             e.printStackTrace();
         }
     }
@@ -76,5 +74,9 @@ public class Seeker extends Thread {
      */
     public void die() {
         IS_RUNNING = false;
+    }
+
+    private void printMessage(String message) {
+        System.out.println(getName() + ": " + message);
     }
 }

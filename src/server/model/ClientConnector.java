@@ -24,36 +24,38 @@ public class ClientConnector extends Thread {
     /** A new connected client to add to {@link #clients} */
         private ClientHandler clientHandler;
         private final String password;
+    /** An addition number to {@link ClientHandler} threads names */
+        private int handlerNumber;
 
-    ClientConnector(ArrayList<ClientHandler> clients, String password) {
+    ClientConnector(String password) {
         super("ClientConnector");
+        handlerNumber = 0;
+        this.clients = new ArrayList<>();
         this.password = password;
-        this.clients = clients;
         try {
             serverSocket = new ServerSocket(SERVER_FINAL_PORT);
 //            serverSocket = new ServerSocket(SERVER_FINAL_PORT, 10, getInterface("eth3"));
         } catch (IOException exc) {
-            System.out.println("Exception thrown while opening ServerSocket.");
-            System.out.println("Thread: " + getName());
+            printMessage("Exception thrown while opening ServerSocket.");
             exc.printStackTrace();
         }
     }
 
     public void run() {
         IS_RUNNING = true;
-        System.out.println("ClientConnector started.");
+        printMessage("Started.");
         try {
             while (IS_RUNNING) {
                 /* Establishing connection with client. */
                 clientSocket = serverSocket.accept();
-                clientHandler = new ClientHandler(clientSocket, password);
+                clientHandler = new ClientHandler(clientSocket, password, this);
+                handlerNumber++;
                 clients.add(clientHandler);
                 clientHandler.start();
-                System.out.println("Client connected.");
+                printMessage("Client connected.");
             }
         } catch (IOException e) {
-            System.out.println("Exception thrown in run() method.");
-            System.out.println("Thread " + getName());
+            printMessage("Exception thrown in run() method.");
         }
         close();
     }
@@ -66,8 +68,7 @@ public class ClientConnector extends Thread {
         try ( Socket dummy = new Socket("localhost", SERVER_FINAL_PORT); ) {
             /* Socket made to overcome "while" cycle in run() method */
         } catch (IOException e) {
-            System.out.println("Exception thrown while trying to kill thread.");
-            System.out.println("Thread " + getName());
+            printMessage("Exception thrown while trying to kill thread.");
             e.printStackTrace();
         }
     }
@@ -81,9 +82,32 @@ public class ClientConnector extends Thread {
                 serverSocket.close();
             }
         } catch (IOException e) {
-            System.out.println("Exception thrown while trying to release resources.");
-            System.out.println("Thread " + getName());
+            printMessage("Exception thrown while trying to release resources.");
         }
         System.out.println("ClientConnector stopped.");
+    }
+
+    public void removeClient(ClientHandler client) {
+        clients.remove(client);
+        printMessage("Client <" + client.getNickname() + "> removed.");
+    }
+
+    public boolean isNicknameUsed(String nickname) {
+        for (ClientHandler ch : clients ) {
+            printMessage("Eximining " + ch.getName() + "(" + ch.getNickname() + ")");
+            if (ch.getNickname().equals(nickname)) {
+                System.out.println("Got it!");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void printMessage(String message) {
+        System.out.println(getName() + ": " + message);
+    }
+
+    int getHandlerNumber() {
+        return handlerNumber;
     }
 }
