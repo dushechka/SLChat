@@ -6,7 +6,104 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/SLChat_jar/SLChat.jar" afterPath="$PROJECT_DIR$/out/artifacts/SLChat_jar/SLChat.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/allclasses-frame.html" afterPath="$PROJECT_DIR$/doc/allclasses-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/allclasses-noframe.html" afterPath="$PROJECT_DIR$/doc/allclasses-noframe.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/model/Client.html" afterPath="$PROJECT_DIR$/doc/client/model/Client.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/model/Seeker.html" afterPath="$PROJECT_DIR$/doc/client/model/Seeker.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/model/class-use/Client.html" afterPath="$PROJECT_DIR$/doc/client/model/class-use/Client.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/model/class-use/Seeker.html" afterPath="$PROJECT_DIR$/doc/client/model/class-use/Seeker.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/model/package-frame.html" afterPath="$PROJECT_DIR$/doc/client/model/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/model/package-summary.html" afterPath="$PROJECT_DIR$/doc/client/model/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/model/package-tree.html" afterPath="$PROJECT_DIR$/doc/client/model/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/model/package-use.html" afterPath="$PROJECT_DIR$/doc/client/model/package-use.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/package-frame.html" afterPath="$PROJECT_DIR$/doc/client/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/package-summary.html" afterPath="$PROJECT_DIR$/doc/client/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/package-tree.html" afterPath="$PROJECT_DIR$/doc/client/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/package-use.html" afterPath="$PROJECT_DIR$/doc/client/package-use.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/login/LoginController.html" afterPath="$PROJECT_DIR$/doc/client/view/login/LoginController.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/login/class-use/LoginController.html" afterPath="$PROJECT_DIR$/doc/client/view/login/class-use/LoginController.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/login/package-frame.html" afterPath="$PROJECT_DIR$/doc/client/view/login/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/login/package-summary.html" afterPath="$PROJECT_DIR$/doc/client/view/login/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/login/package-tree.html" afterPath="$PROJECT_DIR$/doc/client/view/login/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/login/package-use.html" afterPath="$PROJECT_DIR$/doc/client/view/login/package-use.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/package-frame.html" afterPath="$PROJECT_DIR$/doc/client/view/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/package-summary.html" afterPath="$PROJECT_DIR$/doc/client/view/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/package-tree.html" afterPath="$PROJECT_DIR$/doc/client/view/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/package-use.html" afterPath="$PROJECT_DIR$/doc/client/view/package-use.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/search/SearchController.html" afterPath="$PROJECT_DIR$/doc/client/view/search/SearchController.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/search/class-use/SearchController.html" afterPath="$PROJECT_DIR$/doc/client/view/search/class-use/SearchController.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/search/package-frame.html" afterPath="$PROJECT_DIR$/doc/client/view/search/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/search/package-summary.html" afterPath="$PROJECT_DIR$/doc/client/view/search/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/search/package-tree.html" afterPath="$PROJECT_DIR$/doc/client/view/search/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/search/package-use.html" afterPath="$PROJECT_DIR$/doc/client/view/search/package-use.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/start/StartController.html" afterPath="$PROJECT_DIR$/doc/client/view/start/StartController.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/start/StartView.html" afterPath="$PROJECT_DIR$/doc/client/view/start/StartView.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/start/class-use/StartController.html" afterPath="$PROJECT_DIR$/doc/client/view/start/class-use/StartController.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/start/class-use/StartView.html" afterPath="$PROJECT_DIR$/doc/client/view/start/class-use/StartView.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/start/package-frame.html" afterPath="$PROJECT_DIR$/doc/client/view/start/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/start/package-summary.html" afterPath="$PROJECT_DIR$/doc/client/view/start/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/start/package-tree.html" afterPath="$PROJECT_DIR$/doc/client/view/start/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/client/view/start/package-use.html" afterPath="$PROJECT_DIR$/doc/client/view/start/package-use.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/constant-values.html" afterPath="$PROJECT_DIR$/doc/constant-values.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/deprecated-list.html" afterPath="$PROJECT_DIR$/doc/deprecated-list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/help-doc.html" afterPath="$PROJECT_DIR$/doc/help-doc.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-1.html" afterPath="$PROJECT_DIR$/doc/index-files/index-1.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-10.html" afterPath="$PROJECT_DIR$/doc/index-files/index-10.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-11.html" afterPath="$PROJECT_DIR$/doc/index-files/index-11.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-12.html" afterPath="$PROJECT_DIR$/doc/index-files/index-12.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-13.html" afterPath="$PROJECT_DIR$/doc/index-files/index-13.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-14.html" afterPath="$PROJECT_DIR$/doc/index-files/index-14.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-15.html" afterPath="$PROJECT_DIR$/doc/index-files/index-15.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-16.html" afterPath="$PROJECT_DIR$/doc/index-files/index-16.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-2.html" afterPath="$PROJECT_DIR$/doc/index-files/index-2.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-3.html" afterPath="$PROJECT_DIR$/doc/index-files/index-3.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-4.html" afterPath="$PROJECT_DIR$/doc/index-files/index-4.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-5.html" afterPath="$PROJECT_DIR$/doc/index-files/index-5.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-6.html" afterPath="$PROJECT_DIR$/doc/index-files/index-6.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-7.html" afterPath="$PROJECT_DIR$/doc/index-files/index-7.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-8.html" afterPath="$PROJECT_DIR$/doc/index-files/index-8.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index-files/index-9.html" afterPath="$PROJECT_DIR$/doc/index-files/index-9.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index.html" afterPath="$PROJECT_DIR$/doc/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/main/SLChat.html" afterPath="$PROJECT_DIR$/doc/main/SLChat.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/main/class-use/SLChat.html" afterPath="$PROJECT_DIR$/doc/main/class-use/SLChat.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/main/package-frame.html" afterPath="$PROJECT_DIR$/doc/main/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/main/package-summary.html" afterPath="$PROJECT_DIR$/doc/main/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/main/package-tree.html" afterPath="$PROJECT_DIR$/doc/main/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/main/package-use.html" afterPath="$PROJECT_DIR$/doc/main/package-use.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/overview-frame.html" afterPath="$PROJECT_DIR$/doc/overview-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/overview-summary.html" afterPath="$PROJECT_DIR$/doc/overview-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/overview-tree.html" afterPath="$PROJECT_DIR$/doc/overview-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/model/ClientConnector.html" afterPath="$PROJECT_DIR$/doc/server/model/ClientConnector.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/model/ClientNotifier.html" afterPath="$PROJECT_DIR$/doc/server/model/ClientNotifier.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/model/Server.html" afterPath="$PROJECT_DIR$/doc/server/model/Server.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/model/ServerConstants.html" afterPath="$PROJECT_DIR$/doc/server/model/ServerConstants.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/model/class-use/ClientConnector.html" afterPath="$PROJECT_DIR$/doc/server/model/class-use/ClientConnector.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/model/class-use/ClientNotifier.html" afterPath="$PROJECT_DIR$/doc/server/model/class-use/ClientNotifier.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/model/class-use/Server.html" afterPath="$PROJECT_DIR$/doc/server/model/class-use/Server.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/model/class-use/ServerConstants.html" afterPath="$PROJECT_DIR$/doc/server/model/class-use/ServerConstants.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/model/package-frame.html" afterPath="$PROJECT_DIR$/doc/server/model/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/model/package-summary.html" afterPath="$PROJECT_DIR$/doc/server/model/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/model/package-tree.html" afterPath="$PROJECT_DIR$/doc/server/model/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/model/package-use.html" afterPath="$PROJECT_DIR$/doc/server/model/package-use.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/package-frame.html" afterPath="$PROJECT_DIR$/doc/server/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/package-summary.html" afterPath="$PROJECT_DIR$/doc/server/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/package-tree.html" afterPath="$PROJECT_DIR$/doc/server/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/package-use.html" afterPath="$PROJECT_DIR$/doc/server/package-use.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/view/create/CreateController.html" afterPath="$PROJECT_DIR$/doc/server/view/create/CreateController.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/view/create/class-use/CreateController.html" afterPath="$PROJECT_DIR$/doc/server/view/create/class-use/CreateController.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/view/create/package-frame.html" afterPath="$PROJECT_DIR$/doc/server/view/create/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/view/create/package-summary.html" afterPath="$PROJECT_DIR$/doc/server/view/create/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/view/create/package-tree.html" afterPath="$PROJECT_DIR$/doc/server/view/create/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/view/create/package-use.html" afterPath="$PROJECT_DIR$/doc/server/view/create/package-use.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/view/package-frame.html" afterPath="$PROJECT_DIR$/doc/server/view/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/view/package-summary.html" afterPath="$PROJECT_DIR$/doc/server/view/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/view/package-tree.html" afterPath="$PROJECT_DIR$/doc/server/view/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/server/view/package-use.html" afterPath="$PROJECT_DIR$/doc/server/view/package-use.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/model/ServerConstants.java" afterPath="$PROJECT_DIR$/src/server/model/ServerConstants.java" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,12 +124,12 @@
       <file leaf-file-name="SLChat.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/SLChat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
+            <state relative-caret-position="374">
               <caret line="35" column="7" lean-forward="false" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3072#3256#0" expanded="true" />
-                <element signature="e#3255#3256#0" expanded="true" />
+                <marker date="1497845676065" expanded="true" signature="997:1001" ph="/**...*/" />
+                <marker date="1497845676065" expanded="true" signature="5375:5686" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -40,22 +137,22 @@
       </file>
       <file leaf-file-name="Chat.fxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/client/view/chat/Chat.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
+            <state relative-caret-position="408">
               <caret line="24" column="117" lean-forward="false" selection-start-line="24" selection-start-column="117" selection-end-line="24" selection-end-column="117" />
               <folding />
             </state>
-          </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder">
-            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="StartController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/client/view/start/StartController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="86" column="24" lean-forward="false" selection-start-line="86" selection-start-column="24" selection-end-line="86" selection-end-column="24" />
+            <state relative-caret-position="969">
+              <caret line="68" column="24" lean-forward="false" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -66,7 +163,7 @@
       <file leaf-file-name="LoginController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/client/view/login/LoginController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
+            <state relative-caret-position="442">
               <caret line="36" column="19" lean-forward="false" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
               <folding />
             </state>
@@ -76,34 +173,21 @@
       <file leaf-file-name="SearchController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/client/view/search/SearchController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="30" column="72" lean-forward="false" selection-start-line="30" selection-start-column="72" selection-end-line="30" selection-end-column="72" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Start.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/client/view/start/Start.fxml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="37" lean-forward="false" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
+            <state relative-caret-position="340">
+              <caret line="30" column="75" lean-forward="false" selection-start-line="30" selection-start-column="75" selection-end-line="30" selection-end-column="75" />
               <folding />
             </state>
-          </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder">
-            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="StartView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/client/view/start/StartView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="134" column="9" lean-forward="false" selection-start-line="134" selection-start-column="9" selection-end-line="134" selection-end-column="9" />
-              <folding />
+            <state relative-caret-position="2295">
+              <caret line="149" column="0" lean-forward="false" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
+              <folding>
+                <marker date="1497845676065" expanded="true" signature="5268:5277" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -111,8 +195,21 @@
       <file leaf-file-name="ClientConnector.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/server/model/ClientConnector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="46" column="42" lean-forward="false" selection-start-line="46" selection-start-column="42" selection-end-line="46" selection-end-column="42" />
+            <state relative-caret-position="731">
+              <caret line="48" column="13" lean-forward="false" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <marker date="1497845676065" expanded="true" signature="2318:2642" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CreateController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/server/view/create/CreateController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="832">
+              <caret line="62" column="32" lean-forward="false" selection-start-line="62" selection-start-column="32" selection-end-line="62" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -120,14 +217,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CreateController.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/server/view/create/CreateController.java">
+      <file leaf-file-name="ServerConstants.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/server/model/ServerConstants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="64" column="51" lean-forward="false" selection-start-line="64" selection-start-column="51" selection-end-line="64" selection-end-column="51" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="374">
+              <caret line="58" column="9" lean-forward="false" selection-start-line="58" selection-start-column="9" selection-end-line="58" selection-end-column="9" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -135,7 +230,7 @@
       <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/client/model/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="614">
+            <state relative-caret-position="1122">
               <caret line="74" column="24" lean-forward="false" selection-start-line="74" selection-start-column="24" selection-end-line="74" selection-end-column="24" />
               <folding />
             </state>
@@ -165,7 +260,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/server/model/ServerConstants.java" />
         <option value="$PROJECT_DIR$/src/client/view/login/Login.fxml" />
         <option value="$PROJECT_DIR$/src/client/model/ClientStarter.java" />
         <option value="$PROJECT_DIR$/src/client/view/login/Login.css" />
@@ -181,14 +275,15 @@
         <option value="$PROJECT_DIR$/src/main/SLChat.java" />
         <option value="$PROJECT_DIR$/src/server/model/ClientConnector.java" />
         <option value="$PROJECT_DIR$/src/server/view/create/CreateController.java" />
+        <option value="$PROJECT_DIR$/src/server/model/ServerConstants.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1" />
-    <option name="y" value="-2" />
-    <option name="width" value="1682" />
-    <option name="height" value="1053" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1696" />
+    <option name="height" value="1026" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -208,9 +303,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -447,6 +541,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -715,25 +810,25 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="-2" width="1682" height="1053" extended-state="7" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3262032" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293348" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21176471" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21155943" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293348" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19345239" sideWeight="0.6703755" order="5" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32824427" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -748,11 +843,11 @@
       <window_info id="Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3262032" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" x="87" y="110" width="1496" height="826" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32824427" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -871,7 +966,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="33" lean-forward="false" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -881,7 +975,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="12" lean-forward="false" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -900,24 +993,20 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/view/login/Login.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
           <caret line="32" column="15" lean-forward="false" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="15" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/model/Seeker.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="79" column="24" lean-forward="false" selection-start-line="79" selection-start-column="24" selection-end-line="79" selection-end-column="24" />
-          <folding>
-            <element signature="e#2611#2612#0" expanded="false" />
-            <element signature="e#2673#2674#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -925,18 +1014,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
           <caret line="28" column="52" lean-forward="false" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="52" />
-          <folding>
-            <element signature="e#1700#1701#0" expanded="false" />
-            <element signature="e#1762#1763#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/model/ServerConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="26" column="8" lean-forward="false" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -946,16 +1023,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="518">
           <caret line="103" column="32" lean-forward="false" selection-start-line="103" selection-start-column="32" selection-end-line="103" selection-end-column="32" />
-          <folding>
-            <element signature="e#2383#2384#0" expanded="false" />
-            <element signature="e#2414#2415#0" expanded="false" />
-            <element signature="e#2440#2441#0" expanded="false" />
-            <element signature="e#2474#2475#0" expanded="false" />
-            <element signature="e#2502#2503#0" expanded="false" />
-            <element signature="e#2542#2543#0" expanded="false" />
-            <element signature="e#2591#2592#0" expanded="false" />
-            <element signature="e#2671#2672#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -963,60 +1030,44 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1785">
           <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
-          <folding>
-            <element signature="e#4450#4451#0" expanded="true" />
-            <element signature="e#4512#4513#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/view/start/Start.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
+        <state relative-caret-position="289">
           <caret line="17" column="37" lean-forward="false" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/view/chat/Chat.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/view/chat/Chat.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
+        <state relative-caret-position="408">
           <caret line="24" column="117" lean-forward="false" selection-start-line="24" selection-start-column="117" selection-end-line="24" selection-end-column="117" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/lang/Class.java" />
     <entry file="file://$PROJECT_DIR$/src/client/view/search/SearchController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="72" lean-forward="false" selection-start-line="30" selection-start-column="72" selection-end-line="30" selection-end-column="72" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="340">
+          <caret line="30" column="75" lean-forward="false" selection-start-line="30" selection-start-column="75" selection-end-line="30" selection-end-column="75" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/Soft/jdk1.8.0_121/javafx-src.zip!/javafx/stage/Window.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="652" column="22" lean-forward="false" selection-start-line="652" selection-start-column="22" selection-end-line="652" selection-end-column="22" />
-          <folding>
-            <element signature="e#23012#23013#0" expanded="false" />
-            <element signature="e#23063#23064#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://$USER_HOME$/Soft/jdk1.8.0_121/javafx-src.zip!/javafx/stage/Window.java" />
     <entry file="file://$PROJECT_DIR$/src/client/view/login/LoginController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
+        <state relative-caret-position="442">
           <caret line="36" column="19" lean-forward="false" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
           <folding />
         </state>
@@ -1024,16 +1075,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/view/start/StartView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="134" column="9" lean-forward="false" selection-start-line="134" selection-start-column="9" selection-end-line="134" selection-end-column="9" />
-          <folding />
+        <state relative-caret-position="2295">
+          <caret line="149" column="0" lean-forward="false" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
+          <folding>
+            <marker date="1497845676065" expanded="true" signature="5268:5277" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/view/start/StartController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="86" column="24" lean-forward="false" selection-start-line="86" selection-start-column="24" selection-end-line="86" selection-end-column="24" />
+        <state relative-caret-position="969">
+          <caret line="68" column="24" lean-forward="false" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1042,7 +1095,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/model/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="614">
+        <state relative-caret-position="1122">
           <caret line="74" column="24" lean-forward="false" selection-start-line="74" selection-start-column="24" selection-end-line="74" selection-end-column="24" />
           <folding />
         </state>
@@ -1050,33 +1103,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/SLChat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
+        <state relative-caret-position="374">
           <caret line="35" column="7" lean-forward="false" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3072#3256#0" expanded="true" />
-            <element signature="e#3255#3256#0" expanded="true" />
+            <marker date="1497845676065" expanded="true" signature="997:1001" ph="/**...*/" />
+            <marker date="1497845676065" expanded="true" signature="5375:5686" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/server/model/ClientConnector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="46" column="42" lean-forward="false" selection-start-line="46" selection-start-column="42" selection-end-line="46" selection-end-column="42" />
+        <state relative-caret-position="731">
+          <caret line="48" column="13" lean-forward="false" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1497845676065" expanded="true" signature="2318:2642" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/server/view/create/CreateController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="64" column="51" lean-forward="false" selection-start-line="64" selection-start-column="51" selection-end-line="64" selection-end-column="51" />
+        <state relative-caret-position="832">
+          <caret line="62" column="32" lean-forward="false" selection-start-line="62" selection-start-column="32" selection-end-line="62" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/model/ServerConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="58" column="9" lean-forward="false" selection-start-line="58" selection-start-column="9" selection-end-line="58" selection-end-column="9" />
+          <folding />
         </state>
       </provider>
     </entry>

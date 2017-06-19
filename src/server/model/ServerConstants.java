@@ -53,6 +53,18 @@ public class ServerConstants {
         */
         private final static String DEFAULT_CHARSET = "UTF-8";
 
+    /**
+     * Forbidden method, because of
+     * static nature of this class.
+     * <p>
+     * This method should never be
+     * used, because this class does
+     * not need to be instantiated.
+     * <p>
+     * @deprecated No replacement.
+     */
+    @Deprecated
+    public ServerConstants(){}
 
     /**
      * Converts String type to
