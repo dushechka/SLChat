@@ -21,6 +21,8 @@ class ClientHandler extends Thread {
         private final String password;
         private final ClientConnector owner;
         private boolean IS_RUNNING;
+        DataInputStream in;
+        DataOutputStream out;
 
     ClientHandler(Socket socket, String password, ClientConnector owner) {
         super("ClientHandler_" + owner.getHandlerNumber());
@@ -29,32 +31,45 @@ class ClientHandler extends Thread {
         this.owner = owner;
         this.nickname = "";
         IS_RUNNING = false;
+        try {
+            in = new DataInputStream(socket.getInputStream());
+            out = new DataOutputStream(socket.getOutputStream());
+        } catch (IOException e) {
+            printMessage("Exception thrown while instantiating.");
+            e.printStackTrace();
+            close();
+        }
     }
 
     public void run() {
         IS_RUNNING = true;
         /* Opening input and output streams to exchange messages with client. */
-        try (DataInputStream in = new DataInputStream(socket.getInputStream());
-             DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
-                    /* string for saving incoming messages */
-                    String msg;
+        try {
+                /* string for saving incoming messages */
+                String msg;
             msg = in.readUTF();
             if (msg.equals(password)) {
-                out.writeUTF("yes");
-                out.flush();
+                sendMessage("yes");
                 printMessage("Client connection accepted.");
                 msg = in.readUTF();
                 printMessage("Received nickname <" + msg + ">");
                 setNickname(msg);
             } else {
-                out.writeUTF("\"You can suck my balls. Wrong password!\"");
-                out.flush();
+                sendMessage("\"You can suck my balls. Wrong password!\"");
                 printMessage("Client's connection rejected (wrong password).");
+                IS_RUNNING = false;
             }
             while (IS_RUNNING) {
                 msg = in.readUTF();
-                if (msg.equals("stop")){
-                    die();
+                printMessage("Received <" + msg + ">");
+                /* A way to ecological breaking connection */
+                if (msg.equals("malaka")) {
+                    sendMessage("mudak");
+                    printMessage("Client disconnected.");
+                    break;
+                } else if (msg.equals("mudak")) {
+                    printMessage("Broke connection with client " + nickname);
+                    break;
                 }
                 Thread.sleep(100);
             }
@@ -63,20 +78,35 @@ class ClientHandler extends Thread {
         } catch (InterruptedException ie) {
             printMessage("Thread was interrupted, while sleeping.");
             ie.printStackTrace();
+        } finally {
+            close();
         }
-        close();
     }
 
     public String getNickname() {
         return nickname;
     }
 
-    private void die() {
+    void die() {
+        try {
+            sendMessage("malaka");
+        } catch (IOException exc) {
+            exc.printStackTrace();
+        }
         IS_RUNNING = false;
     }
 
     private void close() {
-        owner.removeClient(this);
+        printMessage("Closing...");
+        try {
+            if (in != null) in.close();
+            if (out != null) out.close();
+            if (!socket.isClosed()) socket.close();
+            owner.removeClient(this);
+        } catch (IOException exc) {
+            exc.printStackTrace();
+        }
+        printMessage("Closed.");
     }
 
     private void printMessage(String message) {
@@ -99,8 +129,15 @@ class ClientHandler extends Thread {
     private void setNickname (String msg) {
             String nickname = new String(msg);
         for (int i = 1; owner.isNicknameUsed(nickname.toString()); i++) {
+            printMessage("Nickname <" + nickname + "> is used.");
             nickname = new String(msg + "_" + i);
         }
         this.nickname = nickname;
+        printMessage("Nickname <" + nickname + "> associated to this client.");
+    }
+
+    private void sendMessage(String message) throws IOException {
+        out.writeUTF(message);
+        out.flush();
     }
 }

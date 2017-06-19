@@ -54,7 +54,8 @@ public class ClientConnector extends Thread {
                 handlerNumber++;
                 clients.add(clientHandler);
                 clientHandler.start();
-                printMessage("Client connected.");
+                printMessage("New client connected.");
+                printListOfClients();
             }
         } catch (IOException e) {
             printMessage("Exception thrown in run() method.");
@@ -80,6 +81,7 @@ public class ClientConnector extends Thread {
      * Releases used resources.
      */
     private void close() {
+        emptyClients();
         try {
             if ((serverSocket != null) && (!serverSocket.isClosed())) {
                 serverSocket.close();
@@ -90,9 +92,23 @@ public class ClientConnector extends Thread {
         System.out.println("ClientConnector stopped.");
     }
 
+    private void emptyClients() {
+        for (ClientHandler ch : clients) {
+            ch.die();
+        }
+    }
+
     public void removeClient(ClientHandler client) {
         clients.remove(client);
         printMessage("Client <" + client.getNickname() + "> removed.");
+        printListOfClients();
+    }
+
+    public void printListOfClients() {
+        printMessage("List of connected clients:");
+        for (ClientHandler ch : clients) {
+            printMessage(ch.getName() + "(" + ch.getNickname() + ")");
+        }
     }
 
     public boolean isNicknameUsed(String nickname) {

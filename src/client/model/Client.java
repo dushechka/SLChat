@@ -34,15 +34,30 @@ public class Client extends Thread {
 
     public void run() {
         try {
+            String msg = "";
             IS_RUNNING = true;
             IS_CLIENT_RUNNING = true;
             printMessage("A " + nickname + "'s client is running...");
             while (IS_RUNNING) {
-                Thread.sleep(1000);
+                msg = in.readUTF();
+                printMessage("Received <" + msg + ">");
+                /* A way to ecological breaking connection */
+                if (msg.equals("malaka")) {
+                    sendMessage(out, "mudak");
+                    printMessage("Server broke connection.");
+                    break;
+                } else if (msg.equals("mudak")) {
+                    printMessage("I disconnected myself from server.");
+                    break;
+                }
+                Thread.sleep(100);
             }
-            close();
+        }catch (IOException ie) {
+            printMessage("Server became unavailable unexpectingly.");
         } catch (InterruptedException ie) {
             ie.printStackTrace();
+        } finally {
+            close();
         }
     }
 
@@ -79,6 +94,7 @@ public class Client extends Thread {
     public void die() {
         IS_RUNNING = false;
         IS_CLIENT_RUNNING = false;
+        sendMessage(out, "malaka");
     }
 
     private void close() {
@@ -86,9 +102,7 @@ public class Client extends Thread {
         try {
             in.close();
             out.close();
-            if (!socket.isClosed()) {
-                socket.close();
-            }
+            if (!socket.isClosed()) socket.close();
             printMessage("Closed.");
         } catch (IOException exc) {
             exc.printStackTrace();
@@ -105,6 +119,11 @@ public class Client extends Thread {
             exc.printStackTrace();
             return false;
         }
+    }
+
+    public void sendMessage(String message) throws IOException {
+        out.writeUTF(message);
+        out.flush();
     }
 
     private void printMessage(String message) {
