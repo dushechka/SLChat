@@ -33,6 +33,9 @@ public class SLChat {
         public static boolean IS_SERVER_RUNNING = false;
     /** Is used to stop {@link client.model.Client Client} thread. */
         public static boolean IS_CLIENT_RUNNING = false;
+    /** Is used, to determine, if
+     *  {@link server.model.ClientConnector} already running, to connect */
+        public static boolean IS_CLIENT_CONNECTOR_RUNNING = false;
     /** Server backend thread. */
         public static Server SLServer;
     /** Client backend thread. */

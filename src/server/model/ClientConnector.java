@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.ArrayList;
 
 import static server.model.ServerConstants.*;
+import static main.SLChat.*;
 
 /**
  * Listens for incoming client
@@ -43,6 +44,7 @@ public class ClientConnector extends Thread {
 
     public void run() {
         IS_RUNNING = true;
+        IS_CLIENT_CONNECTOR_RUNNING = true;
         printMessage("Started.");
         try {
             while (IS_RUNNING) {
@@ -65,6 +67,7 @@ public class ClientConnector extends Thread {
      */
     void die() {
         IS_RUNNING = false;
+        IS_CLIENT_CONNECTOR_RUNNING = false;
         try ( Socket dummy = new Socket("localhost", SERVER_FINAL_PORT); ) {
             /* Socket made to overcome "while" cycle in run() method */
         } catch (IOException e) {

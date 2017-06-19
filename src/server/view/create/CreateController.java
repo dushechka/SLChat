@@ -63,6 +63,10 @@ public class CreateController {
             /* starting client */
             try {
                 Client.serverAddress = localAddress;
+                /* waiting, while server runs */
+                while (!IS_CLIENT_CONNECTOR_RUNNING) {
+                    Thread.sleep(100);
+                }
                 if (connectClient("fucker", pass)) {
                     mainView.changeWindow(CLIENT_GUI_PATH);
                 } else {
