@@ -1,7 +1,10 @@
 package client.view.login;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -9,8 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import static client.model.Client.connectClient;
-import static main.SLChat.CLIENT_GUI_PATH;
-import static main.SLChat.mainView;
+import static main.SLChat.*;
 
 public class LoginController {
     @FXML TextField loginField;
@@ -35,6 +37,7 @@ public class LoginController {
             try {
                 if (connectClient(login, password)) {
                     mainView.changeWindow(CLIENT_GUI_PATH);
+                    mainView.bindTextArea();
                 } else {
                     System.out.println("Client could not start!");
                 }

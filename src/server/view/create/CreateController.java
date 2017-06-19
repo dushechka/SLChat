@@ -69,6 +69,7 @@ public class CreateController {
                 }
                 if (connectClient("fucker", pass)) {
                     mainView.changeWindow(CLIENT_GUI_PATH);
+                    mainView.bindTextArea();
                 } else {
                     System.out.println("Client could not start!");
                 }

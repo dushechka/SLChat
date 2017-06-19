@@ -3,13 +3,17 @@ package client.view.start;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import static main.SLChat.*;
 
 import java.io.File;
@@ -39,6 +43,7 @@ public class StartView extends Application {
     public void start(Stage stage) throws IOException {
         /* Setting static field that all classes can invoke it. */
         mainView = this;
+//        stage.initStyle(StageStyle.UNDECORATED);
         /* Setting main stage too. */
         primaryStage = stage;
         Parent root = FXMLLoader.load(getClass().getResource(START_GUI_PATH));
@@ -54,6 +59,7 @@ public class StartView extends Application {
                 } else {
                     /* Killing server on exit? */
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                    alert.initStyle(StageStyle.UTILITY);
                     ObservableList<ButtonType> buttonTypes = alert.getButtonTypes();
                     buttonTypes.setAll(ButtonType.YES, ButtonType.NO);
                     alert.setTitle("Closing SLChat:");
@@ -107,6 +113,21 @@ public class StartView extends Application {
         primaryStage.setScene(new Scene(root));
     }
 
+    /** Gets the link of chat window
+     *  {@link TextArea} and saves it
+     *  in {@link main.SLChat#SLClient}
+     *  instance field.
+     */
+    public void bindTextArea() {
+            ObservableList<Node> nodes = primaryStage.getScene().getRoot().getChildrenUnmodifiable();
+        for (Node node : nodes) {
+            System.out.println(node.getClass());
+            if (node.getClass().toString().contains("TextArea")) {
+                SLClient.setTextArea((TextArea) node);
+            }
+        }
+    }
+
     /**
      * Displays alert window.
      *
@@ -115,6 +136,7 @@ public class StartView extends Application {
      */
     public void alertWindow(String title, String content) {
         Alert nameAlert = new Alert(Alert.AlertType.INFORMATION);
+//        nameAlert.initStyle(StageStyle.UTILITY);
         nameAlert.setTitle(title);
         nameAlert.setHeaderText(null);
         nameAlert.setContentText(content);
@@ -135,6 +157,7 @@ public class StartView extends Application {
     public void openNewVindow(String path) throws IOException {
         Parent root = new GridPane();
         Stage stage = new Stage();
+//        stage.initStyle(StageStyle.UNDECORATED);
         /* opening create room window */
             root = FXMLLoader.load(getClass().getResource(path));
             stage.setScene(new Scene(root));

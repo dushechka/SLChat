@@ -70,6 +70,8 @@ class ClientHandler extends Thread {
                 } else if (msg.equals("mudak")) {
                     printMessage("Broke connection with client " + nickname);
                     break;
+                } else {
+                    owner.sendToAll(msg, this);
                 }
                 Thread.sleep(100);
             }
@@ -136,7 +138,7 @@ class ClientHandler extends Thread {
         printMessage("Nickname <" + nickname + "> associated to this client.");
     }
 
-    private void sendMessage(String message) throws IOException {
+    void sendMessage(String message) throws IOException {
         out.writeUTF(message);
         out.flush();
     }

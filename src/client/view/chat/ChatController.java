@@ -18,13 +18,13 @@ public class ChatController {
     @FXML TextArea textArea;
 
     @FXML
-    protected void handleSendButtonAction(ActionEvent event) {
+    protected void handleSendAction(ActionEvent event) {
         try {
             String msg = "";
-            if (IS_CLIENT_RUNNING) {
-                msg = textField.getText();
+            msg = textField.getText();
+            if (IS_CLIENT_RUNNING && !msg.isEmpty()) {
                 textField.setText("");
-                textArea.appendText(msg);
+                textArea.appendText(msg + "\n");
                 SLClient.sendMessage(msg);
             }
         } catch (IOException exc) {

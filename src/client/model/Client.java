@@ -1,5 +1,7 @@
 package client.model;
 
+import javafx.scene.control.TextArea;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -21,6 +23,7 @@ public class Client extends Thread {
         private final DataOutputStream out;
         private final Socket socket;
         public static InetAddress serverAddress;
+        private TextArea textArea = null;
         private String nickname;
 
     public Client(DataInputStream in, DataOutputStream out, Socket socket) {
@@ -34,6 +37,11 @@ public class Client extends Thread {
 
     public void run() {
         try {
+            /* waiting until mainView will set textArea
+             field, so this could harmlessly with it */
+            while (textArea == null) {
+                Thread.sleep(100);
+            }
             String msg = "";
             IS_RUNNING = true;
             IS_CLIENT_RUNNING = true;
@@ -49,6 +57,8 @@ public class Client extends Thread {
                 } else if (msg.equals("mudak")) {
                     printMessage("I disconnected myself from server.");
                     break;
+                } else {
+                    textArea.appendText(msg + "\n");
                 }
                 Thread.sleep(100);
             }
@@ -124,9 +134,14 @@ public class Client extends Thread {
     public void sendMessage(String message) throws IOException {
         out.writeUTF(message);
         out.flush();
+        printMessage("Sent message <" + message + ">.");
     }
 
     private void printMessage(String message) {
         System.out.println(getName() + ": " + message);
+    }
+
+    public void setTextArea(TextArea textArea) {
+        this.textArea = textArea;
     }
 }

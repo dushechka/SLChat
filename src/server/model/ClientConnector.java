@@ -120,6 +120,19 @@ public class ClientConnector extends Thread {
         return false;
     }
 
+    void sendToAll(String message, ClientHandler sender) {
+        for (ClientHandler ch : clients) {
+            if (ch != sender) {
+                try {
+                    ch.sendMessage(sender.getNickname() + ": " + message);
+                } catch (IOException e) {
+                    printMessage(ch.getName() + " could not send message to " +
+                                                "it's client " + ch.getNickname());
+                }
+            }
+        }
+    }
+
     private void printMessage(String message) {
         System.out.println(getName() + ": " + message);
     }
