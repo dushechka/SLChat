@@ -3,15 +3,10 @@ package client.view.start;
 import client.model.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -41,20 +36,8 @@ public class StartController {
      */
     @FXML
     protected void handleStartButtonAction(ActionEvent event) {
-            Parent root = new GridPane();
-            Stage stage = new Stage();
-        /* opening create room window */
         try {
-            root = FXMLLoader.load(getClass().getResource("/server/view/create/Create.fxml"));
-            stage.setScene(new Scene(root));
-            stage.setResizable(false);
-            /* setting new stage to be the stage owner */
-            mainScene = startButton.getScene();
-            stage.initOwner((Stage) mainScene.getWindow());
-            /* make this stage frozen, while new stage is open */
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.setTitle("SLChat");
-            stage.show();
+            mainView.openNewVindow(CREATE_GUI_PATH);
         } catch (IOException exc) {
             System.out.println("Exception thrown while switching main window to create window.");
             exc.printStackTrace();
@@ -69,8 +52,7 @@ public class StartController {
      */
     @FXML
     protected void handleSearchButtonAction(ActionEvent event) {
-        mainScene = searchButton.getScene();
-        mainView.changeWindow("/client/view/search/Search.fxml");
+        mainView.changeWindow(SEARCH_GUI_PATH);
         getIP();
     }
 
@@ -88,7 +70,6 @@ public class StartController {
      */
     @FXML
     protected void handleEnterNameFieldAction(ActionEvent event) {
-        mainScene = enterName.getScene();
         if (enterName.getText().length() > 30) {
             mainView.alertWindow("Server name is too long", "Please enter a smaller name.");
         } else if (enterName.getText().isEmpty()) {
@@ -103,30 +84,15 @@ public class StartController {
                  */
                 Client.serverAddress = InetAddress.getByName(enterName.getText());
                 enterName.setText("");
-                getCredentials();
+                mainView.openNewVindow(LOGIN_GUI_PATH);
                 /* Switching to client GUI. */
             } catch (UnknownHostException exc) {
                 mainView.alertWindow("Wrong", "Server not found!");
+            } catch (IOException e) {
+                System.out.println("Couldn't open login window.");
+                e.printStackTrace();
             }
         }
     }
 
-    private void getCredentials() {
-            Parent root = new GridPane();
-            Stage stage = new Stage();
-        try {
-            root = FXMLLoader.load(getClass().getResource(LOGIN_GUI_PATH));
-            stage.setScene(new Scene(root));
-            stage.setResizable(false);
-            /* setting new stage to be the stage owner */
-            stage.initOwner((Stage) mainScene.getWindow());
-            /* Make this stage frozen, while new stage is open. */
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.setTitle("SLChat");
-            stage.show();
-        } catch (IOException exc) {
-            System.out.println("Exception thrown while switching main window to create window.");
-            exc.printStackTrace();
-        }
-    }
 }

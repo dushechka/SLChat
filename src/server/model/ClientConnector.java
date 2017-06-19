@@ -94,9 +94,7 @@ public class ClientConnector extends Thread {
 
     public boolean isNicknameUsed(String nickname) {
         for (ClientHandler ch : clients ) {
-            printMessage("Eximining " + ch.getName() + "(" + ch.getNickname() + ")");
             if (ch.getNickname().equals(nickname)) {
-                System.out.println("Got it!");
                 return true;
             }
         }

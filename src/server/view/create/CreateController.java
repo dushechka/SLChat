@@ -57,7 +57,8 @@ public class CreateController {
             SLServer.start();
 
             /* closing secondary window */
-            ((Stage) (openButton.getScene().getWindow())).close();
+            Stage stage = ((Stage) (openButton.getScene().getWindow()));
+            stage.close();
 
             /* starting client */
             try {
@@ -69,6 +70,8 @@ public class CreateController {
                 }
             } catch (IOException exc) {
                 System.out.println("Client can't log on to server!");
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
             }
         }
     }

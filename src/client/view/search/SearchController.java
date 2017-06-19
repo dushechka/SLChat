@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+import static main.SLChat.START_GUI_PATH;
 import java.io.IOException;
 
 /**
@@ -28,7 +28,7 @@ public class SearchController {
     private void handleBackButtonAction(ActionEvent event) {
             Parent root = new GridPane();
         try {
-            root = FXMLLoader.load(getClass().getResource("/client/view/start/Start.fxml"));
+            root = FXMLLoader.load(getClass().getResource(START_GUI_PATH));
         } catch (IOException exc) {
             System.out.println("Exception thrown while switching to main window from search.");
             exc.printStackTrace();

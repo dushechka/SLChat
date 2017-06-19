@@ -8,9 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import static main.SLChat.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -39,7 +41,7 @@ public class StartView extends Application {
         mainView = this;
         /* Setting main stage too. */
         primaryStage = stage;
-        Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(START_GUI_PATH));
         Scene scene = new Scene(root);
 
         /* What to do, when closing program? */
@@ -117,5 +119,31 @@ public class StartView extends Application {
         nameAlert.setHeaderText(null);
         nameAlert.setContentText(content);
         nameAlert.showAndWait();
+    }
+
+    /**
+     * Opens new window above the
+     * previous window and handles
+     * focus, until closed.
+     *
+     * @param path  A path to new window's
+     *              GUI fxml file.
+     * @throws IOException  When cannot find
+     *                      GUI fxml file by
+     *                      given path param.
+     */
+    public void openNewVindow(String path) throws IOException {
+        Parent root = new GridPane();
+        Stage stage = new Stage();
+        /* opening create room window */
+            root = FXMLLoader.load(getClass().getResource(path));
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            /* setting new stage to be the stage owner */
+            stage.initOwner((Stage) primaryStage.getScene().getWindow());
+            /* make this stage frozen, while new stage is open */
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setTitle("SLChat");
+            stage.show();
     }
 }

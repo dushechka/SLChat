@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import server.model.Server;
 import static client.model.Client.connectClient;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.*;
 import java.util.Collections;
@@ -39,12 +41,16 @@ public class SLChat {
         public static Stage primaryStage;
     /** Main menu window backend instance. */
         public static StartView mainView;
-    /** Maine scene of the {@link #mainView} */
-        public static Scene mainScene;
     /** Client's GUI fxml file path. */
         public static final String CLIENT_GUI_PATH = "/client/view/chat/Chat.fxml";
     /** login GUI fxml file path */
-        public static String LOGIN_GUI_PATH = "/client/view/login/Login.fxml";
+        public static final String LOGIN_GUI_PATH = "/client/view/login/Login.fxml";
+    /** search GUI fxml file path */
+        public static final String SEARCH_GUI_PATH = "/client/view/search/Search.fxml";
+    /** create room GUI fxml file path */
+        public static final String CREATE_GUI_PATH = "/server/view/create/Create.fxml";
+    /** start program GUI fxml file path */
+        public static final String START_GUI_PATH = "/client/view/start/Start.fxml";
     /** Preffered network interface, to run client from. */
         private static NetworkInterface prefferedInterface = null;
     /** {@link #prefferedInterface} address, with wich program will work. */
@@ -126,7 +132,7 @@ public class SLChat {
             if (msg.contains(byteToString(SERVER_STRING))) {
                 System.out.println("Room name is: <" + msg.substring(6).trim() + ">");
                 Client.serverAddress = packet.getAddress();
-                mainView.changeWindow(LOGIN_GUI_PATH);
+                mainView.openNewVindow(LOGIN_GUI_PATH);
             } else {
                 System.out.println("Server hadn't responsed for given time (3 sec).");
             }

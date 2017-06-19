@@ -31,7 +31,7 @@ public class LoginController {
             Stage stage = (Stage) loginField.getScene().getWindow();
             stage.close();
 
-            /* connectin client */
+            /* connecting client */
             try {
                 if (connectClient(login, password)) {
                     mainView.changeWindow(CLIENT_GUI_PATH);
