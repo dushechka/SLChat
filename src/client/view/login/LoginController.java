@@ -1,18 +1,16 @@
 package client.view.login;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import static client.model.Client.connectClient;
-import static main.SLChat.*;
+import static client.model.Client.logInClient;
+import static main.SLChat.CLIENT_GUI_PATH;
+import static main.SLChat.mainView;
 
 public class LoginController {
     @FXML TextField loginField;
@@ -35,7 +33,7 @@ public class LoginController {
 
             /* connecting client */
             try {
-                if (connectClient(login, password)) {
+                if (logInClient(login, password)) {
                     mainView.changeWindow(CLIENT_GUI_PATH);
                     mainView.bindTextArea();
                 } else {

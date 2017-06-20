@@ -21,8 +21,7 @@ public class Client extends Thread {
     /** input and output streams for messaging */
         private final DataInputStream in;
         private final DataOutputStream out;
-        private final Socket socket;
-        public static InetAddress serverAddress;
+        private static Socket socket;
         private TextArea textArea = null;
         private String nickname;
 
@@ -71,17 +70,16 @@ public class Client extends Thread {
         }
     }
 
-    public static boolean connectClient(String login, String password) throws IOException {
+    public static boolean logInClient(String login, String password) throws IOException {
         /* string to read from connection */
             String msg;
         /* establishing connection with server */
-            Socket socket = new Socket(serverAddress, SERVER_FINAL_PORT);
         System.out.println("Client " + login + " is authenticating...");
         /* getting input and output stream for messaging */
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
         System.out.println(login + "'s I/O streams initialized.");
-        System.out.println("Server address is: " + serverAddress);
+        System.out.println("Server address is: " + socket.getInetAddress());
         /* sending login and password to server */
         sendMessage(out, password);
         /* reading the answer */
@@ -97,6 +95,15 @@ public class Client extends Thread {
             in.close();
             out.close();
             socket.close();
+            return false;
+        }
+    }
+
+    public static boolean connectClient(InetAddress serverAddress) throws IOException {
+        socket = new Socket(serverAddress, SERVER_FINAL_PORT);
+        if (socket != null) {
+            return true;
+        } else {
             return false;
         }
     }

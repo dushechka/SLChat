@@ -62,16 +62,19 @@ public class CreateController {
 
             /* starting client */
             try {
-                Client.serverAddress = localAddress;
+                if (Client.connectClient(localAddress)) {
                 /* waiting, while server runs */
-                while (!IS_CLIENT_CONNECTOR_RUNNING) {
-                    Thread.sleep(100);
-                }
-                if (connectClient("fucker", pass)) {
-                    mainView.changeWindow(CLIENT_GUI_PATH);
-                    mainView.bindTextArea();
+                    while (!IS_CLIENT_CONNECTOR_RUNNING) {
+                        Thread.sleep(100);
+                    }
+                    if (Client.logInClient("Unknown", pass)) {
+                        mainView.changeWindow(CLIENT_GUI_PATH);
+                        mainView.bindTextArea();
+                    } else {
+                        mainView.alertWindow("Ooops!", "Can't start client.");
+                    }
                 } else {
-                    System.out.println("Client could not start!");
+                    mainView.alertWindow("Ooops!", "Can't start client.");
                 }
             } catch (IOException exc) {
                 System.out.println("Client can't log on to server!");

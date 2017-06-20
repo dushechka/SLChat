@@ -196,13 +196,13 @@ public class ServerConstants {
      * Chooses running network
      * interface to work with.
      * <p>
-     * Getting a list of system's
+     * Gets a list of system's
      * running interfaces and tries
-     * to get a wireless interface
+     * to get a wired interface
      * first, then if none, attempts
-     * to get wired interface. If
+     * to get wireless interface. If
      * none of them were found,
-     * returns null;
+     * returns null.
      * @return  running network interface
      *          to work with or null if none
      * @throws SocketException  when can't get an

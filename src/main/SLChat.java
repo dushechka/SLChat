@@ -3,12 +3,9 @@ package main;
 import client.model.Client;
 import client.model.Seeker;
 import client.view.start.StartView;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import server.model.Server;
-import static client.model.Client.connectClient;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.*;
 import java.util.Collections;
@@ -29,13 +26,14 @@ import static server.model.ServerConstants.*;
  * @since 0.2
  */
 public class SLChat {
-    /** Is used to stop {@link server.model.Server Server} thread. */
-        public static boolean IS_SERVER_RUNNING = false;
-    /** Is used to stop {@link client.model.Client Client} thread. */
-        public static boolean IS_CLIENT_RUNNING = false;
+    /** Is used to stop {@link server.model.Server} thread. */
+        public static boolean IS_SERVER_RUNNING;
+    /** Is used to stop {@link client.model.Client} thread. */
+        public static boolean IS_CLIENT_RUNNING;
     /** Is used, to determine, if
-     *  {@link server.model.ClientConnector} already running, to connect */
-        public static boolean IS_CLIENT_CONNECTOR_RUNNING = false;
+     *  {@link server.model.ClientConnector} already running, so
+     *  the {@link client.model.Client} can connect to server */
+        public static boolean IS_CLIENT_CONNECTOR_RUNNING;
     /** Server backend thread. */
         public static Server SLServer;
     /** Client backend thread. */
@@ -46,26 +44,29 @@ public class SLChat {
         public static StartView mainView;
     /** Client's GUI fxml file path. */
         public static final String CLIENT_GUI_PATH = "/client/view/chat/Chat.fxml";
-    /** login GUI fxml file path */
+    /** Login GUI fxml file path. */
         public static final String LOGIN_GUI_PATH = "/client/view/login/Login.fxml";
-    /** search GUI fxml file path */
+    /** Search GUI fxml file path. */
         public static final String SEARCH_GUI_PATH = "/client/view/search/Search.fxml";
-    /** create room GUI fxml file path */
+    /** Create room GUI fxml file path. */
         public static final String CREATE_GUI_PATH = "/server/view/create/Create.fxml";
-    /** start program GUI fxml file path */
+    /** Main window GUI fxml file path. */
         public static final String START_GUI_PATH = "/client/view/start/Start.fxml";
     /** Preffered network interface, to run client from. */
-        private static NetworkInterface prefferedInterface = null;
+        private static NetworkInterface prefferedInterface;
     /** {@link #prefferedInterface} address, with wich program will work. */
-        public static InetAddress prefferedAddress = null;
+        public static InetAddress prefferedAddress;
     /** Interface, which is used to make local connections. */
-        public static InetAddress localAddress = null;
+        public static InetAddress localAddress;
 
     /**
      * Main program entry.
      */
     public SLChat() {
         try {
+            IS_SERVER_RUNNING = false;
+            IS_CLIENT_RUNNING = false;
+            IS_CLIENT_CONNECTOR_RUNNING = false;
             localAddress = InetAddress.getByName("localhost");
             prefferedInterface = chooseInterface();
             System.out.println("Preffered interface: " + prefferedInterface.getName());
@@ -134,8 +135,7 @@ public class SLChat {
             msg = byteToString(packetData);
             if (msg.contains(byteToString(SERVER_STRING))) {
                 System.out.println("Room name is: <" + msg.substring(6).trim() + ">");
-                Client.serverAddress = packet.getAddress();
-                mainView.openNewVindow(LOGIN_GUI_PATH);
+                mainView.connectClient(packet.getAddress());
             } else {
                 System.out.println("Server hadn't responsed for given time (3 sec).");
             }

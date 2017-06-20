@@ -1,5 +1,6 @@
 package client.view.start;
 
+import client.model.Client;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,8 @@ import static main.SLChat.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Optional;
 
 /**
@@ -168,5 +171,33 @@ public class StartView extends Application {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.setTitle("SLChat");
             stage.show();
+    }
+
+    public void connectClient(String serverAddress) {
+        try {
+            connectClient(InetAddress.getByName(serverAddress));
+        } catch (UnknownHostException exc) {
+            mainView.alertWindow("Wrong", "Server not found!");
+        }
+    }
+
+    public void connectClient(InetAddress serverAddress) {
+        try {
+            /*
+             * Attampting to start client with
+             * gained server address. If failed
+             * to start, {@link client.model.Client}
+             * will throw and handle an exception.
+             */
+            if (Client.connectClient(serverAddress)) {
+                mainView.openNewVindow(LOGIN_GUI_PATH);
+            } else {
+                mainView.alertWindow("Wrong.", "Server not found!");
+            }
+        } catch (IOException e) {
+            mainView.alertWindow("Oops!", "Sorry... Can't connect to server. :'-(");
+            System.out.println("Couldn't open login window.");
+            e.printStackTrace();
+        }
     }
 }

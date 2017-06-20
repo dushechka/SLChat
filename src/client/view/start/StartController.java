@@ -70,28 +70,14 @@ public class StartController {
      */
     @FXML
     protected void handleEnterNameFieldAction(ActionEvent event) {
-        if (enterName.getText().length() > 30) {
+        String serverAddress = enterName.getText();
+        enterName.setText("");
+        if (serverAddress.length() > 30) {
             mainView.alertWindow("Server name is too long", "Please enter a smaller name.");
-        } else if (enterName.getText().isEmpty()) {
+        } else if (serverAddress.isEmpty()) {
             enterSomething.setText("Please enter something!");
         } else {
-            try {
-                /*
-                 * Attampting to start client with
-                 * gained server address. If failed
-                 * to start, {@link client.model.Client}
-                 * will throw and handle an exception.
-                 */
-                Client.serverAddress = InetAddress.getByName(enterName.getText());
-                enterName.setText("");
-                mainView.openNewVindow(LOGIN_GUI_PATH);
-                /* Switching to client GUI. */
-            } catch (UnknownHostException exc) {
-                mainView.alertWindow("Wrong", "Server not found!");
-            } catch (IOException e) {
-                System.out.println("Couldn't open login window.");
-                e.printStackTrace();
-            }
+            mainView.connectClient(serverAddress);
         }
     }
 
