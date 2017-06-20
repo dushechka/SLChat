@@ -54,6 +54,7 @@ public class ClientConnector extends Thread {
                 handlerNumber++;
                 clients.add(clientHandler);
                 clientHandler.start();
+
                 printMessage("New client connected.");
                 printListOfClients();
             }
@@ -101,6 +102,7 @@ public class ClientConnector extends Thread {
     public void removeClient(ClientHandler client) {
         clients.remove(client);
         printMessage("Client <" + client.getNickname() + "> removed.");
+        sendToAllAnon(("<" + client.getNickname() + "> left this room."), client);
         printListOfClients();
     }
 
@@ -128,6 +130,19 @@ public class ClientConnector extends Thread {
                 } catch (IOException e) {
                     printMessage(ch.getName() + " could not send message to " +
                                                 "it's client " + ch.getNickname());
+                }
+            }
+        }
+    }
+
+    void sendToAllAnon(String message, ClientHandler sender) {
+        for (ClientHandler ch : clients) {
+            if (ch != sender) {
+                try {
+                    ch.sendMessage(message);
+                } catch (IOException e) {
+                    printMessage(ch.getName() + " could not send service " +
+                                "message to it's client <" + ch.getNickname() + ">");
                 }
             }
         }

@@ -135,6 +135,7 @@ class ClientHandler extends Thread {
             nickname = new String(msg + "_" + i);
         }
         this.nickname = nickname;
+        owner.sendToAllAnon(("<" + nickname + "> joined this room."), this);
         printMessage("Nickname <" + nickname + "> associated to this client.");
     }
 
