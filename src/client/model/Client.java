@@ -44,10 +44,9 @@ public class Client extends Thread {
             String msg = "";
             IS_RUNNING = true;
             IS_CLIENT_RUNNING = true;
-            printMessage("A " + nickname + "'s client is running...");
+            printMessage(nickname + "'s client is running...");
             while (IS_RUNNING) {
                 msg = in.readUTF();
-                printMessage("Received <" + msg + ">");
                 /* A way to ecological breaking connection */
                 if (msg.equals("malaka")) {
                     sendMessage(out, "mudak");
@@ -130,9 +129,9 @@ public class Client extends Thread {
         try {
             out.writeUTF(message);
             out.flush();
-            System.out.println("SLClient: Sent message <" + message + ">");
             return true;
         } catch (IOException exc) {
+            System.out.println("SLClient: can't sent message.");
             exc.printStackTrace();
             return false;
         }
@@ -141,11 +140,10 @@ public class Client extends Thread {
     public void sendMessage(String message) throws IOException {
         out.writeUTF(message);
         out.flush();
-        printMessage("Sent message <" + message + ">.");
     }
 
     private void printMessage(String message) {
-        System.out.println(getName() + ": " + message);
+        System.out.println(getName() + "(" + nickname + "): " + message);
     }
 
     public void setTextArea(TextArea textArea) {

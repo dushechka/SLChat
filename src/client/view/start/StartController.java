@@ -1,6 +1,5 @@
 package client.view.start;
 
-import client.model.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,8 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import static main.SLChat.*;
 /**
@@ -37,7 +34,7 @@ public class StartController {
     @FXML
     protected void handleStartButtonAction(ActionEvent event) {
         try {
-            mainView.openNewVindow(CREATE_GUI_PATH);
+            mainView.openNewWindow(CREATE_GUI_PATH);
         } catch (IOException exc) {
             System.out.println("Exception thrown while switching main window to create window.");
             exc.printStackTrace();
@@ -77,7 +74,7 @@ public class StartController {
         } else if (serverAddress.isEmpty()) {
             enterSomething.setText("Please enter something!");
         } else {
-            mainView.connectClient(serverAddress);
+            connectClient(serverAddress);
         }
     }
 

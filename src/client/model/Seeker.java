@@ -1,5 +1,7 @@
 package client.model;
 
+import main.SLChat;
+
 import java.io.IOException;
 import java.net.*;
 
@@ -64,13 +66,22 @@ public class Seeker extends Thread {
                 }
             }
         } catch (IOException | InterruptedException e) {
+            /* Sending back packet, that program can stop
+               tyring to receive packet from server, if
+               something went wrong */
+            SLChat.sendBackPacket();
             printMessage("Exception thrown while sending packets in run()");
             e.printStackTrace();
+        } finally {
+            if (!IS_BACK_PACKED_RECEIVED) {
+                SLChat.sendBackPacket();
+            }
+            printMessage("Stopped.");
         }
     }
 
     /**
-     * Kills it's thread.
+     * Kills this class instance's thread.
      */
     public void die() {
         IS_RUNNING = false;

@@ -1,8 +1,6 @@
 package server.model;
 
-import java.util.ArrayList;
-
-import static main.SLChat.*;
+import static main.SLChat.IS_SERVER_RUNNING;
 
 /**
  * Chat's server class.

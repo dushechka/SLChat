@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import static server.model.Server.*;
 
 /**
  * Handle all client's operations.
@@ -61,7 +60,6 @@ class ClientHandler extends Thread {
             }
             while (IS_RUNNING) {
                 msg = in.readUTF();
-                printMessage("Received <" + msg + ">");
                 /* A way to ecological breaking connection */
                 if (msg.equals("malaka")) {
                     sendMessage("mudak");

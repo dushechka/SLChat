@@ -77,7 +77,7 @@ public class ClientNotifier extends Thread {
                     printMessage("Sender's address <" + packet.getAddress() + ">");
                     printMessage("Packet data <" + byteToString(packetData) + ">");
                 }
-                sleep(1000);
+                sleep(100);
             }
         } catch (IOException | InterruptedException e) {
             printMessage("Exception thrown in run() method.");

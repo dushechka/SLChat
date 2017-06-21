@@ -10,9 +10,7 @@ import javafx.stage.Stage;
 import server.model.Server;
 
 import java.io.IOException;
-import java.net.InetAddress;
 
-import static client.model.Client.connectClient;
 import static main.SLChat.*;
 
 public class CreateController {
@@ -34,7 +32,9 @@ public class CreateController {
      * and {@link #password}, then
      * starts server backend thread
      * {@link server.model.Server}
-     * if entered data is correct.
+     * if entered data is correct,
+     * and then runs client if
+     * server started.
      *
      * @param event  User hits openButton.
      */
@@ -59,27 +59,30 @@ public class CreateController {
             /* closing secondary window */
             Stage stage = ((Stage) (openButton.getScene().getWindow()));
             stage.close();
-
-            /* starting client */
             try {
-                if (Client.connectClient(localAddress)) {
-                /* waiting, while server runs */
-                    while (!IS_CLIENT_CONNECTOR_RUNNING) {
-                        Thread.sleep(100);
-                    }
-                    if (Client.logInClient("Unknown", pass)) {
-                        mainView.changeWindow(CLIENT_GUI_PATH);
-                        mainView.bindTextArea();
-                    } else {
-                        mainView.alertWindow("Ooops!", "Can't start client.");
-                    }
-                } else {
-                    mainView.alertWindow("Ooops!", "Can't start client.");
+                /* waiting, until server will start */
+                for (int i = 0; i < 10; i++) {
+                    if (IS_CLIENT_CONNECTOR_RUNNING) break;
+                    Thread.sleep(100);
                 }
-            } catch (IOException exc) {
-                System.out.println("Client can't log on to server!");
+                /* starting client */
+                if (IS_SERVER_RUNNING) {
+                    try {
+                        /* trying to connect to server, and log in then */
+                        if (Client.connectClient(localAddress) && Client.logInClient("Unknown", pass)) {
+                                mainView.changeWindow(CLIENT_GUI_PATH);
+                                mainView.bindTextArea();
+                        } else {
+                            mainView.alertWindow("Ooops!", "Can't start client.");
+                        }
+                    } catch (IOException exc) {
+                        System.out.println("Client can't log on to server!");
+                    }
+                } else{
+                    mainView.alertWindow("Oops!", "Sorry, can't open new room. :-(");
+                }
             } catch (InterruptedException ie) {
-                ie.printStackTrace();
+                        ie.printStackTrace();
             }
         }
     }

@@ -1,11 +1,12 @@
 package server.model;
 
 import java.io.IOException;
-import java.net.*;
-import java.util.ArrayList;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Vector;
 
-import static server.model.ServerConstants.*;
-import static main.SLChat.*;
+import static main.SLChat.IS_CLIENT_CONNECTOR_RUNNING;
+import static server.model.ServerConstants.SERVER_FINAL_PORT;
 
 /**
  * Listens for incoming client
@@ -21,7 +22,7 @@ public class ClientConnector extends Thread {
     /** A socket to transmit new client's connections to {@link ClientHandler} */
         private Socket clientSocket;
     /** A list of connected clients to work with */
-        private ArrayList<ClientHandler> clients;
+        private Vector<ClientHandler> clients;
     /** A new connected client to add to {@link #clients} */
         private ClientHandler clientHandler;
         private final String password;
@@ -31,7 +32,7 @@ public class ClientConnector extends Thread {
     ClientConnector(String password) {
         super("ClientConnector");
         handlerNumber = 0;
-        this.clients = new ArrayList<>();
+        this.clients = new Vector<>();
         this.password = password;
         try {
             serverSocket = new ServerSocket(SERVER_FINAL_PORT);
@@ -50,6 +51,7 @@ public class ClientConnector extends Thread {
             while (IS_RUNNING) {
                 /* Establishing connection with client. */
                 clientSocket = serverSocket.accept();
+                if (!IS_RUNNING) break;
                 clientHandler = new ClientHandler(clientSocket, password, this);
                 handlerNumber++;
                 clients.add(clientHandler);
@@ -60,8 +62,9 @@ public class ClientConnector extends Thread {
             }
         } catch (IOException e) {
             printMessage("Exception thrown in run() method.");
+        } finally {
+            close();
         }
-        close();
     }
 
     /**
@@ -82,20 +85,28 @@ public class ClientConnector extends Thread {
      * Releases used resources.
      */
     private void close() {
-        emptyClients();
         try {
+            emptyClients();
             if ((serverSocket != null) && (!serverSocket.isClosed())) {
                 serverSocket.close();
             }
+        } catch (InterruptedException exc) {
+            printMessage("Couldn't wait, until all clients will be disconnected.");
         } catch (IOException e) {
             printMessage("Exception thrown while trying to release resources.");
         }
         System.out.println("ClientConnector stopped.");
     }
 
-    private void emptyClients() {
+    private void emptyClients() throws InterruptedException {
         for (ClientHandler ch : clients) {
             ch.die();
+        }
+        /* waiting, until all clients will be disconnected */
+        for (int i = 1; i < 11; i++) {
+            if (clients.size() > 0) {
+                Thread.sleep(100 * i);
+            }
         }
     }
 

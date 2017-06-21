@@ -1,6 +1,5 @@
 package client.view.start;
 
-import client.model.Client;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -13,15 +12,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+
+import java.io.IOException;
+import java.util.Optional;
 
 import static main.SLChat.*;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Optional;
 
 /**
  * Main menu view;
@@ -29,36 +24,38 @@ import java.util.Optional;
 public class StartView extends Application {
 
     /**
+     * Opens main GUI window.
+     * <p>
      * Creates main window and saves itself
      * in static {@link main.SLChat#mainView} field.
      * Also creates and saves primary stage for
      * whole program in {@link main.SLChat#primaryStage}.
      * Further, loads main window content and sets
      * onClose operation for main window to close
-     * client and determine with users respond, whether
-     * it should stop server on exit.
+     * client and determines from user respond, whether
+     * it should stop server on exit, if it's running.
      *
-     * @param stage  main javafx stage instance
+     * @param stage  main javafx stage instance.
      * @throws IOException  when FXMLLoader can't find
-     *                      .fxml file with root <b>Pane</b>
+     *                      fxml file with root <b>Pane</b>.
      */
     @Override
     public void start(Stage stage) throws IOException {
-        /* Setting static field that all classes can invoke it. */
+        /* setting static field that all classes can invoke it */
         mainView = this;
 //        stage.initStyle(StageStyle.UNDECORATED);
-        /* Setting main stage too. */
+        /* setting main stage too */
         primaryStage = stage;
+        /* loading GUI window */
         Parent root = FXMLLoader.load(getClass().getResource(START_GUI_PATH));
         Scene scene = new Scene(root);
 
         /* What to do, when closing program? */
         stage.setOnCloseRequest(e -> {
-            /* stopping client on exit */
-
             try {
                 if (!IS_SERVER_RUNNING) {
                     primaryStage.hide();
+                    SLClient.die();
                 } else {
                     /* Killing server on exit? */
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -77,9 +74,8 @@ public class StartView extends Application {
                         System.out.println("SLServer stopped.");
                     }
                 }
-                /* KILLING CLIENT THREAD */
+                /* waiting for client to close */
                 if (IS_CLIENT_RUNNING) {
-                    SLClient.die();
                     SLClient.join();
                 }
             } catch (InterruptedException ie) {
@@ -88,7 +84,7 @@ public class StartView extends Application {
             }
         });
 
-        /* Creating and showing main menu window. */
+        /* CREATING AND SHOWING MAIN MENU WINDOW */
         stage.setTitle("SLChat");
         stage.setScene(scene);
         stage.setResizable(false);
@@ -124,7 +120,6 @@ public class StartView extends Application {
     public void bindTextArea() {
             ObservableList<Node> nodes = primaryStage.getScene().getRoot().getChildrenUnmodifiable();
         for (Node node : nodes) {
-            System.out.println(node.getClass());
             if (node.getClass().toString().contains("TextArea")) {
                 SLClient.setTextArea((TextArea) node);
             }
@@ -148,7 +143,7 @@ public class StartView extends Application {
 
     /**
      * Opens new window above the
-     * previous window and handles
+     * previous window and holds
      * focus, until closed.
      *
      * @param path  A path to new window's
@@ -157,7 +152,7 @@ public class StartView extends Application {
      *                      GUI fxml file by
      *                      given path param.
      */
-    public void openNewVindow(String path) throws IOException {
+    public void openNewWindow(String path) throws IOException {
         Parent root = new GridPane();
         Stage stage = new Stage();
 //        stage.initStyle(StageStyle.UNDECORATED);
@@ -173,31 +168,4 @@ public class StartView extends Application {
             stage.show();
     }
 
-    public void connectClient(String serverAddress) {
-        try {
-            connectClient(InetAddress.getByName(serverAddress));
-        } catch (UnknownHostException exc) {
-            mainView.alertWindow("Wrong", "Server not found!");
-        }
-    }
-
-    public void connectClient(InetAddress serverAddress) {
-        try {
-            /*
-             * Attampting to start client with
-             * gained server address. If failed
-             * to start, {@link client.model.Client}
-             * will throw and handle an exception.
-             */
-            if (Client.connectClient(serverAddress)) {
-                mainView.openNewVindow(LOGIN_GUI_PATH);
-            } else {
-                mainView.alertWindow("Wrong.", "Server not found!");
-            }
-        } catch (IOException e) {
-            mainView.alertWindow("Oops!", "Sorry... Can't connect to server. :'-(");
-            System.out.println("Couldn't open login window.");
-            e.printStackTrace();
-        }
-    }
 }
