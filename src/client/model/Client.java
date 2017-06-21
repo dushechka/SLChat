@@ -49,8 +49,6 @@ public class Client extends Thread {
                 msg = in.readUTF();
                 /* A way to ecological breaking connection */
                 if (msg.equals("malaka")) {
-                    sendMessage(out, "mudak");
-                    printMessage("Server broke connection.");
                     break;
                 } else if (msg.equals("mudak")) {
                     printMessage("I disconnected myself from server.");
@@ -110,7 +108,9 @@ public class Client extends Thread {
     public void die() {
         IS_RUNNING = false;
         IS_CLIENT_RUNNING = false;
-        sendMessage(out, "malaka");
+        if (!socket.isClosed()) {
+            sendMessage(out, "malaka");
+        }
     }
 
     private void close() {
@@ -131,7 +131,7 @@ public class Client extends Thread {
             out.flush();
             return true;
         } catch (IOException exc) {
-            System.out.println("SLClient: can't sent message.");
+            System.out.println("SLClient: can't send message.");
             exc.printStackTrace();
             return false;
         }

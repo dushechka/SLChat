@@ -24,23 +24,23 @@ public class LoginController {
         } else {
             String login = loginField.getText();
             String password = passwordField.getText();
-            loginField.setText("");
             passwordField.setText("");
 
             /* closing secondary window */
             Stage stage = (Stage) loginField.getScene().getWindow();
             stage.close();
 
-            /* connecting client */
             try {
+                /* logging client in */
                 if (logInClient(login, password)) {
                     mainView.changeWindow(CLIENT_GUI_PATH);
                     mainView.bindTextArea();
                 } else {
-                    System.out.println("Client could not start!");
+                    mainView.alertWindow("Wrong.", "Wrong password!");
                 }
             } catch (IOException exc) {
                 System.out.println("Client can't log on to server!");
+                exc.printStackTrace();
             }
         }
     }

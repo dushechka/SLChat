@@ -248,7 +248,6 @@ public class SLChat {
         } catch (IOException e) {
             mainView.alertWindow("Oops!", "Sorry... Can't connect to server. :'-(");
             System.out.println("Couldn't open login window.");
-            e.printStackTrace();
         }
     }
 }

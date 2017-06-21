@@ -55,7 +55,7 @@ public class StartView extends Application {
             try {
                 if (!IS_SERVER_RUNNING) {
                     primaryStage.hide();
-                    SLClient.die();
+                    /* killing client thread */
                 } else {
                     /* Killing server on exit? */
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -74,9 +74,9 @@ public class StartView extends Application {
                         System.out.println("SLServer stopped.");
                     }
                 }
-                /* waiting for client to close */
                 if (IS_CLIENT_RUNNING) {
-                    SLClient.join();
+                        SLClient.die();
+                        SLClient.join();
                 }
             } catch (InterruptedException ie) {
                 System.out.println("Oh no! Client seems not want to stop! :'(");
