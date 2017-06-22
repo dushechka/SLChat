@@ -11,7 +11,7 @@ import static server.model.ServerConstants.*;
 /**
  * Sends Multicast packets to
  * specific multicast group
- * so, the server could recognize,
+ * so, server could recognize,
  * at which IP the client is located.
  *
  * @see server.model.ServerConstants#GROUP_ADDRESS
@@ -19,6 +19,8 @@ import static server.model.ServerConstants.*;
 public class Seeker extends Thread {
     /* Determines when to stop this thread. */
     private boolean IS_RUNNING;
+    /* Period of time in sec. in which this thread will run */
+    private final int WORKING_TIME = 3;
     private InetAddress group = null;
     private DatagramPacket datagramPacket = null;
 
@@ -43,7 +45,10 @@ public class Seeker extends Thread {
      * {@link server.model.ServerConstants#GROUP_ADDRESS}
      * every second, until it gets a signal
      * to stop from outside, by invoking
-     * {@link #die()} method.
+     * {@link #die()} method, or a given
+     * period of time will pass.
+     *
+     * @see #WORKING_TIME
      */
     public void run() {
             int i = 0;
@@ -58,7 +63,7 @@ public class Seeker extends Thread {
                 printMessage("Packet send from: " + prefferedAddress);
                 sleep(1000);
                 /* stop if server's not responding */
-                if (i == 3) {
+                if (i == WORKING_TIME) {
                     datagramPacket = new DatagramPacket(TIME_HAS_EXPIRED, TIME_HAS_EXPIRED.length,
                                                                     prefferedAddress, CLIENT_PORT);
                     datagramSocket.send(datagramPacket);
@@ -81,7 +86,7 @@ public class Seeker extends Thread {
     }
 
     /**
-     * Kills this class instance's thread.
+     * Kills this class instance thread.
      */
     public void die() {
         IS_RUNNING = false;

@@ -5,8 +5,10 @@ import static main.SLChat.IS_SERVER_RUNNING;
 /**
  * Chat's server class.
  * <p>
- * Handles all server's
- * backend functional.
+ * Runs and stops all threads,
+ * that handle all server
+ * operations and
+ * interconnection with clients.
  */
 public class Server extends Thread {
         private ClientNotifier clientNotifier;
@@ -20,6 +22,7 @@ public class Server extends Thread {
         this.password = password;
     }
 
+    /** Main server's backend workflow. */
     public void run() {
         startListening();
         IS_SERVER_RUNNING = true;

@@ -18,8 +18,6 @@ import static main.SLChat.*;
  * @since 0.3
  */
 public class StartController {
-        @FXML private Button startButton;
-        @FXML private Button searchButton;
         @FXML private TextField enterName;
         /* Text, intended to warn user, if he/she entered wrong values. */
         @FXML private Text enterSomething;
@@ -29,7 +27,7 @@ public class StartController {
      * server creation, handled by
      * {@link server.view.create.CreateController}.
      *
-     * @param event  User pressed this button.
+     * @param event  User pressed "Start" button.
      */
     @FXML
     protected void handleStartButtonAction(ActionEvent event) {
@@ -45,7 +43,7 @@ public class StartController {
      * Swithes to search server window, handled by
      * {@link client.view.search.SearchController}.
      *
-     * @param event     User hit the button.
+     * @param event     User pushed the "search" button.
      */
     @FXML
     protected void handleSearchButtonAction(ActionEvent event) {
@@ -54,16 +52,12 @@ public class StartController {
     }
 
     /**
-     * Searches for server on address,
-     * gained from users input.
-     * <p>
-     * If found one, runs client backend
-     * ({@link client.model.Client})
-     * and switches window to chat
-     * window, contained in
-     * {@link main.SLChat#CLIENT_GUI_PATH}.
+     * Switches GUI to search window,
+     * where further search for server
+     * operation is handled.
      *
-     * @param event  User pressed enter in this window.
+     * @see StartController
+     * @param event  User pressed enter in this field.
      */
     @FXML
     protected void handleEnterNameFieldAction(ActionEvent event) {

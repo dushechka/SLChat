@@ -1,5 +1,6 @@
 package client.model;
 
+import client.view.start.StartView;
 import javafx.scene.control.TextArea;
 
 import java.io.DataInputStream;
@@ -13,7 +14,8 @@ import static main.SLChat.SLClient;
 import static server.model.ServerConstants.SERVER_FINAL_PORT;
 
 /**
- * Chat's client backend.
+ * Connects to server and
+ * handles user's messaging.
  */
 public class Client extends Thread {
     /** Determines when to stop this thread. */
@@ -34,6 +36,15 @@ public class Client extends Thread {
         IS_CLIENT_RUNNING = false;
     }
 
+    /**
+     * Handles messaging by
+     * {@link #in} and {@link #out}
+     * that was open by initializing
+     * static methods.
+     *
+     * @see #connectClient(InetAddress)
+     * @see #logInClient(String, String)
+     */
     public void run() {
         try {
             /* waiting until mainView will set textArea
@@ -47,7 +58,7 @@ public class Client extends Thread {
             printMessage(nickname + "'s client is running...");
             while (IS_RUNNING) {
                 msg = in.readUTF();
-                /* A way to ecological breaking connection */
+                /* service stop message, sent by server */
                 if (msg.equals("malaka")) {
                     break;
                 } else if (msg.equals("mudak")) {
@@ -125,6 +136,20 @@ public class Client extends Thread {
         }
     }
 
+    /**
+     * Sends message to server.
+     * <p>
+     * Invoked from static contex, by
+     * {@link #logInClient(String, String)}
+     * to log on to server, when this
+     * class not instantiated yet.
+     *
+     * @param out   connected socket's
+     *              output stream.
+     * @param message   message to send.
+     * @return      whether message was
+     *              sent or not.
+     */
     private static boolean sendMessage(DataOutputStream out, String message) {
         try {
             out.writeUTF(message);
@@ -137,6 +162,19 @@ public class Client extends Thread {
         }
     }
 
+    /**
+     * Sends message to connected server.
+     * <p>
+     * Is used to send chat and service
+     * messages to connected server, by
+     * {@link #run()} method of this
+     * class instance.
+     *
+     * @param message   A message to send.
+     * @throws IOException  when cannot send
+     *                      message by {@link #out},
+     *                      or it is not available.
+     */
     public void sendMessage(String message) throws IOException {
         out.writeUTF(message);
         out.flush();
@@ -146,6 +184,21 @@ public class Client extends Thread {
         System.out.println(getName() + "(" + nickname + "): " + message);
     }
 
+    /**
+     * Sets the {@link #textArea} to
+     * append received messages from
+     * other clients, sent to this
+     * object by server.
+     * <p>
+     * Is invoked by objects' methods,
+     * through {@link StartView#bindTextArea()}
+     * method before they run client's GUI.
+     *
+     * @see StartView#bindTextArea()
+     * @param textArea  Link for a {@link TextArea}
+     *                  instance to append received
+     *                  messages' text.
+     */
     public void setTextArea(TextArea textArea) {
         this.textArea = textArea;
     }

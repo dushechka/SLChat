@@ -100,7 +100,7 @@ public class SLChat {
      * Instantiates new thread of class
      * {@link client.view.start.StartView Startview}.
      *
-     * @param args  not useful
+     * @param args  never used.
      */
     public static void main(String[] args) {
         new SLChat();
@@ -235,7 +235,7 @@ public class SLChat {
     public static void connectClient(InetAddress serverAddress) {
         try {
             /*
-             * Attampting to start client with
+             * Attempting to start client with
              * gained server address. If failed
              * to start, {@link client.model.Client}
              * will throw an exception.

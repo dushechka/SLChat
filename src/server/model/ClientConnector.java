@@ -54,6 +54,7 @@ public class ClientConnector extends Thread {
                 if (!IS_RUNNING) break;
                 clientHandler = new ClientHandler(clientSocket, password, this);
                 handlerNumber++;
+                /* saving ClientHandler to list */
                 clients.add(clientHandler);
                 clientHandler.start();
 
@@ -86,6 +87,7 @@ public class ClientConnector extends Thread {
      */
     private void close() {
         try {
+            /* deleting clients from server */
             emptyClients();
             if ((serverSocket != null) && (!serverSocket.isClosed())) {
                 serverSocket.close();
@@ -98,6 +100,12 @@ public class ClientConnector extends Thread {
         System.out.println("ClientConnector stopped.");
     }
 
+    /**
+     * Stops all running ClientHandlers,
+     * and removes them from list.
+     *
+     * @throws InterruptedException never thrown.
+     */
     private void emptyClients() throws InterruptedException {
         for (ClientHandler ch : clients) {
             ch.die();
@@ -110,6 +118,12 @@ public class ClientConnector extends Thread {
         }
     }
 
+    /**
+     * Remove {@link ClientHandler}
+     * from {@link #clients} list.
+     *
+     * @param client    client to remove.
+     */
     public void removeClient(ClientHandler client) {
         clients.remove(client);
         printMessage("Client <" + client.getNickname() + "> removed.");
@@ -124,6 +138,15 @@ public class ClientConnector extends Thread {
         }
     }
 
+    /**
+     * Checks, if client with supplied
+     * nickname is already connected.
+     *
+     * @param nickname  nickname, which client
+     *                  wants to use.
+     * @return          true, if client with such
+     *                  nickname exists.
+     */
     public boolean isNicknameUsed(String nickname) {
         for (ClientHandler ch : clients ) {
             if (ch.getNickname().equals(nickname)) {
@@ -133,6 +156,14 @@ public class ClientConnector extends Thread {
         return false;
     }
 
+    /**
+     * Sends client's message to
+     * all connected clients, except
+     * the sender.
+     *
+     * @param message   a message to send.
+     * @param sender    client, that sent message.
+     */
     void sendToAll(String message, ClientHandler sender) {
         for (ClientHandler ch : clients) {
             if (ch != sender) {
@@ -146,6 +177,14 @@ public class ClientConnector extends Thread {
         }
     }
 
+    /**
+     * Sends server's messages to
+     * all connected clients.
+     *
+     * @param message   message to send.
+     * @param sender    client, information
+     *                  about whom to send.
+     */
     void sendToAllAnon(String message, ClientHandler sender) {
         for (ClientHandler ch : clients) {
             if (ch != sender) {

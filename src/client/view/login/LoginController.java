@@ -17,6 +17,13 @@ public class LoginController {
     @FXML TextField passwordField;
     @FXML Text actionTarget;
 
+    /**
+     * Login in client to server,
+     * and opens chat GUI, if success.
+     *
+     * @param event User pushed "Connect"
+     *              button on Login.fxml GUI.
+     */
     @FXML
     protected void handleConnectButtonAction(ActionEvent event) {
         if (loginField.getText().isEmpty()) {
@@ -33,7 +40,9 @@ public class LoginController {
             try {
                 /* logging client in */
                 if (logInClient(login, password)) {
+                    /* opening chat window if success */
                     mainView.changeWindow(CLIENT_GUI_PATH);
+                    /* Client object should know, where to append received messages */
                     mainView.bindTextArea();
                 } else {
                     mainView.alertWindow("Wrong.", "Wrong password!");

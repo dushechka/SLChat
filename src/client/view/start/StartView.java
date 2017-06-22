@@ -19,7 +19,7 @@ import java.util.Optional;
 import static main.SLChat.*;
 
 /**
- * Main menu view;
+ * Main menu view.
  */
 public class StartView extends Application {
 
@@ -92,11 +92,11 @@ public class StartView extends Application {
     }
 
     /**
-     * Changes scene on window.
+     * Changes scene on {@link main.SLChat#primaryStage}.
      * <p>
-     *     Invoked from other view classes,
-     *     which needs to change scene at
-     *     {@link main.SLChat#mainView}.
+     * Is invoked from other view classes,
+     * which need to change scene at
+     * {@link main.SLChat#mainView}.
      *
      * @param fxmlPath  a path to .fxml file,
      *                  containing root <b>Pane</b>
@@ -130,7 +130,7 @@ public class StartView extends Application {
      * Displays alert window.
      *
      * @param title    title of an alert window
-     * @param content  a window to be displayed
+     * @param content  a string to be displayed
      */
     public void alertWindow(String title, String content) {
         Alert nameAlert = new Alert(Alert.AlertType.INFORMATION);

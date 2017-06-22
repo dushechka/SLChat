@@ -23,7 +23,10 @@ public class SearchController {
         @FXML private Button connectButton;
         @FXML static Text roomName;
 
-    // Switching to main menu;
+    /**
+     * Switches GUI to main menu.
+     * @param event User pushed "Back" button.
+     */
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
             Parent root = new GridPane();

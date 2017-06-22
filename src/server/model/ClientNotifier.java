@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 import static main.SLChat.localAddress;
+import static main.SLChat.prefferedAddress;
 import static server.model.ServerConstants.*;
 
 /**
@@ -31,6 +32,10 @@ public class ClientNotifier extends Thread {
 
 
     /**
+     * Attaching created socket to
+     * {@link server.model.ServerConstants#SERVER_MULTI_PORT}
+     * and {@link server.model.ServerConstants#GROUP_ADDRESS}
+     * inet group.
      *
      * @param roomName  The name of server's room, which
      *                  is represented to client.
@@ -43,6 +48,9 @@ public class ClientNotifier extends Thread {
 //            inetAddress = getInterface("eth3");
 //            mSocket = new MulticastSocket(new InetSocketAddress(prefferedAddress, SERVER_MULTI_PORT));
             mSocket = new MulticastSocket(SERVER_MULTI_PORT);
+            /* Setting interface to work with. Otherwise it won't work. */
+            mSocket.setInterface(prefferedAddress);
+            printMessage("Multicast socket interface is " + mSocket.getInterface());
             group = InetAddress.getByName(GROUP_ADDRESS);
             mSocket.joinGroup(group);
         } catch (IOException exc) {
@@ -51,6 +59,17 @@ public class ClientNotifier extends Thread {
         }
     }
 
+    /**
+     * Receives multicast packets
+     * and answers to them.
+     * <p>
+     * Uses created in {@link #ClientNotifier(String)}
+     * socket to receive clients' multicast messages
+     * and answer to thev with packets, containing
+     * server's IP address and room name.
+     *
+     * @see #roomName
+     */
     public void run() {
         IS_RUNNING = true;
         printMessage("Started.");
@@ -87,7 +106,7 @@ public class ClientNotifier extends Thread {
         }
     }
 
-    /* Killing this thread */
+    /* killing this thread */
     void die() {
         IS_RUNNING = false;
         /* Sending dummy packet to overcome "while" cycle in method run() */
@@ -102,7 +121,7 @@ public class ClientNotifier extends Thread {
         }
     }
 
-    /* Releasing used resources */
+    /* releasing used resources */
     private void close() {
         if ((mSocket != null) && (!mSocket.isClosed())) {
             this.mSocket.close();

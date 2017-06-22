@@ -6,18 +6,20 @@ import java.io.IOException;
 import java.net.Socket;
 
 /**
- * Handle all client's operations.
+ * Handles all client's operations
+ * on server side.
  * <p>
  * Examines if client supplies
  * correct password, and then,
  * if so, handles messaging
- * operation, until disconnect.
+ * operation, until disconnected.
  */
 class ClientHandler extends Thread {
     /** A socket, to which client is connected */
         private final Socket socket;
         private String nickname;
         private final String password;
+    /** Thread, that born this thread. */
         private final ClientConnector owner;
         private boolean IS_RUNNING;
         DataInputStream in;
@@ -89,6 +91,7 @@ class ClientHandler extends Thread {
 
     void die() {
         try {
+            /* sending this, so client would close it's connection */
             sendMessage("malaka");
         } catch (IOException exc) {
             exc.printStackTrace();
@@ -98,6 +101,7 @@ class ClientHandler extends Thread {
 
     private void close() {
         printMessage("Closing...");
+        /* releasing used resources */
         try {
             if (in != null) in.close();
             if (out != null) out.close();
