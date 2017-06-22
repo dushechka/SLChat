@@ -7,8 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/view/chat/Chat.fxml" afterPath="$PROJECT_DIR$/src/client/view/chat/Chat.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/view/start/StartView.java" afterPath="$PROJECT_DIR$/src/client/view/start/StartView.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/client/model/Room.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,7 +27,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="StartView.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StartView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/client/view/start/StartView.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="230">
@@ -36,16 +36,6 @@
                 <element signature="imports" expanded="true" />
                 <marker date="1498106596985" expanded="true" signature="6097:6106" ph="{...}" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClientHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/model/ClientHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="114" column="0" lean-forward="false" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -75,14 +65,29 @@
       <file leaf-file-name="SLChat.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/SLChat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2753">
-              <caret line="237" column="18" lean-forward="false" selection-start-line="237" selection-start-column="18" selection-end-line="237" selection-end-column="18" />
+            <state relative-caret-position="264">
+              <caret line="234" column="48" lean-forward="true" selection-start-line="234" selection-start-column="48" selection-end-line="234" selection-end-column="48" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3318#3502#0" expanded="true" />
                 <element signature="e#3501#3502#0" expanded="true" />
                 <marker date="1498105733381" expanded="true" signature="870:874" ph="/**...*/" />
                 <marker date="1498105733381" expanded="true" signature="5964:6252" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Room.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/client/model/Room.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="7" lean-forward="false" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+              <folding>
+                <element signature="e#393#394#0" expanded="true" />
+                <element signature="e#425#426#0" expanded="true" />
+                <element signature="e#470#471#0" expanded="true" />
+                <element signature="e#507#508#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -183,6 +188,7 @@
         <option value="$PROJECT_DIR$/src/client/model/Seeker.java" />
         <option value="$PROJECT_DIR$/src/server/model/ClientNotifier.java" />
         <option value="$PROJECT_DIR$/src/client/view/start/StartView.java" />
+        <option value="$PROJECT_DIR$/src/client/model/Room.java" />
       </list>
     </option>
   </component>
@@ -308,6 +314,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -820,7 +830,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/client/view/search/package-info.java" />
     <entry file="file://$PROJECT_DIR$/src/client/view/main/package-info.java" />
     <entry file="file://$PROJECT_DIR$/src/server/view/package-info.java" />
     <entry file="file://$PROJECT_DIR$/src/client/view/login/package-info.java" />
@@ -1114,20 +1123,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/SLChat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2753">
-          <caret line="237" column="18" lean-forward="false" selection-start-line="237" selection-start-column="18" selection-end-line="237" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3318#3502#0" expanded="true" />
-            <element signature="e#3501#3502#0" expanded="true" />
-            <marker date="1498105733381" expanded="true" signature="870:874" ph="/**...*/" />
-            <marker date="1498105733381" expanded="true" signature="5964:6252" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/client/model/Seeker.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="791">
@@ -1153,6 +1148,33 @@
           <folding>
             <element signature="imports" expanded="true" />
             <marker date="1498106596985" expanded="true" signature="6097:6106" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/SLChat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="234" column="48" lean-forward="true" selection-start-line="234" selection-start-column="48" selection-end-line="234" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3318#3502#0" expanded="true" />
+            <element signature="e#3501#3502#0" expanded="true" />
+            <marker date="1498105733381" expanded="true" signature="870:874" ph="/**...*/" />
+            <marker date="1498105733381" expanded="true" signature="5964:6252" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/model/Room.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="7" lean-forward="false" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+          <folding>
+            <element signature="e#393#394#0" expanded="true" />
+            <element signature="e#425#426#0" expanded="true" />
+            <element signature="e#470#471#0" expanded="true" />
+            <element signature="e#507#508#0" expanded="true" />
           </folding>
         </state>
       </provider>
