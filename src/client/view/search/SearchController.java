@@ -54,6 +54,8 @@ public class SearchController {
      */
     @FXML
     private void handleConnectButtonAction(ActionEvent event) {
-
+        roomsList.setOnEditStart(e -> {
+            System.out.println("You got me!");
+        });
     }
 }

@@ -17,15 +17,18 @@ import static server.model.ServerConstants.*;
  * @see server.model.ServerConstants#GROUP_ADDRESS
  */
 public class Seeker extends Thread {
-    /* Determines when to stop this thread. */
+    /** Determines when to stop this thread. */
     private boolean IS_RUNNING;
-    /* Period of time in sec. in which this thread will run */
+    /** Represents amount of times this object sends
+        multicast packets on LAN, interrupting for
+        100 miliseconds after each time. */
     private final int WORKING_TIME = 1;
     private InetAddress group = null;
     private DatagramPacket datagramPacket = null;
 
     public Seeker() {
         super("Seeker");
+        IS_RUNNING = true;
         try {
             /* Getting multicast group IP address */
             group = InetAddress.getByName(GROUP_ADDRESS);
@@ -43,16 +46,13 @@ public class Seeker extends Thread {
      * Starts sending multicast packets
      * at given group addres
      * {@link server.model.ServerConstants#GROUP_ADDRESS}
-     * every second, until it gets a signal
-     * to stop from outside, by invoking
-     * {@link #die()} method, or a given
+     * every second, for a given
      * period of time will pass.
      *
      * @see #WORKING_TIME
      */
     public void run() {
             int i = 0;
-        IS_RUNNING = true;
         printMessage("Started.");
         /* Sending multicast packet's on LAN */
         try (DatagramSocket datagramSocket = new DatagramSocket(CLIENT_MULTICAST_PORT, prefferedAddress)) {
@@ -61,13 +61,12 @@ public class Seeker extends Thread {
                 /* Sending broadcast packet */
                 datagramSocket.send(datagramPacket);
                 printMessage("Packet sent from: " + prefferedAddress);
-                sleep(1000);
+                sleep(100);
                 /* stop if server's not responding */
                 if (i == WORKING_TIME) {
                     break;
                 }
             }
-            IS_RUNNING = false;
         } catch (IOException | InterruptedException e) {
             /* Sending back packet, that program can stop
                tyring to receive packet from server, if
@@ -76,7 +75,8 @@ public class Seeker extends Thread {
             printMessage("Exception thrown while sending packets in run()");
             e.printStackTrace();
         } finally {
-                SLChat.sendBackPacket();
+            IS_RUNNING = false;
+            SLChat.sendBackPacket();
             printMessage("Stopped.");
         }
     }
@@ -90,5 +90,9 @@ public class Seeker extends Thread {
 
     private void printMessage(String message) {
         System.out.println(getName() + ": " + message);
+    }
+
+    public boolean getStatus() {
+        return IS_RUNNING;
     }
 }

@@ -63,6 +63,8 @@ public class SLChat {
         public static InetAddress localAddress;
     /** A list of rooms, found on LAN */
         public static Hashtable<String, InetAddress> rooms;
+    /** Determines, whether {@link #getIP()} is listening for incoming packets */
+        private static boolean isListening = false;
 
     /**
      * Main program entry.
@@ -123,6 +125,7 @@ public class SLChat {
             Seeker seeker;
             DatagramPacket packet;
             byte[] packetData;
+
             rooms = new Hashtable<>();
 
         /* Creates instance of client.model.Seeker class thread, that sends multicast
@@ -133,7 +136,8 @@ public class SLChat {
             seeker = new Seeker();
             seeker.start();
             Long startTime = System.currentTimeMillis();
-            while (true) {
+            while (seeker.getStatus()) {
+                isListening = true;
                 /* stop listening, when time is out */
                 if ((System.currentTimeMillis() - startTime) > 3000L) break;
                 packetData = new byte[64];
@@ -148,10 +152,9 @@ public class SLChat {
                     System.out.println("Room name is: <" + roomName + ">");
                     rooms.put(roomName, packet.getAddress());
                 }
-                if (!seeker.isAlive()) {
-                    break;
-                }
             }
+            isListening = false;
+            System.out.println("GetIP stopped.");
         } catch (IOException ie) {
             System.out.println("Exception thrown while trying to find server.;");
             ie.printStackTrace();
@@ -199,7 +202,10 @@ public class SLChat {
         try (DatagramSocket socket = new DatagramSocket()) {
             DatagramPacket packet = new DatagramPacket(TIME_HAS_EXPIRED, TIME_HAS_EXPIRED.length,
                                                                     prefferedAddress, CLIENT_PORT);
+            while (isListening) {
                 socket.send(packet);
+                Thread.sleep(100);
+            }
 
         } catch (SocketException se) {
             System.out.println("getIP() method can't open socket to send back packet.");
@@ -207,6 +213,8 @@ public class SLChat {
         } catch (IOException exc) {
             System.out.println("getIP() method can't send back packet.");
             exc.printStackTrace();
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
         }
         System.out.println("Stop sending back packets.");
     }
