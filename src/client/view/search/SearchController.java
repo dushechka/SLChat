@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import static main.SLChat.START_GUI_PATH;
+import static main.SLChat.connectClient;
 import static main.SLChat.rooms;
 
 /**
@@ -54,8 +55,7 @@ public class SearchController {
      */
     @FXML
     private void handleConnectButtonAction(ActionEvent event) {
-        roomsList.setOnEditStart(e -> {
-            System.out.println("You got me!");
-        });
+        String choosenRoomName = roomsList.getSelectionModel().getSelectedItem();
+        connectClient(rooms.get(choosenRoomName));
     }
 }
