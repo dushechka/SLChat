@@ -125,12 +125,12 @@ public class ServerConstants {
         System.out.println();
 
         /* searching for proper interface */
-        iFace = chooseInterface(uPnets, "eth");
-        if (iFace == null) {
-            iFace = chooseInterface(uPnets, "wlan");
-        }
+        iFace = chooseInterface(uPnets, "wlan");
         if (iFace == null) {
             iFace = chooseInterface(uPnets, "wan");
+        }
+        if (iFace == null) {
+            iFace = chooseInterface(uPnets, "eth");
         }
         if (iFace == null) {
             iFace = uPnets.get(0);
