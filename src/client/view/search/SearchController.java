@@ -1,17 +1,22 @@
 package client.view.search;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import static main.SLChat.START_GUI_PATH;
+
 import java.io.IOException;
+
+import static main.SLChat.START_GUI_PATH;
+import static main.SLChat.rooms;
 
 /**
  * Controller, responsible for
@@ -21,7 +26,7 @@ import java.io.IOException;
 public class SearchController {
         @FXML private Button getBackButton;
         @FXML private Button connectButton;
-        @FXML static Text roomName;
+        @FXML private ListView<String> roomsList;
 
     /**
      * Switches GUI to main menu.
@@ -39,5 +44,16 @@ public class SearchController {
         Stage stage = (Stage) getBackButton.getScene().getWindow();
         stage.setTitle("SLChat");
         stage.setScene(new Scene(root));
+    }
+
+    /**
+     * Connects to the room, chosen
+     * by user from {@link #roomsList}.
+     *
+     * @param event User pushed this button.
+     */
+    @FXML
+    private void handleConnectButtonAction(ActionEvent event) {
+
     }
 }

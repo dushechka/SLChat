@@ -20,7 +20,7 @@ public class Seeker extends Thread {
     /* Determines when to stop this thread. */
     private boolean IS_RUNNING;
     /* Period of time in sec. in which this thread will run */
-    private final int WORKING_TIME = 3;
+    private final int WORKING_TIME = 1;
     private InetAddress group = null;
     private DatagramPacket datagramPacket = null;
 
@@ -60,16 +60,14 @@ public class Seeker extends Thread {
                 i++;
                 /* Sending broadcast packet */
                 datagramSocket.send(datagramPacket);
-                printMessage("Packet send from: " + prefferedAddress);
+                printMessage("Packet sent from: " + prefferedAddress);
                 sleep(1000);
                 /* stop if server's not responding */
                 if (i == WORKING_TIME) {
-                    datagramPacket = new DatagramPacket(TIME_HAS_EXPIRED, TIME_HAS_EXPIRED.length,
-                                                                    prefferedAddress, CLIENT_PORT);
-                    datagramSocket.send(datagramPacket);
                     break;
                 }
             }
+            IS_RUNNING = false;
         } catch (IOException | InterruptedException e) {
             /* Sending back packet, that program can stop
                tyring to receive packet from server, if
@@ -78,9 +76,7 @@ public class Seeker extends Thread {
             printMessage("Exception thrown while sending packets in run()");
             e.printStackTrace();
         } finally {
-            if (!IS_BACK_PACKED_RECEIVED) {
                 SLChat.sendBackPacket();
-            }
             printMessage("Stopped.");
         }
     }

@@ -1,8 +1,12 @@
 package client.view.start;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
@@ -47,8 +51,31 @@ public class StartController {
      */
     @FXML
     protected void handleSearchButtonAction(ActionEvent event) {
-        mainView.changeWindow(SEARCH_GUI_PATH);
+            ListView<String> roomsList = null;
+            ObservableList<String> roomNames = FXCollections.observableArrayList();
         getIP();
+        mainView.changeWindow(SEARCH_GUI_PATH);
+        /* getting a link for the ListView node on just loaded root */
+        for (Node n : primaryStage.getScene().getRoot().getChildrenUnmodifiable()) {
+            if(n.getClass().toString().contains("ListView")) {
+                roomsList = (ListView<String>) n;
+            }
+        }
+        /* checking, whether we got a link to ListView */
+        if (roomsList != null) {
+            /* checking, whether open rooms were found on LAN */
+            if (rooms.size() > 0) {
+                /* setting found rooms names in ListView */
+                for (String name : rooms.keySet()) {
+                    System.out.println("Found room: " + name);
+                    roomNames.add(name);
+                    roomsList.setItems(roomNames);
+                }
+            } else {
+                /* if none of them were found */
+                roomsList.getItems().setAll("No open rooms were found.");
+            }
+        }
     }
 
     /**

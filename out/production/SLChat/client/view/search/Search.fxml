@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -27,11 +28,12 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="connectButton" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="115.0" text="Connect &gt;&gt;" textFill="#0d184a" />
+            <Button fx:id="connectButton" mnemonicParsing="false" onAction="#handleConnectButtonAction" prefHeight="25.0" prefWidth="115.0" text="Connect &gt;&gt;" textFill="#0d184a" />
          </children>
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
       </HBox>
+      <ListView fx:id="roomsList" prefHeight="335.0" prefWidth="100.0" />
    </children>
 </GridPane>

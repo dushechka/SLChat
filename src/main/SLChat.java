@@ -3,13 +3,16 @@ package main;
 import client.model.Client;
 import client.model.Seeker;
 import client.view.start.StartView;
+import javafx.collections.FXCollections;
 import javafx.stage.Stage;
 import server.model.Server;
 
 import java.io.IOException;
 import java.net.*;
 import java.util.Collections;
+import java.util.Hashtable;
 
+import static java.lang.System.currentTimeMillis;
 import static server.model.ServerConstants.*;
 
 /**
@@ -34,8 +37,6 @@ public class SLChat {
      *  {@link server.model.ClientConnector} already running, so
      *  the {@link client.model.Client} can connect to server */
         public static boolean IS_CLIENT_CONNECTOR_RUNNING;
-    /** Determines, whether {@link #getIP()} method received answer from server */
-        public static boolean IS_BACK_PACKED_RECEIVED;
     /** Server backend thread. */
         public static Server SLServer;
     /** Client backend thread. */
@@ -60,6 +61,8 @@ public class SLChat {
         public static InetAddress prefferedAddress;
     /** Interface, which is used to make local connections. */
         public static InetAddress localAddress;
+    /** A list of rooms, found on LAN */
+        public static Hashtable<String, InetAddress> rooms;
 
     /**
      * Main program entry.
@@ -120,31 +123,34 @@ public class SLChat {
             Seeker seeker;
             DatagramPacket packet;
             byte[] packetData;
+            rooms = new Hashtable<>();
 
         /* Creates instance of client.model.Seeker class thread, that sends multicast
            packets on LAN, in order, to server.model.ClientNotifier catch them and
            response with packet, containing it's IP. Then, creates DatagramSocket
            to catch server's back packet extracts server's IP and message from it */
         try (DatagramSocket dSocket = new DatagramSocket(CLIENT_PORT, prefferedAddress)) {
-            IS_BACK_PACKED_RECEIVED = false;
             seeker = new Seeker();
             seeker.start();
-            packetData = new byte[64];
-            packet = new DatagramPacket(packetData, packetData.length);
-            dSocket.receive(packet);
-            IS_BACK_PACKED_RECEIVED = true;
-            System.out.println("Server's back packet recieved.");
-            System.out.println("Server's address: " + packet.getAddress());
-            System.out.println("Recieved message: " + byteToString(packetData));
-            if (seeker.isAlive()) {
-                seeker.die();
-            }
-            msg = byteToString(packetData);
-            if (msg.contains(byteToString(SERVER_STRING))) {
-                System.out.println("Room name is: <" + msg.substring(6).trim() + ">");
-                connectClient(packet.getAddress());
-            } else {
-                System.out.println("Server hadn't responsed for given time (3 sec).");
+            Long startTime = System.currentTimeMillis();
+            while (true) {
+                /* stop listening, when time is out */
+                if ((System.currentTimeMillis() - startTime) > 3000L) break;
+                packetData = new byte[64];
+                packet = new DatagramPacket(packetData, packetData.length);
+                dSocket.receive(packet);
+                System.out.println("Server's back packet recieved.");
+                System.out.println("Server's address: " + packet.getAddress());
+                System.out.println("Recieved message: " + byteToString(packetData));
+                msg = byteToString(packetData);
+                if (msg.contains(byteToString(SERVER_STRING))) {
+                    String roomName = msg.substring(6).trim();
+                    System.out.println("Room name is: <" + roomName + ">");
+                    rooms.put(roomName, packet.getAddress());
+                }
+                if (!seeker.isAlive()) {
+                    break;
+                }
             }
         } catch (IOException ie) {
             System.out.println("Exception thrown while trying to find server.;");
@@ -189,13 +195,11 @@ public class SLChat {
      * probably because it can't open socket.
      */
     public static void sendBackPacket() {
-        System.out.println("Start sending back packets.");
+        System.out.println("Sending dummy back packet.");
         try (DatagramSocket socket = new DatagramSocket()) {
             DatagramPacket packet = new DatagramPacket(TIME_HAS_EXPIRED, TIME_HAS_EXPIRED.length,
                                                                     prefferedAddress, CLIENT_PORT);
-            while (!IS_BACK_PACKED_RECEIVED) {
                 socket.send(packet);
-            }
 
         } catch (SocketException se) {
             System.out.println("getIP() method can't open socket to send back packet.");
