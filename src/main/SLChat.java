@@ -1,19 +1,19 @@
 package main;
 
 import client.model.Client;
-import client.model.Seeker;
+import client.model.RoomsGetter;
 import client.view.start.StartView;
-import javafx.collections.FXCollections;
 import javafx.stage.Stage;
 import server.model.Server;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Hashtable;
 
-import static java.lang.System.currentTimeMillis;
 import static server.model.ServerConstants.*;
 
 /**
@@ -70,8 +70,7 @@ public class SLChat {
         public static InetAddress localAddress;
     /** A list of rooms, found on LAN */
         public static Hashtable<String, InetAddress> rooms;
-    /** Determines, whether {@link #getIP()} is listening for incoming packets */
-        private static boolean isListening = false;
+
 
     /**
      * Main program entry.
@@ -125,89 +124,46 @@ public class SLChat {
     }
 
     /**
-     * Searches for server's IP on LAN.
-     * <p>
-     * Starts {@link client.model.Seeker}
-     * and then waits for response from
-     * server with datagram, from which
-     * it retrieves server's address and
-     * room name.
      */
     public static void getIP() {
-            String msg;
-            Seeker seeker;
-            DatagramPacket packet;
-            byte[] packetData;
+            int i = 1;
+            ArrayList<RoomsGetter> getters = new ArrayList<>();
+            /* time, at which RoomsGetter threads will work */
+            final int WORKING_TIME = 300;
 
-            rooms = new Hashtable<>();
-
-        /* Creates instance of client.model.Seeker class thread, that sends multicast
-           packets on LAN, in order, to server.model.ClientNotifier catch them and
-           response with packet, containing it's IP. Then, creates DatagramSocket
-           to catch server's back packet extracts server's IP and message from it */
-        try (DatagramSocket dSocket = new DatagramSocket(CLIENT_PORT, prefferedAddress)) {
-            seeker = new Seeker();
-            seeker.start();
-            Long startTime = System.currentTimeMillis();
-            while (seeker.getStatus()) {
-                isListening = true;
-                /* stop listening, when time is out */
-                if ((System.currentTimeMillis() - startTime) > 3000L) break;
-                packetData = new byte[64];
-                packet = new DatagramPacket(packetData, packetData.length);
-                dSocket.receive(packet);
-                System.out.println("Server's back packet recieved.");
-                System.out.println("Server's address: " + packet.getAddress());
-                System.out.println("Recieved message: " + byteToString(packetData));
-                msg = byteToString(packetData);
-                if (msg.contains(byteToString(SERVER_STRING))) {
-                    String roomName = msg.substring(6).trim();
-                    System.out.println("Room name is: <" + roomName + ">");
-                    rooms.put(roomName, packet.getAddress());
-                }
-            }
-            isListening = false;
-            System.out.println("GetIP stopped.");
-        } catch (IOException ie) {
-            System.out.println("Exception thrown while trying to find server.;");
-            ie.printStackTrace();
+        rooms = new Hashtable<>();
+        long startTime = System.currentTimeMillis();
+        /* Creating a pool of RoomsGetters, to get servers
+           InetAddresses from LAN's on all network interfaces. */
+        System.out.println("Starting getters and seekers.");
+        for (InetAddress iFace : inetAddresses) {
+            RoomsGetter getter = new RoomsGetter(iFace, i);
+            getter.start();
+            getters.add(getter);
+            i++;
         }
-    }
-
-    /**
-     * Sends back packets, if
-     * server is not responding,
-     * until {@link #getIP()}
-     * method will stop listening.
-     * <p>
-     * Spare method, that is invoked, if
-     * {@link server.model.ClientNotifier}
-     * does not respond on client's multicast
-     * packets, and exception thrown in
-     * {@link client.model.Seeker} Thread,
-     * probably because it can't open socket.
-     */
-    public static void sendBackPacket() {
-        System.out.println("Sending dummy back packet.");
-        try (DatagramSocket socket = new DatagramSocket()) {
-            DatagramPacket packet = new DatagramPacket(TIME_HAS_EXPIRED, TIME_HAS_EXPIRED.length,
-                                                                    prefferedAddress, CLIENT_PORT);
-            while (isListening) {
-                socket.send(packet);
+        System.out.println("Seekers and getters started.");
+        /* waiting for a given period of time */
+        try {
+            while ((System.currentTimeMillis() - startTime) < WORKING_TIME) {
                 Thread.sleep(100);
             }
-
-        } catch (SocketException se) {
-            System.out.println("getIP() method can't open socket to send back packet.");
-            se.printStackTrace();
-        } catch (IOException exc) {
-            System.out.println("getIP() method can't send back packet.");
-            exc.printStackTrace();
         } catch (InterruptedException ie) {
             ie.printStackTrace();
         }
-        System.out.println("Stop sending back packets.");
+
+        System.out.println("Killing seekers and getters.");
+        for (RoomsGetter gt : getters) {
+            gt.die();
+            rooms.putAll(gt.getRooms());
+        }
+        System.out.println("A list of gained rooms:");
+        for (String roomName : rooms.keySet()) {
+            System.out.println(roomName);
+        }
     }
+
+
 
     /**
      * Invokes {@link #connectClient(InetAddress)}

@@ -8,6 +8,7 @@ import java.net.MulticastSocket;
 
 import static main.SLChat.localAddress;
 import static main.SLChat.prefferedAddress;
+import static main.SLChat.primaryStage;
 import static server.model.ServerConstants.*;
 
 /**
@@ -26,10 +27,8 @@ public class ClientNotifier extends Thread {
         private MulticastSocket mSocket = null;
     /** Multicast group in which client sends packets. */
         private InetAddress group = null;
-        private DatagramPacket packet = null;
-        private byte[] packetData = null;
-        private final String roomName;
         private final InetAddress ifaceAddress;
+        private final String roomName;
 
 
     /**
@@ -77,6 +76,10 @@ public class ClientNotifier extends Thread {
      * @see #roomName
      */
     public void run() {
+                DatagramPacket packet;
+                byte[] packetData;
+                int port;
+
         IS_RUNNING = true;
         printMessage("Started.");
         try {
@@ -86,14 +89,21 @@ public class ClientNotifier extends Thread {
                 packet = new DatagramPacket(packetData, packetData.length);
                 mSocket.receive(packet);
                 packetData = packet.getData();
+
+                /* Determining RoomsGetter port. First operand is the addition
+                   number of RoomsGetter thread, which was added to default
+                   CLIENT_MULTICAST_PORT, used by Seeker. */
+                port = (packet.getPort() - CLIENT_MULTICAST_PORT) + CLIENT_PORT;
                 printMessage("Received packet <" + byteToString(packetData) + ">");
                 if (byteToString(packetData).contains(byteToString(SERVER_STRING))) {
                     printMessage("Multicast packet recieved from client.");
                     printMessage("Clients address <" + packet.getAddress() + ">");
+                    printMessage("Clients port: " + packet.getPort());
+                    printMessage("Port, choosed to send message: " + port);
                     /* Making a packet, containing room name and server address info */
                     String msg = new String(byteToString(SERVER_STRING) + roomName);
                     packetData = stringToByte(msg);
-                    packet = new DatagramPacket(packetData, packetData.length, packet.getAddress(), CLIENT_PORT);
+                    packet = new DatagramPacket(packetData, packetData.length, packet.getAddress(), port);
                     /* Sending packet to corresponding client's method (main.SLChat#getIP()). */
                     mSocket.send(packet);
                     printMessage("Back datagram packet sent to client.");
@@ -114,6 +124,8 @@ public class ClientNotifier extends Thread {
 
     /* killing this thread */
     void die() {
+            byte[] packetData = TIME_HAS_EXPIRED;
+
         IS_RUNNING = false;
         /* Sending dummy packet to overcome "while" cycle in method run() */
         printMessage(": Stopping...");

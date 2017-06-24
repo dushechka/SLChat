@@ -28,10 +28,10 @@ public class ServerConstants {
         server listens for them in order, to find each other. */
         public final static int SERVER_MULTI_PORT = 4444;
     /** Port, from which {@link client.model.Seeker} sends multicast packets */
-        public final static int CLIENT_MULTICAST_PORT = 4445;
+        public final static int CLIENT_MULTICAST_PORT = 4848;
     /** Port, on which client receives server's answer packet,
         and retrieves servers IP address from it */
-        public final static int CLIENT_PORT = 4447;
+        public final static int CLIENT_PORT = 8484;
     /** Broadcast group address at which {@link client.model.Seeker sends packets}. */
         public final static String GROUP_ADDRESS = "230.0.0.1";
     /** A default inner program charset name for converting strings to arrays of byte and backwards

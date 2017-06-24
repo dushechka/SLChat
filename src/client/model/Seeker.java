@@ -1,11 +1,11 @@
 package client.model;
 
-import main.SLChat;
-
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-import static main.SLChat.*;
 import static server.model.ServerConstants.*;
 
 /**
@@ -19,15 +19,17 @@ import static server.model.ServerConstants.*;
 public class Seeker extends Thread {
     /** Determines when to stop this thread. */
     private boolean IS_RUNNING;
-    /** Represents amount of times this object sends
-        multicast packets on LAN, interrupting for
-        100 miliseconds after each time. */
-    private final int WORKING_TIME = 1;
+    /** Determines on which network interface to send packets */
+    private InetAddress iFaceAddress;
     private InetAddress group = null;
     private DatagramPacket datagramPacket = null;
+    private final int PORT;
 
-    public Seeker() {
-        super("Seeker");
+    public Seeker(InetAddress iFaceAddress, int number) {
+        super("Seeker_" + number);
+        PORT = CLIENT_MULTICAST_PORT + number;
+        printMessage("Taken port is: " + PORT);
+        this.iFaceAddress = iFaceAddress;
         IS_RUNNING = true;
         try {
             /* Getting multicast group IP address */
@@ -48,35 +50,27 @@ public class Seeker extends Thread {
      * {@link server.model.ServerConstants#GROUP_ADDRESS}
      * every second, for a given
      * period of time will pass.
-     *
-     * @see #WORKING_TIME
      */
     public void run() {
             int i = 0;
         printMessage("Started.");
         /* Sending multicast packet's on LAN */
-        try (DatagramSocket datagramSocket = new DatagramSocket(CLIENT_MULTICAST_PORT, prefferedAddress)) {
+        try (DatagramSocket datagramSocket = new DatagramSocket(PORT, iFaceAddress)) {
             while (IS_RUNNING) {
                 i++;
                 /* Sending broadcast packet */
                 datagramSocket.send(datagramPacket);
-                printMessage("Packet sent from: " + prefferedAddress);
+                printMessage("Packet sent from: " + iFaceAddress);
                 sleep(100);
                 /* stop if server's not responding */
-                if (i == WORKING_TIME) {
-                    break;
-                }
             }
         } catch (IOException | InterruptedException e) {
             /* Sending back packet, that program can stop
                tyring to receive packet from server, if
                something went wrong */
-            SLChat.sendBackPacket();
             printMessage("Exception thrown while sending packets in run()");
             e.printStackTrace();
         } finally {
-            IS_RUNNING = false;
-            SLChat.sendBackPacket();
             printMessage("Stopped.");
         }
     }
