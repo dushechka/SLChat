@@ -11,7 +11,7 @@ import static main.SLChat.prefferedAddress;
 import static server.model.ServerConstants.*;
 
 /**
- * Notifies client about server's
+ * Notifies clients about server's
  * presence on LAN.
  * <p>
  * Receives multicast packets
@@ -29,27 +29,33 @@ public class ClientNotifier extends Thread {
         private DatagramPacket packet = null;
         private byte[] packetData = null;
         private final String roomName;
+        private final InetAddress ifaceAddress;
 
 
     /**
      * Attaching created socket to
      * {@link server.model.ServerConstants#SERVER_MULTI_PORT}
      * and {@link server.model.ServerConstants#GROUP_ADDRESS}
-     * inet group.
+     * inet group on specified interface address by
+     * corresponding param #ifaceAddress.
      *
      * @param roomName  The name of server's room, which
      *                  is represented to client.
+     * @param ifaceAddress  Network interface IPv4 address
+     *                      on wich this will listen for
+     *                      incoming packets from clients.
      */
-    ClientNotifier(String roomName) {
+    ClientNotifier(String roomName, InetAddress ifaceAddress) {
         super("ClientNotifier");
         this.roomName = roomName;
+        this.ifaceAddress = ifaceAddress;
         try {
             printMessage("Starting...");
 //            inetAddress = getInterface("eth3");
 //            mSocket = new MulticastSocket(new InetSocketAddress(prefferedAddress, SERVER_MULTI_PORT));
             mSocket = new MulticastSocket(SERVER_MULTI_PORT);
             /* Setting interface to work with. Otherwise it won't work. */
-            mSocket.setInterface(prefferedAddress);
+            mSocket.setInterface(ifaceAddress);
             printMessage("Multicast socket interface is " + mSocket.getInterface());
             group = InetAddress.getByName(GROUP_ADDRESS);
             mSocket.joinGroup(group);
@@ -63,7 +69,7 @@ public class ClientNotifier extends Thread {
      * Receives multicast packets
      * and answers to them.
      * <p>
-     * Uses created in {@link #ClientNotifier(String)}
+     * Uses created in {@link #ClientNotifier(String, InetAddress)}
      * socket to receive clients' multicast messages
      * and answer to thev with packets, containing
      * server's IP address and room name.
@@ -113,7 +119,7 @@ public class ClientNotifier extends Thread {
         printMessage(": Stopping...");
         try ( DatagramSocket dummySocket = new DatagramSocket(4455); ) {
             DatagramPacket dummyPacket = new DatagramPacket(packetData, packetData.length,
-                                                            localAddress, SERVER_MULTI_PORT);
+                                                            ifaceAddress, SERVER_MULTI_PORT);
             dummySocket.send(dummyPacket);
         } catch (IOException exc) {
             printMessage(": Exception thrown while trying to release kill the thread.");
@@ -131,5 +137,9 @@ public class ClientNotifier extends Thread {
 
     private void printMessage(String message) {
         System.out.println(getName() + ": " + message);
+    }
+
+    public InetAddress getIfaceAddress() {
+        return ifaceAddress;
     }
 }

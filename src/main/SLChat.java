@@ -9,6 +9,7 @@ import server.model.Server;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 
@@ -55,8 +56,14 @@ public class SLChat {
         public static final String CREATE_GUI_PATH = "/server/view/create/Create.fxml";
     /** Main window GUI fxml file path. */
         public static final String START_GUI_PATH = "/client/view/start/Start.fxml";
+    /** A list of system's running network interfaces */
+        private static ArrayList<NetworkInterface> liveNICs;
     /** Preffered network interface, to run client from. */
         private static NetworkInterface prefferedInterface;
+    /** A list of system rinning network interfaces' IPv4 addresses */
+        public static ArrayList<InetAddress> inetAddresses;
+    /** A list of system rinning network interfaces' IPv4 addresses, that support multicasting */
+    public static ArrayList<InetAddress> mCastAddresses;
     /** {@link #prefferedInterface} address, with wich program will work. */
         public static InetAddress prefferedAddress;
     /** Interface, which is used to make local connections. */
@@ -76,9 +83,15 @@ public class SLChat {
             IS_CLIENT_CONNECTOR_RUNNING = false;
             localAddress = InetAddress.getByName("localhost");
             /* choosing live network interface to work with */
-            prefferedInterface = chooseInterface();
+            liveNICs = getLiveNICs();
+            prefferedInterface = chooseInterface(liveNICs);
             System.out.println("Preffered interface: " + prefferedInterface.getName());
             System.out.println("Does interface support multicasting: " + prefferedInterface.supportsMulticast());
+            /* getting a list of all available running interfaces IPv4 addresses */
+            inetAddresses = new ArrayList<>();
+            mCastAddresses = new ArrayList<>();
+            getIfacesAddresses(liveNICs, inetAddresses, false);
+            getIfacesAddresses(liveNICs, mCastAddresses, true);
             prefferedAddress = getIfaceAddress(prefferedInterface);
             System.out.println("Preffered address is: " + prefferedAddress);
             /* starting program GUI */
@@ -159,29 +172,6 @@ public class SLChat {
             System.out.println("Exception thrown while trying to find server.;");
             ie.printStackTrace();
         }
-    }
-
-    /**
-     * Gets interface address, from
-     * which to send packets.
-     *
-     * @param nif   A network interface, for
-     *              which to get an address.
-     * @return      {@link InetAddress} from
-     *              which to send packets.
-     * @throws SocketException  When cannot get
-     *                          address by name.
-     */
-    private static InetAddress getIfaceAddress(NetworkInterface nif) throws SocketException {
-            InetAddress address = null;
-
-        for (InetAddress addr : Collections.list(nif.getInetAddresses())) {
-            /* selects an IPv4 address, assigned to interface */
-            if (addr.toString().length() <= 16) {
-                address = addr;
-            }
-        }
-        return address;
     }
 
     /**

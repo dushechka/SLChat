@@ -1,5 +1,6 @@
 package server.model;
 
+import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.nio.charset.Charset;
@@ -84,7 +85,7 @@ public class ServerConstants {
      * @throws SocketException  when can't retrieve
      *                          a list of interfaces.
      */
-    private static ArrayList<NetworkInterface> getLiveNICs() throws SocketException {
+    public static ArrayList<NetworkInterface> getLiveNICs() throws SocketException {
             Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
             ArrayList<NetworkInterface> uPnets = new ArrayList<>();
         for (NetworkInterface netIf : Collections.list(nets)) {
@@ -93,6 +94,52 @@ public class ServerConstants {
             }
         }
         return uPnets;
+    }
+
+    /**
+     * Gets interface address, from
+     * which to send packets.
+     *
+     * @param nif   A network interface, for
+     *              which to get an address.
+     * @return      {@link InetAddress} from
+     *              which to send packets.
+     * @throws SocketException  When cannot get
+     *                          address by name.
+     */
+    public static InetAddress getIfaceAddress(NetworkInterface nif) throws SocketException {
+            InetAddress address = null;
+        System.out.println("Extracting IPv4 address from " + nif.getName() + ": " + nif.getDisplayName());
+        for (InetAddress addr : Collections.list(nif.getInetAddresses())) {
+            /* selects an IPv4 address, assigned to interface */
+            if (addr.toString().length() <= 16) {
+                address = addr;
+            }
+        }
+        return address;
+    }
+
+    /**
+     * Gets interface address, which
+     * supports multicasting.
+     *
+     * @param nif   A network interface, for
+     *              which to get an address.
+     * @return      {@link InetAddress} which
+     *              supports multicasting.
+     * @throws SocketException  When cannot get
+     *                          address by name.
+     */
+    private static InetAddress getMcastAddress(NetworkInterface nif) throws SocketException {
+        InetAddress address = null;
+        System.out.println("Extracting multicast address from " + nif.getName() + ": " + nif.getDisplayName());
+        for (InetAddress addr : Collections.list(nif.getInetAddresses())) {
+            /* selects an IPv4 address, assigned to interface */
+            if (addr.toString().length() <= 16 && nif.supportsMulticast()) {
+                address = addr;
+            }
+        }
+        return address;
     }
 
     /**
@@ -107,16 +154,19 @@ public class ServerConstants {
      * none of them were found,
      * returns null.
      *
+     * @param   uPnets  A list of found
+     *                  running system's
+     *                  network interfaces.
+     * @see     #getLiveNICs()
      * @return  running network interface
      *          to work with or null if none.
      * @throws SocketException  when can't get an
      *                          enumeration of
      *                          interfaces from system.
      */
-    public static NetworkInterface chooseInterface() throws SocketException {
+    public static NetworkInterface chooseInterface(ArrayList<NetworkInterface> uPnets) throws SocketException {
             NetworkInterface iFace = null;
             /* running interfaces */
-            ArrayList<NetworkInterface> uPnets = getLiveNICs();
 
         System.out.println("A list of system's running interfaces:");
         for (NetworkInterface netIf : uPnets) {
@@ -161,5 +211,39 @@ public class ServerConstants {
             }
         }
         return nic;
+    }
+
+    /**
+     * Extracts all the IPv4
+     * addresses from system
+     * running network interfaces.
+     *
+     * @param mCast Determines, if
+     *              work only with
+     *              interfaces, which
+     *              support multicast.
+     *
+     * @param nics  List of system's
+     *              running interfaces.
+     * @param addresses List, to which
+     *                  this method
+     *                  saves addresses.
+     * @throws SocketException  when cannot interconnect
+     *                          with some of the interfaces.
+     */
+    public static void getIfacesAddresses(ArrayList<NetworkInterface> nics,
+                                          ArrayList<InetAddress> addresses, boolean mCast) throws SocketException {
+            InetAddress address;
+        for (NetworkInterface iface : nics) {
+            if (mCast) {
+                address = getMcastAddress(iface);
+            } else {
+                address = getIfaceAddress(iface);
+            }
+            if (address != null) {
+                System.out.println("Adding address to list: " + address);
+                addresses.add(address);
+            }
+        }
     }
 }

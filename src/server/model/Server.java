@@ -1,6 +1,9 @@
 package server.model;
 
-import static main.SLChat.IS_SERVER_RUNNING;
+import java.net.InetAddress;
+import java.util.ArrayList;
+
+import static main.SLChat.*;
 
 /**
  * Chat's server class.
@@ -15,11 +18,13 @@ public class Server extends Thread {
         private ClientConnector clientConnector;
         private final String roomName;
         private final String password;
+        private ArrayList<ClientNotifier> notifiers;
 
     public Server(String roomName, String password) {
         super("SLServer");
         this.roomName = roomName;
         this.password = password;
+        notifiers = new ArrayList<>();
     }
 
     /** Main server's backend workflow. */
@@ -40,10 +45,24 @@ public class Server extends Thread {
      * @see server.model.ClientConnector
      */
     private void startListening() {
-        clientNotifier = new ClientNotifier(roomName);
+        startNotifiers();
         clientConnector = new ClientConnector(password);
-        clientNotifier.start();
         clientConnector.start();
+    }
+
+    /**
+     * Starting {@link ClientNotifier}s
+     * on all system's running interfaces,
+     * which support multicasting and saving
+     * them to {@link #notifiers}.
+     */
+    private void startNotifiers() {
+        for (InetAddress addr : mCastAddresses) {
+            clientNotifier = new ClientNotifier(roomName, addr);
+            clientNotifier.setDaemon(true);
+            clientNotifier.start();
+            notifiers.add(clientNotifier);
+        }
     }
 
     /**
@@ -52,15 +71,19 @@ public class Server extends Thread {
      */
     public void close() {
         try {
-            clientNotifier.die();
+            printMessage("Stopping...");
             clientConnector.die();
-            clientNotifier.join();
+            for (ClientNotifier cn : notifiers) {
+                System.out.println("Invoking die() method for " + cn.getIfaceAddress());
+                cn.die();
+            }
             clientConnector.join();
             IS_SERVER_RUNNING = false;
         } catch (InterruptedException e) {
             printMessage("Exception thrown, while closing secondary threads.");
             e.printStackTrace();
         }
+        printMessage("Stopped.");
     }
 
     private void printMessage(String message) {
