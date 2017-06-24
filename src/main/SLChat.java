@@ -129,7 +129,7 @@ public class SLChat {
             int i = 1;
             ArrayList<RoomsGetter> getters = new ArrayList<>();
             /* time, at which RoomsGetter threads will work */
-            final int WORKING_TIME = 300;
+            final int WORKING_TIME = 100;
 
         rooms = new Hashtable<>();
         long startTime = System.currentTimeMillis();
