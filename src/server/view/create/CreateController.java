@@ -71,7 +71,7 @@ public class CreateController {
                     try {
                         /* trying to connect to server, and log in then */
                         if (Client.connectClient(localAddress) && Client.logInClient("Unknown", pass)) {
-                                mainView.changeWindow(CLIENT_GUI_PATH);
+                                mainView.changeOnChat();
                                 mainView.bindTextArea();
                         } else {
                             mainView.alertWindow("Ooops!", "Can't start client.");

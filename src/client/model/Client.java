@@ -2,6 +2,7 @@ package client.model;
 
 import client.view.start.StartView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -25,6 +26,7 @@ public class Client extends Thread {
         private final DataOutputStream out;
         private static Socket socket;
         private TextArea textArea = null;
+        private TextField textField = null;
         private String nickname;
 
     public Client(DataInputStream in, DataOutputStream out, Socket socket) {
@@ -201,5 +203,13 @@ public class Client extends Thread {
      */
     public void setTextArea(TextArea textArea) {
         this.textArea = textArea;
+    }
+
+    public void setTextField(TextField textField) {
+        this.textField = textField;
+    }
+
+    public TextField getTextField() {
+        return textField;
     }
 }

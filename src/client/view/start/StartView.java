@@ -2,6 +2,7 @@ package client.view.start;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.collections.SetChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -9,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -85,7 +87,7 @@ public class StartView extends Application {
             }
         });
 
-        /* CREATING AND SHOWING MAIN MENU WINDOW */
+        /* creating and showing main menu wiwndow */
         stage.setTitle("SLChat");
         stage.setScene(scene);
         stage.setResizable(false);
@@ -113,6 +115,19 @@ public class StartView extends Application {
         primaryStage.setScene(new Scene(root));
     }
 
+    /**
+     * Changes GUI to chat
+     * window.
+     *
+     * @see main.SLChat#CLIENT_GUI_PATH
+     */
+    public void changeOnChat() {
+        changeWindow(CLIENT_GUI_PATH);
+        primaryStage.setResizable(true);
+        primaryStage.setMinWidth(240);
+        primaryStage.setMinHeight(478);
+    }
+
     /** Gets the link of chat window
      *  {@link TextArea} and saves it
      *  in {@link main.SLChat#SLClient}
@@ -123,6 +138,13 @@ public class StartView extends Application {
         for (Node node : nodes) {
             if (node.getClass().toString().contains("TextArea")) {
                 SLClient.setTextArea((TextArea) node);
+            } else if (node.getClass().toString().contains("GridPane")) {
+                GridPane gridPane = (GridPane) node;
+                Node nd = gridPane.getChildren().get(1);
+                if (nd.getClass().toString().contains("TextField")) {
+                    SLClient.setTextField((TextField) nd);
+                    SLClient.getTextField().requestFocus();
+                }
             }
         }
     }

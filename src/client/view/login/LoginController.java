@@ -12,6 +12,7 @@ import java.io.IOException;
 import static client.model.Client.logInClient;
 import static main.SLChat.CLIENT_GUI_PATH;
 import static main.SLChat.mainView;
+import static main.SLChat.primaryStage;
 
 public class LoginController {
     @FXML TextField loginField;
@@ -42,7 +43,7 @@ public class LoginController {
                 /* logging client in */
                 if (logInClient(login, password)) {
                     /* opening chat window if success */
-                    mainView.changeWindow(CLIENT_GUI_PATH);
+                    mainView.changeOnChat();
                     /* Client object should know, where to append received messages */
                     mainView.bindTextArea();
                 } else {

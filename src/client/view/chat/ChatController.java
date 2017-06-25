@@ -19,6 +19,7 @@ public class ChatController {
 
     @FXML
     protected void handleSendAction(ActionEvent event) {
+        textField.requestFocus();
         try {
             String msg = "";
             msg = textField.getText();
