@@ -11,6 +11,8 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -244,7 +246,7 @@ public class SLChat {
                 @Override
                 public void println(final String str) {
                     realPrintStream.println(str);
-                    newOutputStream.println(str);
+                    newOutputStream.println(LocalTime.now() + ": " + str);
                 }
         };
     }
@@ -265,11 +267,14 @@ public class SLChat {
      */
     private static PrintStream makeFileOutput(String filePath, String encoding) throws FileNotFoundException,
                                                                         UnsupportedEncodingException {
-        PrintStream out = new PrintStream(new FileOutputStream(new File(filePath), true),
-                                                                                    true,"UTF-16");
+        String path = LocalDate.now().toString().substring(0,10) + "_";
+        path += LocalTime.now().toString().substring(0,8).replace(':','-');
+        path += "_" + filePath;
+        PrintStream out = new PrintStream(new FileOutputStream(new File(path), true), true,"UTF-16");
         /* separating new output from old one */
         out.println("\n");
         out.println("********************STARTING NEW PROGRAM********************");
+        out.println("Current date and time: " + LocalDate.now() + " - " + LocalTime.now());
         return out;
     }
 
