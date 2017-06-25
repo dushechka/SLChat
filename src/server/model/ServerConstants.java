@@ -42,9 +42,9 @@ public class ServerConstants {
     /** A path to program log folder, which containing program service messages and exceptions */
         public final static String LOG_FOLDER_PATH = "log/";
     /** Path to program's output file */
-        public final static String OUT_FILE_PATH = (LOG_FOLDER_PATH + "out.txt");
+        public final static String OUT_FILE_PATH = "out.txt";
     /** Path to program's error output file */
-    public final static String ERR_FILE_PATH = (LOG_FOLDER_PATH + "err.txt");
+    public final static String ERR_FILE_PATH = "err.txt";
 
     /**
      * Forbidden method, because of
