@@ -37,6 +37,14 @@ public class ServerConstants {
     /** A default inner program charset name for converting strings to arrays of byte and backwards
         by {@link #byteToString(byte[])} and {@link #stringToByte(String)} methods. */
         private final static String DEFAULT_CHARSET = "UTF-8";
+    /** Default program charset, used in file output */
+        public final static String UNICODE_CHARSET = "UTF-16";
+    /** A path to program log folder, which containing program service messages and exceptions */
+        public final static String LOG_FOLDER_PATH = "log/";
+    /** Path to program's output file */
+        public final static String OUT_FILE_PATH = (LOG_FOLDER_PATH + "out.txt");
+    /** Path to program's error output file */
+    public final static String ERR_FILE_PATH = (LOG_FOLDER_PATH + "err.txt");
 
     /**
      * Forbidden method, because of

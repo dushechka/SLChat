@@ -6,7 +6,7 @@ import client.view.start.StartView;
 import javafx.stage.Stage;
 import server.model.Server;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -76,6 +76,15 @@ public class SLChat {
      * Main program entry.
      */
     public SLChat() {
+        try {
+            catchSOut();
+        } catch (FileNotFoundException e) {
+            System.out.println("Program can't find the file!");
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException exc) {
+            System.out.println("System does not support encoding " + UNICODE_CHARSET);
+            exc.printStackTrace();
+        }
         try {
             IS_SERVER_RUNNING = false;
             IS_CLIENT_RUNNING = false;
@@ -207,5 +216,66 @@ public class SLChat {
             mainView.alertWindow("Oops!", "Sorry... Can't connect to server. :'-(");
             System.out.println("Couldn't open login window.");
         }
+    }
+
+    /**
+     * Intercepts given output
+     * stream (realPrintStream),
+     * prints message to it and
+     * duplicates to given
+     * PrintStream (newOutputStream).
+     *
+     * @param realPrintStream   PrintStram to catch messages.
+     * @param newOutputStream   PrintStrim to duplicate messages.
+     * @return  new PrintStream, which prints messages to both streams.
+     */
+    private static PrintStream duplicatePrintStream(PrintStream realPrintStream, PrintStream newOutputStream) {
+            return new PrintStream(realPrintStream) {
+                @Override
+                public void print(final String str) {
+                    realPrintStream.print(str);
+                    newOutputStream.println(str);
+            }
+        };
+    }
+
+    /**
+     * Opens new PrintStream at
+     * {@link FileOutputStream}
+     * with given file path.
+     *
+     * @param filePath  a path to output file.
+     * @param encoding  encoding, at which to
+     *                  save a stream of symbols.
+     * @return  opened PrintStream to file.
+     * @throws FileNotFoundException    not checked yet.
+     * @throws UnsupportedEncodingException when given encoding
+     *                                      is not suppoerted
+     *                                      by system.
+     */
+    private static PrintStream makeFileOutput(String filePath, String encoding) throws FileNotFoundException,
+                                                                        UnsupportedEncodingException {
+        return new PrintStream(new FileOutputStream(filePath, true), true, "UTF-16");
+    }
+
+    /**
+     * Catches default systems
+     * output streams and
+     * duplicates them to output
+     * files.
+     *
+     * @see    #makeFileOutput(String, String)
+     * @see    #duplicatePrintStream(PrintStream, PrintStream)
+     * @throws FileNotFoundException    when cannot assign
+     *                                  file output in
+     *                                  supplementary method.
+     * @throws UnsupportedEncodingException when system does not
+     *                                      support encoding,
+     *                                      used in supplementary
+     *                                      method.
+     */
+    private static void catchSOut() throws FileNotFoundException, UnsupportedEncodingException {
+        System.setOut(duplicatePrintStream(System.out, makeFileOutput(OUT_FILE_PATH, UNICODE_CHARSET)));
+        System.setErr(duplicatePrintStream(System.err, makeFileOutput(ERR_FILE_PATH, UNICODE_CHARSET)));
     }
 }
