@@ -85,6 +85,7 @@ public class SLChat {
             System.out.println("System does not support encoding " + UNICODE_CHARSET);
             exc.printStackTrace();
         }
+
         try {
             IS_SERVER_RUNNING = false;
             IS_CLIENT_RUNNING = false;
@@ -231,11 +232,20 @@ public class SLChat {
      */
     private static PrintStream duplicatePrintStream(PrintStream realPrintStream, PrintStream newOutputStream) {
             return new PrintStream(realPrintStream) {
+
                 @Override
                 public void print(final String str) {
                     realPrintStream.print(str);
+                    newOutputStream.print(str);
+                }
+
+                /* Overriding this method, so the output
+                   strings in file could be separated. */
+                @Override
+                public void println(final String str) {
+                    realPrintStream.println(str);
                     newOutputStream.println(str);
-            }
+                }
         };
     }
 
@@ -255,7 +265,12 @@ public class SLChat {
      */
     private static PrintStream makeFileOutput(String filePath, String encoding) throws FileNotFoundException,
                                                                         UnsupportedEncodingException {
-        return new PrintStream(new FileOutputStream(filePath, true), true, "UTF-16");
+        PrintStream out = new PrintStream(new FileOutputStream(new File(filePath), true),
+                                                                                    true,"UTF-16");
+        /* separating new output from old one */
+        out.println("\n");
+        out.println("********************STARTING NEW PROGRAM********************");
+        return out;
     }
 
     /**
