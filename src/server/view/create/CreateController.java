@@ -4,6 +4,7 @@ import client.model.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -21,7 +22,7 @@ public class CreateController {
     /* Field for input a room name of server to be created */
         @FXML private TextField roomName;
     /* Field for server's password, which is used to authenticate users */
-        @FXML private TextField password;
+        @FXML private PasswordField password;
 
     /**
      * Starts server backend thread

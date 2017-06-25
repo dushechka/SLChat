@@ -2,6 +2,7 @@ package client.view.login;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -14,7 +15,7 @@ import static main.SLChat.mainView;
 
 public class LoginController {
     @FXML TextField loginField;
-    @FXML TextField passwordField;
+    @FXML PasswordField passwordField;
     @FXML Text actionTarget;
 
     /**
