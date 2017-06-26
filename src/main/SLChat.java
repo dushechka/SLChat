@@ -265,12 +265,16 @@ public class SLChat {
      *                                      is not suppoerted
      *                                      by system.
      */
-    private static PrintStream makeFileOutput(String filePath, String encoding) throws FileNotFoundException,
-                                                                        UnsupportedEncodingException {
-        String path = LocalDate.now().toString().substring(0,10) + "_";
-        path += LocalTime.now().toString().substring(0,8).replace(':','-');
-        path += "_" + filePath;
-        PrintStream out = new PrintStream(new FileOutputStream(new File(path), true), true,"UTF-16");
+    private static PrintStream makeFileOutput(String folderPath, String fileName, String encoding)
+                                                throws FileNotFoundException, UnsupportedEncodingException {
+
+        /* determining full path to output file */
+        String filePath = folderPath + "/";
+        filePath += LocalDate.now().toString().substring(0,10) + "_";
+        filePath += LocalTime.now().toString().substring(0,8).replace(':','-');
+        filePath += "_" + fileName + TXT_APPENDIX;
+        PrintStream out = new PrintStream(new FileOutputStream(new File(filePath), true),
+                                                                                true,"UTF-16");
         /* separating new output from old one */
         out.println("\n");
         out.println("********************STARTING NEW PROGRAM********************");
@@ -279,12 +283,34 @@ public class SLChat {
     }
 
     /**
+     * Creates folders for program.
+     * <p>
+     * Creates folders by given name
+     * in folder, named "SLChat", which
+     * is located in user's home folder.
+     *
+     * @param folderName    Folder name to create.
+     * @return Full path to created folder, in
+     *         correct system style.
+     */
+    private static String makeFolders(String folderName) {
+        String s = "/";
+        String home = System.getProperty("user.home");
+        String folderPath = home + s + PROGRAM_FOLDER_NAME + s + folderName;
+        File folder = new File(folderPath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        return folder.toString();
+    }
+
+    /**
      * Catches default systems
      * output streams and
      * duplicates them to output
      * files.
      *
-     * @see    #makeFileOutput(String, String)
+     * @see    #makeFileOutput(String, String, String)
      * @see    #duplicatePrintStream(PrintStream, PrintStream)
      * @throws FileNotFoundException    when cannot assign
      *                                  file output in
@@ -295,7 +321,8 @@ public class SLChat {
      *                                      method.
      */
     private static void catchSOut() throws FileNotFoundException, UnsupportedEncodingException {
-        System.setOut(duplicatePrintStream(System.out, makeFileOutput(OUT_FILE_PATH, UNICODE_CHARSET)));
-        System.setErr(duplicatePrintStream(System.err, makeFileOutput(ERR_FILE_PATH, UNICODE_CHARSET)));
+        String logPath = makeFolders(LOG_FOLDER_NAME);
+        System.setOut(duplicatePrintStream(System.out, makeFileOutput(logPath, OUT_FILE_PATH, UNICODE_CHARSET)));
+        System.setErr(duplicatePrintStream(System.err, makeFileOutput(logPath, ERR_FILE_PATH, UNICODE_CHARSET)));
     }
 }

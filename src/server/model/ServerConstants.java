@@ -40,11 +40,14 @@ public class ServerConstants {
     /** Default program charset, used in file output */
         public final static String UNICODE_CHARSET = "UTF-16";
     /** A path to program log folder, which containing program service messages and exceptions */
-        public final static String LOG_FOLDER_PATH = "log/";
+        public final static String LOG_FOLDER_NAME = "log";
+        public final static String PROGRAM_FOLDER_NAME = "SLChat";
     /** Path to program's output file */
-        public final static String OUT_FILE_PATH = "out.txt";
+        public final static String OUT_FILE_PATH = "out";
     /** Path to program's error output file */
-    public final static String ERR_FILE_PATH = "err.txt";
+        public final static String ERR_FILE_PATH = "err";
+    /** An extention of output text files, so systems could define them as so */
+        public final static String TXT_APPENDIX = ".txt";
 
     /**
      * Forbidden method, because of
