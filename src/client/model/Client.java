@@ -9,9 +9,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.time.LocalTime;
 
 import static main.SLChat.IS_CLIENT_RUNNING;
 import static main.SLChat.SLClient;
+import static main.SLChat.history;
 import static server.model.ServerConstants.SERVER_FINAL_PORT;
 
 /**
@@ -68,6 +70,10 @@ public class Client extends Thread {
                     break;
                 } else {
                     textArea.appendText(msg + "\n");
+                    /* saving message to history log file*/
+                   if (history != null) {
+                       history.println(LocalTime.now() + "\t" + msg);
+                   }
                 }
                 Thread.sleep(100);
             }

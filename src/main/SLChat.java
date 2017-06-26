@@ -72,12 +72,14 @@ public class SLChat {
         public static InetAddress localAddress;
     /** A list of rooms, found on LAN */
         public static Hashtable<String, InetAddress> rooms;
+        public static PrintStream history;
 
 
     /**
      * Main program entry.
      */
     public SLChat() {
+        /* duplicating standart output to log files */
         try {
             catchSOut();
         } catch (FileNotFoundException e) {
@@ -85,6 +87,17 @@ public class SLChat {
             e.printStackTrace();
         } catch (UnsupportedEncodingException exc) {
             System.out.println("System does not support encoding " + UNICODE_CHARSET);
+            exc.printStackTrace();
+        }
+
+        /* Making a file for history, initializing a stream
+           to write to it and saving that stream to corresponding
+            field so the Client class could write to it. */
+        try {
+            String historyPath = makeFolders(HISTORY_FOLDER_NAME
+                                                            + "/" + LocalDate.now().toString().substring(0,10));
+            history = makeFileOutput(historyPath, TXT_APPENDIX, UNICODE_CHARSET);
+        } catch (FileNotFoundException | UnsupportedEncodingException exc) {
             exc.printStackTrace();
         }
 
@@ -233,6 +246,7 @@ public class SLChat {
      * @return  new PrintStream, which prints messages to both streams.
      */
     private static PrintStream duplicatePrintStream(PrintStream realPrintStream, PrintStream newOutputStream) {
+
             return new PrintStream(realPrintStream) {
 
                 @Override
@@ -256,9 +270,11 @@ public class SLChat {
      * {@link FileOutputStream}
      * with given file path.
      *
-     * @param filePath  a path to output file.
-     * @param encoding  encoding, at which to
-     *                  save a stream of symbols.
+     * @param folderPath    a path to folder,
+     *                      where file resides.
+     * @param fileName      a name of output file.
+     * @param encoding      encoding, at which to
+     *                      save a stream of symbols.
      * @return  opened PrintStream to file.
      * @throws FileNotFoundException    not checked yet.
      * @throws UnsupportedEncodingException when given encoding
@@ -270,16 +286,11 @@ public class SLChat {
 
         /* determining full path to output file */
         String filePath = folderPath + "/";
-        filePath += LocalDate.now().toString().substring(0,10) + "_";
+//        filePath += LocalDate.now().toString().substring(0,10) + "_";
         filePath += LocalTime.now().toString().substring(0,8).replace(':','-');
-        filePath += "_" + fileName + TXT_APPENDIX;
-        PrintStream out = new PrintStream(new FileOutputStream(new File(filePath), true),
+        filePath += "_" + fileName;
+        return new PrintStream(new FileOutputStream(new File(filePath), true),
                                                                                 true,"UTF-16");
-        /* separating new output from old one */
-        out.println("\n");
-        out.println("********************STARTING NEW PROGRAM********************");
-        out.println("Current date and time: " + LocalDate.now() + " - " + LocalTime.now());
-        return out;
     }
 
     /**
@@ -321,8 +332,10 @@ public class SLChat {
      *                                      method.
      */
     private static void catchSOut() throws FileNotFoundException, UnsupportedEncodingException {
-        String logPath = makeFolders(LOG_FOLDER_NAME);
-        System.setOut(duplicatePrintStream(System.out, makeFileOutput(logPath, OUT_FILE_PATH, UNICODE_CHARSET)));
-        System.setErr(duplicatePrintStream(System.err, makeFileOutput(logPath, ERR_FILE_PATH, UNICODE_CHARSET)));
+        String logPath = makeFolders(LOG_FOLDER_NAME + "/" + LocalDate.now().toString().substring(0,10));
+        System.setOut(duplicatePrintStream(System.out, makeFileOutput(logPath, (OUT_FILE_PATH + TXT_APPENDIX),
+                                                                                                UNICODE_CHARSET)));
+        System.setErr(duplicatePrintStream(System.err, makeFileOutput(logPath, (ERR_FILE_PATH + TXT_APPENDIX),
+                                                                                                UNICODE_CHARSET)));
     }
 }

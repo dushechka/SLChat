@@ -6,9 +6,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.time.LocalTime;
 
 import static main.SLChat.SLClient;
 import static main.SLChat.IS_CLIENT_RUNNING;
+import static main.SLChat.history;
 
 /**
  * Handles chat window operations.
@@ -27,6 +29,10 @@ public class ChatController {
                 textField.setText("");
                 textArea.appendText(msg + "\n");
                 SLClient.sendMessage(msg);
+                /* saving message to history log file*/
+                if (history != null) {
+                    history.println(LocalTime.now() + "\t" + msg);
+                }
             }
         } catch (IOException exc) {
             System.out.println("Can't send message!");

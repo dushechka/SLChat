@@ -41,6 +41,9 @@ public class ServerConstants {
         public final static String UNICODE_CHARSET = "UTF-16";
     /** A path to program log folder, which containing program service messages and exceptions */
         public final static String LOG_FOLDER_NAME = "log";
+    /** A path to program history folder, which containing chat messages */
+        public final static String HISTORY_FOLDER_NAME = "history";
+    /** A path to folder, which contains program output files */
         public final static String PROGRAM_FOLDER_NAME = "SLChat";
     /** Path to program's output file */
         public final static String OUT_FILE_PATH = "out";
