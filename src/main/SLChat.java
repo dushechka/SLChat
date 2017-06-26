@@ -95,7 +95,7 @@ public class SLChat {
             System.out.println("Program can't find the file!");
             e.printStackTrace();
         } catch (UnsupportedEncodingException exc) {
-            System.out.println("System does not support encoding " + DEFAULT_CHARSET);
+            exc.printStackTrace();
         }
 
         /* Making a file for history, initializing a stream
@@ -106,14 +106,16 @@ public class SLChat {
             String historyPath = makeFolders(HISTORY_FOLDER_NAME
                                                             + "/" + LocalDate.now().toString().substring(0,10));
             if (IS_DEFAULT_CHARSET_SUPPORTED) {
+                System.out.println(DEFAULT_CHARSET + "IS SUPPORTED.");
                 history = makeFileOutput(historyPath, TXT_APPENDIX, DEFAULT_CHARSET);
             } else {
+                System.out.println(DEFAULT_CHARSET + "IS NOT SUPPORTED!");
                 history = makeFileOutput(historyPath, TXT_APPENDIX, null);
             }
         } catch (FileNotFoundException exc) {
             exc.printStackTrace();
         } catch (UnsupportedEncodingException e) {
-            System.out.println("System does not support encoding " + DEFAULT_CHARSET);
+            e.printStackTrace();
         }
 
         try {
