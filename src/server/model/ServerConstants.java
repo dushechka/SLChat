@@ -36,9 +36,7 @@ public class ServerConstants {
         public final static String GROUP_ADDRESS = "230.0.0.1";
     /** A default inner program charset name for converting strings to arrays of byte and backwards
         by {@link #byteToString(byte[])} and {@link #stringToByte(String)} methods. */
-        private final static String DEFAULT_CHARSET = "UTF-8";
-    /** Default program charset, used in file output */
-        public final static String UNICODE_CHARSET = "UTF-16";
+        public final static String DEFAULT_CHARSET = "UTF-8";
     /** A path to program log folder, which containing program service messages and exceptions */
         public final static String LOG_FOLDER_NAME = "log";
     /** A path to program history folder, which containing chat messages */

@@ -86,7 +86,7 @@ public class SLChat {
             System.out.println("Program can't find the file!");
             e.printStackTrace();
         } catch (UnsupportedEncodingException exc) {
-            System.out.println("System does not support encoding " + UNICODE_CHARSET);
+            System.out.println("System does not support encoding " + DEFAULT_CHARSET);
             exc.printStackTrace();
         }
 
@@ -96,7 +96,7 @@ public class SLChat {
         try {
             String historyPath = makeFolders(HISTORY_FOLDER_NAME
                                                             + "/" + LocalDate.now().toString().substring(0,10));
-            history = makeFileOutput(historyPath, TXT_APPENDIX, UNICODE_CHARSET);
+            history = makeFileOutput(historyPath, TXT_APPENDIX, DEFAULT_CHARSET);
         } catch (FileNotFoundException | UnsupportedEncodingException exc) {
             exc.printStackTrace();
         }
@@ -290,7 +290,7 @@ public class SLChat {
         filePath += LocalTime.now().toString().substring(0,8).replace(':','-');
         filePath += "_" + fileName;
         return new PrintStream(new FileOutputStream(new File(filePath), true),
-                                                                                true,"UTF-16");
+                                                                                true, DEFAULT_CHARSET);
     }
 
     /**
@@ -334,8 +334,8 @@ public class SLChat {
     private static void catchSOut() throws FileNotFoundException, UnsupportedEncodingException {
         String logPath = makeFolders(LOG_FOLDER_NAME + "/" + LocalDate.now().toString().substring(0,10));
         System.setOut(duplicatePrintStream(System.out, makeFileOutput(logPath, (OUT_FILE_PATH + TXT_APPENDIX),
-                                                                                                UNICODE_CHARSET)));
+                                                                                                DEFAULT_CHARSET)));
         System.setErr(duplicatePrintStream(System.err, makeFileOutput(logPath, (ERR_FILE_PATH + TXT_APPENDIX),
-                                                                                                UNICODE_CHARSET)));
+                                                                                                DEFAULT_CHARSET)));
     }
 }
