@@ -106,10 +106,10 @@ public class SLChat {
             String historyPath = makeFolders(HISTORY_FOLDER_NAME
                                                             + "/" + LocalDate.now().toString().substring(0,10));
             if (IS_DEFAULT_CHARSET_SUPPORTED) {
-                System.out.println(DEFAULT_CHARSET + "IS SUPPORTED.");
+                System.out.println("***" + DEFAULT_CHARSET + " IS SUPPORTED***");
                 history = makeFileOutput(historyPath, TXT_APPENDIX, DEFAULT_CHARSET);
             } else {
-                System.out.println(DEFAULT_CHARSET + "IS NOT SUPPORTED!");
+                System.out.println("***" + DEFAULT_CHARSET + " IS NOT SUPPORTED***");
                 history = makeFileOutput(historyPath, TXT_APPENDIX, null);
             }
         } catch (FileNotFoundException exc) {
@@ -377,11 +377,9 @@ public class SLChat {
             SortedMap<String, Charset> charsetsMap = Charset.availableCharsets();
         for(String name : charsetsMap.keySet()) {
             if (charsetName.equals(name)) {
-                System.out.println(charsetName + "IS SUPPORTED.");
                 return true;
             }
         }
-        System.out.println(charsetName + "IS NOT SUPPORTED!");
         return false;
     }
 }
