@@ -34,9 +34,10 @@ public class ServerConstants {
         public final static int CLIENT_PORT = 8484;
     /** Broadcast group address at which {@link client.model.Seeker sends packets}. */
         public final static String GROUP_ADDRESS = "230.0.0.1";
-    /** A default inner program charset name for converting strings to arrays of byte and backwards
-        by {@link #byteToString(byte[])} and {@link #stringToByte(String)} methods. */
-        public final static String DEFAULT_CHARSET = "UTF-8";
+    /** Charset, which is used for output (to files for example) */
+        public final static String DEFAULT_CHARSET = "ABC";
+    /** Charset, which is used in java runtime only and never for output */
+        private final static String INNER_CHARSET = "UTF-8";
     /** A path to program log folder, which containing program service messages and exceptions */
         public final static String LOG_FOLDER_NAME = "log";
     /** A path to program history folder, which containing chat messages */
@@ -73,7 +74,7 @@ public class ServerConstants {
      *                  {@link #DEFAULT_CHARSET}.
      */
         public static byte[] stringToByte(String input) {
-            return input.getBytes(Charset.forName(DEFAULT_CHARSET));
+            return input.getBytes(Charset.forName(INNER_CHARSET));
         }
 
     /**
@@ -87,7 +88,7 @@ public class ServerConstants {
      *              process of array conversion.
      */
     public static String byteToString(byte[] input) {
-        return (new String(input, Charset.forName(DEFAULT_CHARSET)));
+        return (new String(input, Charset.forName(INNER_CHARSET)));
         }
 
     /**

@@ -11,10 +11,12 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.SortedMap;
 
 import static server.model.ServerConstants.*;
 
@@ -73,32 +75,45 @@ public class SLChat {
     /** A list of rooms, found on LAN */
         public static Hashtable<String, InetAddress> rooms;
         public static PrintStream history;
+    /** Determines, wheter system supports {@link server.model.ServerConstants#DEFAULT_CHARSET} */
+        private final boolean IS_DEFAULT_CHARSET_SUPPORTED;
 
 
     /**
      * Main program entry.
      */
     public SLChat() {
+        IS_DEFAULT_CHARSET_SUPPORTED = isCharsetPresent(DEFAULT_CHARSET);
         /* duplicating standart output to log files */
         try {
-            catchSOut();
+            if (IS_DEFAULT_CHARSET_SUPPORTED) {
+                catchSOut(DEFAULT_CHARSET);
+            } else {
+                catchSOut(null);
+            }
         } catch (FileNotFoundException e) {
             System.out.println("Program can't find the file!");
             e.printStackTrace();
         } catch (UnsupportedEncodingException exc) {
             System.out.println("System does not support encoding " + DEFAULT_CHARSET);
-            exc.printStackTrace();
         }
 
         /* Making a file for history, initializing a stream
            to write to it and saving that stream to corresponding
             field so the Client class could write to it. */
         try {
+
             String historyPath = makeFolders(HISTORY_FOLDER_NAME
                                                             + "/" + LocalDate.now().toString().substring(0,10));
-            history = makeFileOutput(historyPath, TXT_APPENDIX, DEFAULT_CHARSET);
-        } catch (FileNotFoundException | UnsupportedEncodingException exc) {
+            if (IS_DEFAULT_CHARSET_SUPPORTED) {
+                history = makeFileOutput(historyPath, TXT_APPENDIX, DEFAULT_CHARSET);
+            } else {
+                history = makeFileOutput(historyPath, TXT_APPENDIX, null);
+            }
+        } catch (FileNotFoundException exc) {
             exc.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("System does not support encoding " + DEFAULT_CHARSET);
         }
 
         try {
@@ -289,8 +304,16 @@ public class SLChat {
 //        filePath += LocalDate.now().toString().substring(0,10) + "_";
         filePath += LocalTime.now().toString().substring(0,8).replace(':','-');
         filePath += "_" + fileName;
-        return new PrintStream(new FileOutputStream(new File(filePath), true),
-                                                                                true, DEFAULT_CHARSET);
+
+        File file = new File(filePath);
+        FileOutputStream fileOutputStream = new FileOutputStream(filePath, true);
+        if (encoding != null) {
+            return new PrintStream(new FileOutputStream(new File(filePath), true),
+                    true, DEFAULT_CHARSET);
+        } else {
+            return new PrintStream(new FileOutputStream(new File(filePath), true),
+                    true);
+        }
     }
 
     /**
@@ -321,21 +344,40 @@ public class SLChat {
      * duplicates them to output
      * files.
      *
+     * @param encoding  encoding in which to save output.
      * @see    #makeFileOutput(String, String, String)
      * @see    #duplicatePrintStream(PrintStream, PrintStream)
      * @throws FileNotFoundException    when cannot assign
      *                                  file output in
      *                                  supplementary method.
      * @throws UnsupportedEncodingException when system does not
-     *                                      support encoding,
-     *                                      used in supplementary
-     *                                      method.
+     *                                      support used encoding.
      */
-    private static void catchSOut() throws FileNotFoundException, UnsupportedEncodingException {
+    private static void catchSOut(String encoding) throws FileNotFoundException, UnsupportedEncodingException {
         String logPath = makeFolders(LOG_FOLDER_NAME + "/" + LocalDate.now().toString().substring(0,10));
         System.setOut(duplicatePrintStream(System.out, makeFileOutput(logPath, (OUT_FILE_PATH + TXT_APPENDIX),
-                                                                                                DEFAULT_CHARSET)));
+                                                                                                encoding)));
         System.setErr(duplicatePrintStream(System.err, makeFileOutput(logPath, (ERR_FILE_PATH + TXT_APPENDIX),
-                                                                                                DEFAULT_CHARSET)));
+                                                                                                encoding)));
+    }
+
+    /**
+     * Determines, whether system
+     * supports charset, given by
+     * charsetName parameter.
+     *
+     * @param charsetName   a charset
+     *                      to be found.
+     * @return  true, if given charset
+     *          is supported by a system.
+     */
+    private static boolean isCharsetPresent(String charsetName) {
+            SortedMap<String, Charset> charsetsMap = Charset.availableCharsets();
+        for(String name : charsetsMap.keySet()) {
+            if (charsetName.equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
