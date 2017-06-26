@@ -375,9 +375,11 @@ public class SLChat {
             SortedMap<String, Charset> charsetsMap = Charset.availableCharsets();
         for(String name : charsetsMap.keySet()) {
             if (charsetName.equals(name)) {
+                System.out.println(charsetName + "IS SUPPORTED.");
                 return true;
             }
         }
+        System.out.println(charsetName + "IS NOT SUPPORTED!");
         return false;
     }
 }

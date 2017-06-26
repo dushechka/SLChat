@@ -27,15 +27,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SLChat.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SLChat.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/SLChat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+            <state relative-caret-position="500">
+              <caret line="381" column="58" lean-forward="false" selection-start-line="381" selection-start-column="58" selection-end-line="381" selection-end-column="58" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1498446371901" expanded="true" signature="1123:1127" ph="/**...*/" />
-                <marker date="1498446371901" expanded="true" signature="8298:8303" ph="{...}" />
+                <marker date="1498446585020" expanded="true" signature="1123:1127" ph="/**...*/" />
+                <marker date="1498446585020" expanded="true" signature="8298:8303" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -63,16 +63,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ServerConstants.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ServerConstants.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/server/model/ServerConstants.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="228">
-              <caret line="37" column="56" lean-forward="false" selection-start-line="37" selection-start-column="56" selection-end-line="37" selection-end-column="56" />
+              <caret line="37" column="58" lean-forward="false" selection-start-line="37" selection-start-column="58" selection-end-line="37" selection-end-column="58" />
               <folding>
-                <element signature="e#3336#3337#0" expanded="true" />
-                <element signature="e#3413#3414#0" expanded="true" />
-                <element signature="e#3755#3756#0" expanded="true" />
-                <element signature="e#3833#3834#0" expanded="true" />
+                <element signature="e#3338#3339#0" expanded="true" />
+                <element signature="e#3415#3416#0" expanded="true" />
+                <element signature="e#3757#3758#0" expanded="true" />
+                <element signature="e#3835#3836#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1022,27 +1022,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/model/ServerConstants.java">
+    <entry file="file://$PROJECT_DIR$/src/main/SLChat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="37" column="56" lean-forward="false" selection-start-line="37" selection-start-column="56" selection-end-line="37" selection-end-column="56" />
+        <state relative-caret-position="500">
+          <caret line="381" column="58" lean-forward="false" selection-start-line="381" selection-start-column="58" selection-end-line="381" selection-end-column="58" />
           <folding>
-            <element signature="e#3336#3337#0" expanded="true" />
-            <element signature="e#3413#3414#0" expanded="true" />
-            <element signature="e#3755#3756#0" expanded="true" />
-            <element signature="e#3833#3834#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <marker date="1498446585020" expanded="true" signature="1123:1127" ph="/**...*/" />
+            <marker date="1498446585020" expanded="true" signature="8298:8303" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/SLChat.java">
+    <entry file="file://$PROJECT_DIR$/src/server/model/ServerConstants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+        <state relative-caret-position="228">
+          <caret line="37" column="58" lean-forward="false" selection-start-line="37" selection-start-column="58" selection-end-line="37" selection-end-column="58" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1498446371901" expanded="true" signature="1123:1127" ph="/**...*/" />
-            <marker date="1498446371901" expanded="true" signature="8298:8303" ph="{...}" />
+            <element signature="e#3338#3339#0" expanded="true" />
+            <element signature="e#3415#3416#0" expanded="true" />
+            <element signature="e#3757#3758#0" expanded="true" />
+            <element signature="e#3835#3836#0" expanded="true" />
           </folding>
         </state>
       </provider>

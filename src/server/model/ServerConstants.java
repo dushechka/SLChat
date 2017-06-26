@@ -35,7 +35,7 @@ public class ServerConstants {
     /** Broadcast group address at which {@link client.model.Seeker sends packets}. */
         public final static String GROUP_ADDRESS = "230.0.0.1";
     /** Charset, which is used for output (to files for example) */
-        public final static String DEFAULT_CHARSET = "ABC";
+        public final static String DEFAULT_CHARSET = "UTF-8";
     /** Charset, which is used in java runtime only and never for output */
         private final static String INNER_CHARSET = "UTF-8";
     /** A path to program log folder, which containing program service messages and exceptions */
