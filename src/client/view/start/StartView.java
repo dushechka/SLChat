@@ -16,8 +16,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Properties;
 
 import static main.SLChat.*;
 
@@ -81,9 +83,14 @@ public class StartView extends Application {
                         SLClient.die();
                         SLClient.join();
                 }
+                Properties properties = getProperties();
+                properties.setProperty("isRunning", "false");
+                storeProperties(properties);
             } catch (InterruptedException ie) {
                 System.out.println("Oh no! Client seems not want to stop! :'(");
                 ie.printStackTrace();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
             }
         });
 

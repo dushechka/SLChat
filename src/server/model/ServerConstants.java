@@ -50,6 +50,9 @@ public class ServerConstants {
         public final static String ERR_FILE_PATH = "err";
     /** An extention of output text files, so systems could define them as so */
         public final static String TXT_APPENDIX = ".txt";
+    /** A name of the folder, which contains stored properties,
+                                    used by program at runtime */
+        public final static String CFG_FOLDER_NAME = "cfg";
 
     /**
      * Forbidden method, because of

@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Properties;
 import java.util.SortedMap;
 
 import static server.model.ServerConstants.*;
@@ -77,6 +78,10 @@ public class SLChat {
         public static PrintStream history;
     /** Determines, wheter system supports {@link server.model.ServerConstants#DEFAULT_CHARSET} */
         private final boolean IS_DEFAULT_CHARSET_SUPPORTED;
+    /** A path to file, which contains program state variables */
+        private static String propertiesFilePath;
+    /** Program state variables */
+        private static Properties properties;
 
 
     /**
@@ -103,7 +108,7 @@ public class SLChat {
             field so the Client class could write to it. */
         try {
 
-            String historyPath = makeFolders(HISTORY_FOLDER_NAME
+            String historyPath = makeFolder(HISTORY_FOLDER_NAME
                                                             + "/" + LocalDate.now().toString().substring(0,10));
             if (IS_DEFAULT_CHARSET_SUPPORTED) {
                 System.out.println("***" + DEFAULT_CHARSET + " IS SUPPORTED***");
@@ -162,7 +167,37 @@ public class SLChat {
      * @param args  never used.
      */
     public static void main(String[] args) {
-        new SLChat();
+            /* checking if program is running first */
+            propertiesFilePath = makeFolder(CFG_FOLDER_NAME) + "/properties";
+            File propertiesFile = new File(propertiesFilePath);
+            properties = new Properties();
+        try {
+            if (propertiesFile.exists()) {
+                FileInputStream PFIn = new FileInputStream(propertiesFile);
+                properties.load(PFIn);
+                PFIn.close();
+                if (properties.getProperty("isRunning").equals("true")) {
+                    /* exiting, if program is already running */
+                    System.exit(0);
+                }
+            }
+            properties.setProperty("isRunning", "true");
+            storeProperties(properties, propertiesFile);
+            new SLChat();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    public static void storeProperties(Properties prop) throws IOException {
+        storeProperties(prop, new File(propertiesFilePath));
+    }
+
+    private static void storeProperties(Properties prop, File propFile) throws IOException {
+        FileOutputStream PFOut = new FileOutputStream(propFile);
+        prop.store(PFOut, null);
+        PFOut.close();
     }
 
     /**
@@ -319,17 +354,19 @@ public class SLChat {
     }
 
     /**
-     * Creates folders for program.
+     * Creates folder for program.
      * <p>
-     * Creates folders by given name
+     * Creates folder by given name
      * in folder, named "SLChat", which
      * is located in user's home folder.
      *
      * @param folderName    Folder name to create.
-     * @return Full path to created folder, in
-     *         correct system style.
+     * @return Full path to the folder, in
+     *         correct system style, even if
+     *         folder wasn't creates because
+     *         it is already exists.
      */
-    private static String makeFolders(String folderName) {
+    private static String makeFolder(String folderName) {
         String s = "/";
         String home = System.getProperty("user.home");
         String folderPath = home + s + PROGRAM_FOLDER_NAME + s + folderName;
@@ -356,7 +393,7 @@ public class SLChat {
      *                                      support used encoding.
      */
     private static void catchSOut(String encoding) throws FileNotFoundException, UnsupportedEncodingException {
-        String logPath = makeFolders(LOG_FOLDER_NAME + "/" + LocalDate.now().toString().substring(0,10));
+        String logPath = makeFolder(LOG_FOLDER_NAME + "/" + LocalDate.now().toString().substring(0,10));
         System.setOut(duplicatePrintStream(System.out, makeFileOutput(logPath, (OUT_FILE_PATH + TXT_APPENDIX),
                                                                                                 encoding)));
         System.setErr(duplicatePrintStream(System.err, makeFileOutput(logPath, (ERR_FILE_PATH + TXT_APPENDIX),
@@ -381,5 +418,9 @@ public class SLChat {
             }
         }
         return false;
+    }
+
+    public static Properties getProperties() {
+        return properties;
     }
 }
