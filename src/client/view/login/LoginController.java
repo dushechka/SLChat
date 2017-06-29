@@ -44,7 +44,7 @@ public class LoginController {
                 if (logInClient(login, password)) {
                     /* opening chat window if success */
                     mainView.changeOnChat();
-                    /* Client object should know, where to append received messages */
+                    /* Client object should know, where to append received messages. */
                     mainView.bindTextArea();
                 } else {
                     mainView.alertWindow("Wrong.", "Wrong password!");

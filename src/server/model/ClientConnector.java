@@ -13,6 +13,21 @@ import static server.model.ServerConstants.SERVER_FINAL_PORT;
  * connections and pass them to
  * ClientHandler if connection
  * was established.
+ * <p>
+ * Saves the list of connected
+ * {@link ClientHandler}s and
+ * performs operations on them,
+ * such as adding and removing
+ * to/from list,
+ * running/stopping them,
+ * sending messages and so on.
+ *
+ * @see #isNicknameUsed(String)
+ * @see #emptyClients()
+ * @see #printListOfClients()
+ * @see #removeClient(ClientHandler)
+ * @see #sendToAll(String, ClientHandler)
+ * @see #sendToAllAnon(String, ClientHandler)
  */
 public class ClientConnector extends Thread {
     /** Determines, when to stop this thread */

@@ -86,6 +86,24 @@ public class Client extends Thread {
         }
     }
 
+    /**
+     * Opens IO streams on {@link #socket}
+     * and tries to log on server with
+     * given login and password
+     * parameters.
+     * <p>
+     * Run only after {@link #socket}
+     * field is initialized by
+     * {@link #connectClient(InetAddress)}.
+     *
+     * @param login   user nickname.
+     * @param password  server's room password.
+     * @return          true, in case of
+     *                  succesful logon.
+     * @throws IOException  when cannont connect
+     *                      to server by
+     *                      {@link #socket}.
+     */
     public static boolean logInClient(String login, String password) throws IOException {
         /* string to read from connection */
             String msg;
@@ -115,6 +133,15 @@ public class Client extends Thread {
         }
     }
 
+    /**
+     * Tries to connect to
+     * server by given address.
+     *
+     * @param serverAddress server's IP.
+     * @return              true, in case
+     *                      of succesful connection.
+     * @throws IOException  when can't use given address.
+     */
     public static boolean connectClient(InetAddress serverAddress) throws IOException {
         socket = new Socket(serverAddress, SERVER_FINAL_PORT);
         if (socket != null) {
@@ -124,6 +151,9 @@ public class Client extends Thread {
         }
     }
 
+    /**
+     * Stops client.
+     */
     public void die() {
         IS_RUNNING = false;
         IS_CLIENT_RUNNING = false;
@@ -132,6 +162,9 @@ public class Client extends Thread {
         }
     }
 
+    /**
+     * Releases used resources.
+     */
     private void close() {
         printMessage("Closing...");
         try {

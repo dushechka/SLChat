@@ -28,7 +28,7 @@ import static server.model.ServerConstants.*;
  * window and also guides program workflow,
  * serving as intermedium between other
  * objects in program. Contains methods for
- * getting service information ({@link #getIP()}
+ * getting service information ({@link #getRooms()}
  * for example).
  *
  * @author  Andrey Fadeev
@@ -107,7 +107,6 @@ public class SLChat {
            to write to it and saving that stream to corresponding
             field so the Client class could write to it. */
         try {
-
             String historyPath = makeFolder(HISTORY_FOLDER_NAME
                                                             + "/" + LocalDate.now().toString().substring(0,10));
             if (IS_DEFAULT_CHARSET_SUPPORTED) {
@@ -122,7 +121,7 @@ public class SLChat {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
+        /* initializing common mapameters */
         try {
             IS_SERVER_RUNNING = false;
             IS_CLIENT_RUNNING = false;
@@ -201,8 +200,11 @@ public class SLChat {
     }
 
     /**
+     * Retrieves rooms' names
+     * and IPs from LAN, and
+     * saves them to {@link #rooms}.
      */
-    public static void getIP() {
+    public static void getRooms() {
             int i = 1;
             ArrayList<RoomsGetter> getters = new ArrayList<>();
             /* time, at which RoomsGetter threads will work */

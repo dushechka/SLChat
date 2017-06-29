@@ -53,7 +53,7 @@ public class StartController {
     protected void handleSearchButtonAction(ActionEvent event) {
             ListView<String> roomsList = null;
             ObservableList<String> roomNames = FXCollections.observableArrayList();
-        getIP();
+        getRooms();
         mainView.changeWindow(SEARCH_GUI_PATH);
         /* getting a link for the ListView node on just loaded root */
         for (Node n : primaryStage.getScene().getRoot().getChildrenUnmodifiable()) {

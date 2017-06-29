@@ -46,7 +46,7 @@ public class RoomsGetter extends Thread {
             String msg;
             DatagramPacket packet;
             byte[] packetData;
-
+        /* start sending multicast packets on LAN */
         seeker.start();
         printMessage("Started.");
         try (DatagramSocket dSocket = new DatagramSocket(PORT, iFaceAddress)) {

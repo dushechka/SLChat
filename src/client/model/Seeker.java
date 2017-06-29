@@ -48,7 +48,7 @@ public class Seeker extends Thread {
      * Starts sending multicast packets
      * at given group addres
      * {@link server.model.ServerConstants#GROUP_ADDRESS}
-     * every second, for a given
+     * every second, until a given
      * period of time will pass.
      */
     public void run() {
