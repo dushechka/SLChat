@@ -32,7 +32,7 @@ public class RoomsGetter extends Thread {
 
     public RoomsGetter(InetAddress address, int number) {
         super("RoomsGetter_" + number);
-        PORT = CLIENT_PORT + number;
+        PORT = Ports.valueOf("CLIENT_PORT").getPort() + number;
         printMessage("Port number is: " + PORT);
         rooms = new Hashtable<>();
         this.iFaceAddress = address;

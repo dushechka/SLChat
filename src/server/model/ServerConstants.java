@@ -15,23 +15,26 @@ import java.util.Enumeration;
  *
  */
 public class ServerConstants {
+    /* Enumeration of all standart ports, used in this program */
+    public enum Ports {
+            SERVER_FINAL_PORT(4488), SERVER_MULTI_PORT(4444), CLIENT_MULTICAST_PORT(4848), CLIENT_PORT(8484);
+            private final int port;
+
+        Ports(int port) {
+            this.port = port;
+        }
+
+        public int getPort() {
+            return port;
+        }
+    }
+
     /** String, that {@link client.model.Seeker} and {@link server.model.ClientNotifier}
         are using to identify, that datagrams, which they receive belongs to each other. */
         public final static byte[] SERVER_STRING = stringToByte("SLChat");
     /** Message, that {@link client.model.Seeker} sends to itself,
         to stop listening for server's answer, if it is not responding. */
         public final static byte[] TIME_HAS_EXPIRED = stringToByte("TimeHasExpired");
-    /** This port is used by client and server
-        to establish connection with each other. */
-        public final static int SERVER_FINAL_PORT = 4488;
-    /** Port, on which client sends multicast packets and
-        server listens for them in order, to find each other. */
-        public final static int SERVER_MULTI_PORT = 4444;
-    /** Port, from which {@link client.model.Seeker} sends multicast packets */
-        public final static int CLIENT_MULTICAST_PORT = 4848;
-    /** Port, on which client receives server's answer packet,
-        and retrieves servers IP address from it */
-        public final static int CLIENT_PORT = 8484;
     /** Broadcast group address at which {@link client.model.Seeker sends packets}. */
         public final static String GROUP_ADDRESS = "230.0.0.1";
     /** Charset, which is used for output (to files for example) */

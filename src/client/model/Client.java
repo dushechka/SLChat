@@ -3,6 +3,7 @@ package client.model;
 import client.view.start.StartView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import server.model.ServerConstants;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -14,7 +15,7 @@ import java.time.LocalTime;
 import static main.SLChat.IS_CLIENT_RUNNING;
 import static main.SLChat.SLClient;
 import static main.SLChat.history;
-import static server.model.ServerConstants.SERVER_FINAL_PORT;
+import static server.model.ServerConstants.Ports;
 
 /**
  * Connects to server and
@@ -143,6 +144,7 @@ public class Client extends Thread {
      * @throws IOException  when can't use given address.
      */
     public static boolean connectClient(InetAddress serverAddress) throws IOException {
+            int SERVER_FINAL_PORT = Ports.valueOf("SERVER_FINAL_PORT").getPort();
         socket = new Socket(serverAddress, SERVER_FINAL_PORT);
         if (socket != null) {
             return true;

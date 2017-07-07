@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.Vector;
 
 import static main.SLChat.IS_CLIENT_CONNECTOR_RUNNING;
-import static server.model.ServerConstants.SERVER_FINAL_PORT;
+import static server.model.ServerConstants.Ports;
 
 /**
  * Listens for incoming client
@@ -32,6 +32,8 @@ import static server.model.ServerConstants.SERVER_FINAL_PORT;
 public class ClientConnector extends Thread {
     /** Determines, when to stop this thread */
         private boolean IS_RUNNING;
+    /** Determines on which port to open server's socket */
+        private final int SERVER_FINAL_PORT;
     /** A server socket for establishing final connection with client */
         private ServerSocket serverSocket;
     /** A socket to transmit new client's connections to {@link ClientHandler} */
@@ -49,6 +51,7 @@ public class ClientConnector extends Thread {
         handlerNumber = 0;
         this.clients = new Vector<>();
         this.password = password;
+        this.SERVER_FINAL_PORT = Ports.valueOf("SERVER_FINAL_PORT").getPort();
         try {
             serverSocket = new ServerSocket(SERVER_FINAL_PORT);
 //            serverSocket = new ServerSocket(SERVER_FINAL_PORT, 10, getInterface("eth3"));

@@ -27,14 +27,15 @@ public class Seeker extends Thread {
 
     public Seeker(InetAddress iFaceAddress, int number) {
         super("Seeker_" + number);
-        PORT = CLIENT_MULTICAST_PORT + number;
+        PORT = Ports.valueOf("CLIENT_MULTICAST_PORT").getPort() + number;
         printMessage("Taken port is: " + PORT);
         this.iFaceAddress = iFaceAddress;
         IS_RUNNING = true;
         try {
             /* Getting multicast group IP address */
             group = InetAddress.getByName(GROUP_ADDRESS);
-            datagramPacket = new DatagramPacket(SERVER_STRING, SERVER_STRING.length, group, SERVER_MULTI_PORT);
+            datagramPacket = new DatagramPacket(SERVER_STRING, SERVER_STRING.length,
+                                                group, Ports.valueOf("SERVER_MULTI_PORT").getPort());
         } catch (UnknownHostException e) {
             printMessage("Exception thrown while trying to achieve multicast group and IP address.");
             e.printStackTrace();

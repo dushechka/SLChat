@@ -29,11 +29,15 @@ public class ClientNotifier extends Thread {
         private InetAddress group = null;
         private final InetAddress ifaceAddress;
         private final String roomName;
+    /** Ports, which are used to handle notification */
+        private final int SERVER_MULTI_PORT;
+        private final int CLIENT_MULTICAST_PORT;
+        private final int CLIENT_PORT;
 
 
     /**
      * Attaching created socket to
-     * {@link server.model.ServerConstants#SERVER_MULTI_PORT}
+     * {@link #SERVER_MULTI_PORT}
      * and {@link server.model.ServerConstants#GROUP_ADDRESS}
      * inet group on specified interface address by
      * corresponding param #ifaceAddress.
@@ -48,6 +52,9 @@ public class ClientNotifier extends Thread {
         super("ClientNotifier");
         this.roomName = roomName;
         this.ifaceAddress = ifaceAddress;
+        this.SERVER_MULTI_PORT = Ports.valueOf("SERVER_MULTI_PORT").getPort();
+        this.CLIENT_MULTICAST_PORT = Ports.valueOf("CLIENT_MULTICAST_PORT").getPort();
+        this.CLIENT_PORT = Ports.valueOf("CLIENT_PORT").getPort();
         try {
             printMessage("Starting...");
 //            inetAddress = getInterface("eth3");
